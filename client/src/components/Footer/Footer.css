@@ -1,0 +1,59 @@
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.container1 {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.column {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.footer h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.footer p, .footer ul {
+    margin-top: 0;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links p {
+    color: #fff;
+    text-decoration: none;
+}
+
+.socialIcons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.MuiIconButton-root {
+    margin-right: 10px;
+}
+
+.copyRight {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Additional CSS for specific icons */
+/* Add more styles as needed for other social media icons */
+.MuiSvgIcon-root.MuiFacebook-fontSizeLarge,
+.MuiSvgIcon-root.MuiTwitter-fontSizeLarge {
+    color: #fff; 
+}

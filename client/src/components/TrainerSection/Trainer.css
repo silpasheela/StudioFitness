@@ -1,0 +1,43 @@
+.trainercard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: #ffffff;
+}
+
+.trainercard .MuiCard-root {
+    box-shadow: 0 8px 40px -12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease-in-out;
+    border-top-left-radius: 125px;
+    border-top-right-radius: 0px;
+}
+
+.trainercard .MuiCard-root:hover {
+    box-shadow: 0 16px 70px -12.125px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+
+.trainercard .MuiCardMedia-root {
+    padding-top: '56.25%';
+}
+
+.trainercard .MuiCardContent-root {
+    text-align: 'left';
+    padding: '16px';
+}
+
+.trainercard .MuiTypography--heading {
+    font-weight: 'bold'
+}
+
+.trainercard .MuiTypography--subheading {
+    line-height: 1.8
+}
+
+.trainercard .MuiCardActions-root {
+    display: 'flex';
+    justify-content: 'space-between';
+    text-align: 'center'
+}
+

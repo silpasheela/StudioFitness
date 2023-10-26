@@ -1,0 +1,97 @@
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+)
+
+router.get("/auth/google/callback", googleAuthenticate)
+
+router.get("/auth/google/failure", failedGoogleAuthentication)
+
+
+
+export const googleAuthenticate = (req, res, next) => {
+  console.log("called")
+  passport.authenticate("google", { session: false }, async (err, user) => {
+    try {
+      if (err) {
+        throw err
+      }
+      const token = createToken(user._id, user.email)
+      // res.cookie("googleToken", token)
+      console.log(token)
+      res.redirect(`https://vibee.kromium.shop/login?googleToken=${token}`)
+    } catch (error) {
+      console.log(error)
+      return res.redirect(
+        "https://vibee.kromium.shop/login?authentication=failed"
+      )
+    }
+  })(req, res)
+}
+
+export const failedGoogleAuthentication = async (req, res) => {
+  res.redirect("https://vibee.kromium.shop/login?authentication=failed")
+}
+
+
+
+
+import passport from "passport"
+import { Strategy as GoogleStrategy } from "passport-google-oauth20"
+import userModel from "../model/User.js"
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "https://www1.kromium.shop/api/auth/google/callback",
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        const existing = await userModel.findOne({ googleId: profile.id })
+        if (existing) {
+          return done(null, existing, { message: "Logged in succesfully" })
+        }
+        const emailExisting = await userModel.findOne({
+          email: profile.emails[0].value,
+        })
+        if (emailExisting) return done({ message: "User already exists" })
+        const user = new userModel({
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          username: (profile.name.givenName + profile.id).toLowerCase(),
+          email: profile.emails[0].value,
+          profilePicture: profile.photos[0]?.value,
+          googleId: profile.id,
+          isVerified: true,
+        })
+        await user.save()
+        return done(null, user)
+      } catch (error) {
+        console.log(error)
+        done(error)
+      }
+    }
+  )
+)
+
+import passport from "passport"
+import { Strategy as JWTstrategy } from "passport-jwt"
+import { ExtractJwt } from "passport-jwt"
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: process.env.TOKEN_SECRET_KEY,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user)
+      } catch (error) {
+        done(error)
+      }
+    }
+  )
+)

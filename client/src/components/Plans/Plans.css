@@ -1,0 +1,120 @@
+.plancard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    /* background-color: #ffffff; */
+    background-image: url(https://t4.ftcdn.net/jpg/04/14/02/09/360_F_414020916_hrbXZVSgF6NbinmQs1CrZTVTRlDEyeqV.jpg);
+
+}
+
+.plancard .MuiCard-root {
+    box-shadow: 0 8px 40px -12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease-in-out;
+    border-radius: 1px;
+    margin: 0 25px;
+    background-color: #a9dd64;
+    border: 5px solid #ffffff;
+}
+
+.plancard .MuiCard-root:hover {
+    box-shadow: 0 16px 70px -12.125px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+    background-color: #fff;
+    border: 5px solid #88C13E;
+
+    /* color: #88C13E; */
+}
+
+/* .plancard .MuiCardMedia-root {
+    padding-top: '56.25%';
+} */
+
+.plancard .MuiCardContent-root {
+    text-align: 'left';
+    padding: '16px';
+}
+
+.plancard .MuiTypography--heading {
+    font-weight: 'bold';
+    
+}
+
+.plancard .MuiTypography--subheading {
+    line-height: 1.8;
+
+}
+
+.plancard .MuiCardActions-root {
+    display: 'flex';
+    justify-content: 'space-between';
+    text-align: 'center'
+}
+
+
+.btn-element-plan {
+    color: #fff;
+    background: transparent;
+    font-weight: 700;
+    font-family: var(--rubik-font);
+    letter-spacing: 0.35px;
+    border: 1px solid #88C13E;
+    background: #000000;
+    font-size: 14px;
+    margin-right: 120px;
+    border-radius: 15px;
+    padding: 6px 7px;
+    width: 200px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin-top: 0.25px;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s; }
+.btn-element-plan:hover {
+    background: #88C13E;
+    color: #000000;
+    border-color: #fff;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
+
+    .plancard .MuiTypography-body2 {
+        list-style-type: none;
+        padding: 20px;
+    }
+    
+    .plancard .MuiTypography-body2 li {
+        position: relative;
+        padding-left: 3.5em;
+        display: flex;
+    }
+    
+    .plancard .MuiTypography-body2 li:before {
+        content: '✔';
+        position: absolute;
+        left: 25px;
+        color: #88C13E;
+    }
+
+    
+    .h5 {
+        font-family: 'Arial', sans-serif;
+        font-size: 24px;
+        font-weight: bolder;
+        color: #393939;
+        text-transform: uppercase;
+        text-align: center;
+    }
+    
+    .subcard {
+        -webkit-transform: skewY(-4deg);
+        -ms-transform: skewY(-4deg);
+        transform: skewY(-4deg);
+        -webkit-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        position: relative;
+        border: 1px solid #464646;
+
+
+    }
