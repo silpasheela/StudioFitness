@@ -20,6 +20,8 @@ router.put('/verify-trainer/:id',auth.authenticateToken,auth.isAdmin,adminContro
 router.post('/add-service',auth.authenticateToken,auth.isAdmin,adminController.addService);
 router.get('/all-services',auth.authenticateToken,auth.isAdmin,adminController.getAllServices);
 router.put('/deactivate-service/:id',auth.authenticateToken,auth.isAdmin,adminController.deactivateService);
+router.post('/add-plan',auth.authenticateToken,auth.isAdmin,adminController.addPlan);
+
 
 
 

@@ -1,5 +1,6 @@
 const Admin = require('../models/adminModel');
 const User = require('../models/userModel');
+const Plan = require('../models/planModel')
 const Trainer = require('../models/trainerModel');
 const Service = require('../models/serviceModel');
 const {verifyPassword} = require('../utils/password');
@@ -438,6 +439,46 @@ const deactivateService = async (req, res) => {
 }
 
 
+
+const addPlan = async (req,res) => {
+
+    const {planName,planAmount} = req.body;
+    console.log("hey")
+    if(!planName || !planAmount ) {
+        console.log("hello")
+
+        return res.status(400).json({
+            message: 'Please fill out the required fields !'
+        })
+    }
+
+    try {
+        console.log("hemmm")
+
+        const exists = await Plan.findOne({planName:planName});
+        if(exists) {
+            return res.status(400).json({
+                message: 'Plan already exists !'
+            })
+        } else {
+            const plan = await Plan.create({
+                ...req.body,
+                // service,
+                isActive:true
+            })
+            return res.status(201).json({
+                plan: plan,
+                message: 'Plan added successfully'
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+} 
+
+
 module.exports = {
     adminLogIn,
     adminLogOut,
@@ -455,5 +496,6 @@ module.exports = {
     addService,
     getAllServices,
     deactivateService,
+    addPlan,
 
 }

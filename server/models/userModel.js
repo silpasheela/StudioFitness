@@ -53,23 +53,10 @@ const userSchema = mongoose.Schema({
     profilePicture: {
         type: String
     },
-    subscriptionDetails: [
-        {
-            subscribedPlan: {
-                type: String,
-                ref: "Plan"
-            },
-            startDate: {
-                type: Date
-            },
-            expiryDate: {
-                type: Date
-            },
-            isSubscriptionActive: {
-                type: Boolean
-            }
-        }
-    ],
+    subscriptionDetails: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subscription'
+    },
     role: {
         type: String,
         default: 'user'
@@ -98,6 +85,9 @@ const userSchema = mongoose.Schema({
     },
     bio: {
         type: String,
+    },
+    stripeCustomerId: {
+        type: String
     }
 
 

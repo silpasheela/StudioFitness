@@ -6,11 +6,30 @@ const getHashedPassword = async(password) => {
     return hashedPassword;
 }
 
-const verifyPassword = async(password,securedPassword) => {
+// const verifyPassword = async(password,securedPassword) => {
 
-    const isPasswordMatch = await bcrypt.compare(password,securedPassword);
-    return isPasswordMatch;
-}
+//     const isPasswordMatch = await bcrypt.compare(password,securedPassword);
+//     return isPasswordMatch;
+// }
+
+const verifyPassword = async(password, securedPassword) => {
+    try {
+        if (!password || !securedPassword) {
+            throw new Error('Both password and securedPassword must be provided');
+        }
+
+        const isPasswordMatch = await bcrypt.compare(password, securedPassword);
+
+        if (isPasswordMatch === undefined || isPasswordMatch === null) {
+            throw new Error('Error comparing passwords');
+        }
+
+        return isPasswordMatch;
+    } catch (error) {
+        console.error(error);
+        // handle error appropriately
+    }
+};
 
 module.exports = {
     getHashedPassword,

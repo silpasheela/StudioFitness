@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Trainer = require('../models/trainerModel');
+const Plan = require('../models/planModel');
 const {getHashedPassword,verifyPassword} = require('../utils/password');
 const {signUpValidation,loginValidation,userProfileUpdateValidation,profilePictureValidation} = require('../utils/validation');
 const {getToken, verifyToken} = require('../utils/token');
@@ -455,6 +456,55 @@ const userGetTrainer = async(req,res) => {
 }
 
 
+
+const getAllPlans = async(req,res) => {
+    
+    try {
+        const plans = await Plan.find({}, { planId: 0 });
+
+        if(plans.length > 0) {
+            return res.status(200).json({
+                plans,
+                message: `Plan details fetched successfully`
+            })
+        }
+        return res.status(404).json({
+            message:'No Plan data available!'
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+}
+
+
+const getPlanById = async(req,res) => {
+    const {id} = req.params;
+
+    console.log('myid',id)
+
+    try {
+        const plan = await Plan.findOne({_id:id});
+        console.log('user',plan);
+
+        if(plan) {
+            return res.status(200).json({
+                plan,
+                message: `Plan details fetched successfully`
+            })
+        } 
+        res.status(404).json({
+            message:`Plan with id ${id} doesn't exist!`
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+}
+
+
 module.exports = {
     userSignUp,
     userEmailVerification,
@@ -469,4 +519,6 @@ module.exports = {
     failedGoogleAuthentication,
     userGetAllTrainers,
     userGetTrainer,
+    getAllPlans,
+    getPlanById
 }

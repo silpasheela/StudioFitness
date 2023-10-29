@@ -1,38 +1,26 @@
-import React, { useEffect } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { setAuth } from "../app/features/Auth/authSlice"
-import Demos from '../components/demo/Demos'
-import jwt_decode from "jwt-decode";
+import React, { useEffect,useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import Demos from '../components/demo/Demos';
+import { viewAllPlans } from "../app/features/Data/dataSlice";
+import PlanDetails from "../components/PlanDetails.js/PlanDetails"
+import { Container, Grid } from '@mui/material';
+import {Typography} from "@mui/material";
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { uninterceptedApiInstance, instance } from "../api/axiosInstance";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = await loadStripe('pk_test_51O5jK5SFewJqLbl0um0DUGqSV4WRzkXPTe6ACi1ZKiCPXqEYAszxWJnBUUbFub24LDZWMDokTD8VoYYuZO53lUN200H4TGJMNG');
+
 
 
 function DemoModel() {
 
-  // const navigate = useNavigate()
-  // const dispatch = useDispatch()
-  // const [searchParams] = useSearchParams()
-  // const googleToken = searchParams.get("googleToken")
-  // const decodedToken = jwt_decode(googleToken);
-  // console.log(decodedToken);
 
-
-  // useEffect(() => {
-  //   console.log(googleToken)
-
-  //   if (googleToken) {
-  //     const user = {...decodedToken,token:googleToken}
-  //     console.log(user)
-  //     localStorage.setItem('user', JSON.stringify(user))
-
-  //     // localStorage.setItem('user',JSON.stringify(data?.user));
-
-  //     dispatch(setAuth())
-  //     navigate("/user/dashboard")
-  //   }
-  // }, [googleToken])
 
   return (
+    <Elements stripe={stripePromise}>
     <Demos/>
+    </Elements>
   )
 }
 

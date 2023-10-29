@@ -17,9 +17,10 @@ import DemoModel from './pages/DemoModel';
 import UserProfileEditPage from './pages/UserProfileEditPage';
 import TrainerProfileEdit from './components/TrainerProfileEdit/TrainerProfileEdit';
 import AdminServiceDataPage from './pages/AdminServiceDataPage';
-import TrainerView from './components/TrainerView/TrainerView';
 import ViewTrainersPage from './pages/ViewTrainersPage';
 import TrainerDetailsPage from './pages/TrainerDetailsPage';
+import PlanDetailsPage from './pages/PlanDetailsPage';
+import CheckoutPage from './pages/CheckoutPage';
 
 
 function App() {
@@ -46,11 +47,12 @@ function App() {
           <Route path='/admin/service/details' element={<AdminServiceDataPage/>}></Route>
           <Route path='/user/viewtrainers' element={<ViewTrainersPage/>}></Route>
           <Route path='/user/trainer/:id' element={<TrainerDetailsPage/>}></Route>
-
+          <Route path='/viewplandetails' element={<PlanDetailsPage/>}></Route>
+          <Route path='/user/checkout/:id' element={<CheckoutPage/>}></Route>
 
           {/* <Route path="*" element={<LandingPage />} /> */}
 
-          <Route path="/demo" element={<Demos />} />
+          <Route path="/demo" element={<DemoModel />} />
 
 
 
