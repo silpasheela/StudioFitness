@@ -5,7 +5,7 @@ import NavBar from '../components/NavBar/NavBar'
 function UserProfileEditPage() {
     return (
         <div className=''>
-            {/* <NavBar/> */}
+            <NavBar/>
             <UserProfileEdit/>
         </div>   
     )

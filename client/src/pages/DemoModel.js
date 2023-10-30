@@ -9,6 +9,8 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { uninterceptedApiInstance, instance } from "../api/axiosInstance";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import NavBar from "../components/NavBar/NavBar";
+import UserSideBar from "../components/UserSideBar/UserSideBar";
 const stripePromise = await loadStripe('pk_test_51O5jK5SFewJqLbl0um0DUGqSV4WRzkXPTe6ACi1ZKiCPXqEYAszxWJnBUUbFub24LDZWMDokTD8VoYYuZO53lUN200H4TGJMNG');
 
 
@@ -18,9 +20,11 @@ function DemoModel() {
 
 
   return (
-    <Elements stripe={stripePromise}>
+    <>
+    <NavBar/>
+    <UserSideBar/>
     <Demos/>
-    </Elements>
+    </>
   )
 }
 

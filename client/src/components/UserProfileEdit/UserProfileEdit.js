@@ -4,7 +4,6 @@ import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid, Input } from
 import { Avatar, Button, Card, CardActions, CardContent, Divider, CardHeader, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useNavigate } from 'react-router-dom';
-
 import { instance } from '../../api/axiosInstance';
 
 
@@ -184,7 +183,7 @@ function UserProfileEdit() {
 
 
     return (
-        <Stack>
+        <Stack sx={{marginTop:'4.5rem'}}>
         <Box
             component="main"
             sx={{
@@ -195,9 +194,11 @@ function UserProfileEdit() {
             <Container maxWidth="lg">
             <Stack spacing={3}>
                 <div>
-                <Typography variant="h4">
+                {/* <Typography variant="h4" 
+                // sx={{color:'#6EC72D'}}
+                >
                     Account Settings
-                </Typography>
+                </Typography> */}
                 </div>
                 <div>
                 <Grid
@@ -210,7 +211,9 @@ function UserProfileEdit() {
                     lg={4}
                     >
                     {/* <AccountProfile /> */}
-                    <Card >
+                    <Card 
+                    // sx={{backgroundColor:'#000',borderRadius:5}}
+                    >
                         <CardContent>
                         <Box
                             sx={{
@@ -260,6 +263,7 @@ function UserProfileEdit() {
                             </Typography>
                             <TextField
                                 fullWidth
+                                // sx={{color:'white', borderColor:'white'}}
                                 name="bio"
                                 onChange={(e) => setEditedUser({ ...editedUser, bio: e.target.value })}
                                 required
@@ -315,7 +319,7 @@ function UserProfileEdit() {
                                 >
                                 <TextField
                                     fullWidth
-                                    helperText="Please specify full name"
+                                    helperText="Name can't be edited"
                                     label="Full name"
                                     name="fullName"
                                     onChange={handleChange}
@@ -333,7 +337,7 @@ function UserProfileEdit() {
                                     name="dateOfBirth"
                                     onChange={handleChange}
                                     required
-                                    value={formData?.dateOfBirth}
+                                    value={new Date(formData?.dateOfBirth).toLocaleDateString()}
                                 />
                                 </Grid>
                                 <Grid

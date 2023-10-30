@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import './Footer.css';
 
@@ -10,46 +11,49 @@ import './Footer.css';
 
 function Footer() {
         return (
-        <div style={{ marginTop: 35 }}>
+        <div style={{ marginTop: 50 }}>
         <div className="footer">
             <div className="container1">
             <div className="column">
-                <h3>About Us</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod eros sed semper pharetra.</p>
+                <h2>About Us</h2>
+                <p style={{color:'#9F9F9F'}}>StudioFitness is one of Europe's largest specialist fitness retailers. We are proud to offer our customers the best selection of fitness equipment on the planet at the very best price and with the best service.</p>
             </div>
             <div className="column">
-                <h3>Further Info</h3>
+                <h2>Further Info</h2>
                 <ul className="footer-links">
-                <li><p>Home</p></li>
-                <li><p >Services</p></li>
-                <li><p>Trainers</p></li>
+                <li><p style={{color:'#9F9F9F'}}>Home</p></li>
+                <li><p style={{color:'#9F9F9F'}}>Services</p></li>
+                <li><p style={{color:'#9F9F9F'}}>Trainers</p></li>
                 </ul>
             </div>
             <div className="column">
-                <h3>Contact Us</h3>
-                <p>123 Main St, Anytown, USA</p>
-                <p>Email: info@studiofitness.com</p>
-                <p>Phone: (123) 456-7890</p>
+                <h2>Contact Us</h2>
+                <p style={{color:'#9F9F9F'}}>123 Main Street, Anytown, USA</p>
+                <p style={{color:'#9F9F9F'}}>Email: info@studiofitness.com</p>
+                <p style={{color:'#9F9F9F'}}>Phone: (123) 456-7890</p>
             </div>
             </div>
     
-            <div className="socialIcons">
-            <IconButton aria-label="Facebook" style={{color:'#fff'}}>
-                <FacebookIcon fontSize="large" />
+            <div className="socialIcons" style={{}}>
+            <IconButton fontSize='small' aria-label="Facebook" style={{color:'#3A559F',backgroundColor: '#fff',}}>
+                <FacebookIcon  />
             </IconButton>
-            <IconButton aria-label="Twitter" style={{color:'#fff'}}>
-                <TwitterIcon fontSize="large" />
+            <IconButton fontSize='small'aria-label="YouTube" style={{color:'#F70000',backgroundColor: '#fff',}}>
+                <YouTubeIcon  />
             </IconButton>
-            <IconButton aria-label="YouTube" style={{color:'#fff'}}>
-                <YouTubeIcon fontSize="large" />
+            <IconButton fontSize='small'aria-label="Twitter" style={{color:'#03A9F4',backgroundColor: '#fff',}}>
+                <TwitterIcon />
             </IconButton>
-            <IconButton aria-label="LinkedIn" style={{color:'#fff'}}>
-                <LinkedInIcon fontSize="large" />
+            <IconButton fontSize='small'aria-label="Instagram" style={{color:'#e95950',backgroundColor: '#fff',}}>
+                <InstagramIcon  />
+            </IconButton>
+            <IconButton fontSize='small'aria-label="LinkedIn" style={{color:'#0077B7',backgroundColor: '#fff',}}>
+                <LinkedInIcon  />
             </IconButton>
             </div>
     
-            <div className="copyRight">
-            © 2023 by Silpa Sreekumar. All rights reserved.
+            <div className="copyRight" style={{color:'#9F9F9F', fontSize:'12px'}}>
+            ©2023 by Silpa Sreekumar. All rights reserved.
             </div>
         </div>
         </div>

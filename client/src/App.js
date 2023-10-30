@@ -21,6 +21,8 @@ import ViewTrainersPage from './pages/ViewTrainersPage';
 import TrainerDetailsPage from './pages/TrainerDetailsPage';
 import PlanDetailsPage from './pages/PlanDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
+import UserSideBar from './components/UserSideBar/UserSideBar';
+import UserSubscriptionPage from './pages/UserSubscriptionPage';
 
 
 function App() {
@@ -49,10 +51,10 @@ function App() {
           <Route path='/user/trainer/:id' element={<TrainerDetailsPage/>}></Route>
           <Route path='/viewplandetails' element={<PlanDetailsPage/>}></Route>
           <Route path='/user/checkout/:id' element={<CheckoutPage/>}></Route>
-
+          <Route path='/user/subscription-details' element={<UserSubscriptionPage/>}></Route>
           {/* <Route path="*" element={<LandingPage />} /> */}
 
-          <Route path="/demo" element={<DemoModel />} />
+          {/* <Route path="/demo" element={<DemoModel />} /> */}
 
 
 

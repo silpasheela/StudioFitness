@@ -22,7 +22,7 @@ function LogIn() {
       if (googleToken) {
         const decodedToken = jwt_decode(googleToken);
         console.log(decodedToken);
-        const user = {...decodedToken,token:googleToken}
+        const user = {...decodedToken,role:'user',token:googleToken}
         console.log(user)
         localStorage.setItem('user', JSON.stringify(user))  
         dispatch(setAuth())

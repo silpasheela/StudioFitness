@@ -5,6 +5,7 @@ import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/materia
 import { instance } from '../../api/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewPlan } from '../../app/features/Data/dataSlice';
+import { updateAuth } from '../../app/features/Auth/authSlice';
 
 function Checkout() {
 
@@ -43,6 +44,7 @@ function Checkout() {
     
             if (response.status === 201) {
                 const data = response.data;
+                dispatch(updateAuth(data));
                 navigate('/user/dashboard');
                 console.log(data);
             } else {

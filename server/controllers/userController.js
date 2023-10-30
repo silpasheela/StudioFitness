@@ -100,7 +100,7 @@ const userSignIn = async(req,res) => {
 
     const {email,password} = req.body;
 
-    const userExists = await User.findOne({email:email});
+    const userExists = await User.findOne({email:email}).populate('subscriptionDetails');
 
     if(userExists) {
         const isPasswordMatch = await verifyPassword(password,userExists.password);
@@ -162,7 +162,8 @@ const googleAuthenticate = (req, res, next) => {
             if (err) {
             throw err
             }
-            const token = await getToken(user._id, user.email)
+            console.log("myuser",user?.user)
+            const token = await getToken(user?.user?._id, user?.user?.email)
             console.log(token)
 
             user.token=token;
@@ -184,6 +185,7 @@ const failedGoogleAuthentication = async (req, res) => {
 
 
 const userDashboard = async(req,res) => {
+    console.log(req._id)
     try {
         const userExists = await User.findOne({_id:req.userId},{password:0,email:0,role:0,subscriptionDetails:0,emailVerificationToken:0,isEmailVerified:0,resetPasswordToken:0,isActive:0,googleId:0,__v:0});
         // userExists.password = undefined;
@@ -201,6 +203,7 @@ const userDashboard = async(req,res) => {
         })
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: 'Internal server error'
         })

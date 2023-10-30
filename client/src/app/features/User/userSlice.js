@@ -1,5 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { instance, uninterceptedApiInstance } from "../../../api/axiosInstance";
+import { instance } from "../../../api/axiosInstance";
 import { baseURL } from "../../../constants/endpoints";
 
 const initialState = {
@@ -89,6 +89,24 @@ export const userGetTrainer = createAsyncThunk('user/userGetTrainer', async(id, 
 })
 
 
+//GET SUBSCRIPTION DETAILS BY USER
+
+export const userGetSubscriptionDetails = createAsyncThunk('user/userGetSubscriptionDetails', async(id, {rejectWithValue}) => {
+    console.log(id)
+    try {
+        const response = await instance.get(`user/subscription/${id}`, { withCredentials: true });
+        console.log(response.data)
+
+        if(response.status === 200) {
+            return response.data;
+        } else {
+            return rejectWithValue('Failed to fetch Subscription data');
+        }
+    } catch (error) {
+        return rejectWithValue('Network error');
+    }
+})
+
 
 
 const userSlice = createSlice({
@@ -149,6 +167,18 @@ const userSlice = createSlice({
             state.user = action.payload;
         })
         .addCase(userGetTrainer.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        })
+
+        .addCase(userGetSubscriptionDetails.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(userGetSubscriptionDetails.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+        })
+        .addCase(userGetSubscriptionDetails.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         })

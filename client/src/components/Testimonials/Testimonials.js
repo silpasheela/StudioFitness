@@ -9,9 +9,9 @@ function Testimonials() {
     return (
         <React.Fragment>
         <div className="section-title">
-        <h1 className="title">Our Client says</h1>
+        <h1 className="title" style={{fontStyle:'italic'}}>Our Client says</h1>
         </div>
-        <div className='clientcard' style={{display:'flex', justifyContent:'center'}}>
+        <div className='clientcard' style={{display:'flex', justifyContent:'center',marginTop:50}}>
             <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                     sx={{ height: 300 }}

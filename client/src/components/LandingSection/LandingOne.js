@@ -43,7 +43,7 @@ function LandingOne() {
             <div className="service-row">
                 <div className="">
                     <div className="section-title">
-                        <h1 className="title">Our Services</h1>
+                        <h1 className="title" style={{fontStyle:'italic'}}>Our Services</h1>
                     </div>
                 </div>
             </div>

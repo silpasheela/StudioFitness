@@ -7,28 +7,36 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 function Plans() {
 
     const navigate = useNavigate();
 
+    const authState = useSelector((state) => {
+        return state.auth.authState;
+    })
+
+    console.log("myauthstate",authState);
+
+
     const handleClick = () => {
-        navigate('/viewplandetails');
+        navigate(authState?.role === 'user' ? '/viewplandetails' : '/signup');
     };
 
 
     return (
         <React.Fragment>
         <div className="section-title" style={{alignItems:"center"}}>
-        <h1 className="title">Subscribe Now</h1>
+        <h1 className="title"  style={{fontStyle:'italic'}}>Subscribe Now</h1>
         </div>
         <div className='plancard' style={{display:'flex', }}>
             <Card className='subcard' sx={{ maxWidth: 345 , height:250 }}>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" className='h5'>
-                    Standard - Rs. 999/-
-                </Typography>
+                    <Typography gutterBottom variant="h5" component="div" className='h5' >
+                    Standard - ₹999/-
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
                     <li>Progress Tracking</li>
                     <li>Pre-recorded Classes</li>
@@ -44,8 +52,8 @@ function Plans() {
             <Card className='subcard' sx={{ maxWidth: 345,height:250 }}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div" className='h5'>
-                    Premium - Rs. 1999/-
-                </Typography>
+                    Premium - ₹1999/-
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
                     <li>Progress Tracking</li>
                     <li>Pre-recorded Classes</li>
@@ -64,8 +72,8 @@ function Plans() {
                 sx={{ 
                     marginTop:30,
                     marginRight:-15,
-                    backgroundColor: '#88C13E', 
-                    color: '#fff', 
+                    backgroundColor: '#fff', 
+                    color: '#88C13E', 
                     '&:hover': { backgroundColor: '#000',color: '#88C13E', },
                     padding: '10px 15px',
                     borderRadius: '20px',

@@ -17,10 +17,15 @@ const authSlice = createSlice({
 
         removeAuth: (state) => {
             state.authState = null  //actions
+        },
+
+        updateAuth: (state, action) => {
+            state.authState = {...state.authState,...action.payload}
+            console.log("state.authState",state.authState)
         }
     }
 })
 
 
 export default authSlice.reducer;
-export const {setAuth,removeAuth} = authSlice.actions;
+export const {setAuth,removeAuth,updateAuth} = authSlice.actions;

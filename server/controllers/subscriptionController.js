@@ -230,10 +230,12 @@ const getSubscription = async (req, res) => {
     
     const userId = req.params.userId; 
     try {
-        const subscription = await Subscription.findOne({
-            userId,
-            status: 'active',
-        }).populate('planId'); 
+        // const subscription = await Subscription.findOne({
+        //     userId,
+        //     status: 'active',
+        // }).populate('planId'); 
+
+        const subscription = await User.findOne({_id:userId}).populate('subscriptionDetails');
 
         if (!subscription) {
             return res.status(404).json({ message: 'No active subscription found for this user' });

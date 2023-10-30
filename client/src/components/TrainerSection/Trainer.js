@@ -11,21 +11,29 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 function Trainer() {
 
+    
     const navigate = useNavigate();
 
+    const authState = useSelector((state) => {
+        return state.auth.authState;
+    })
+
+    console.log("myauthstate",authState);
+
     const handleViewMoreClick = () => {
-        navigate('/viewtrainers');
+        navigate(authState?.role === 'user' ? '/user/viewtrainers' : '/signup');
     };
 
     return (
         <React.Fragment>
         <div className="section-title">
-        <h1 className="title">Our Trainers</h1>
+        <h1 className="title" style={{fontStyle:'italic'}}>Our Trainers</h1>
         </div>
         <div className='trainercard' style={{marginTop:50}}>
             <Card sx={{ maxWidth: 345,margin: 3  }}>
@@ -35,7 +43,7 @@ function Trainer() {
                     title=""
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder', color:'green'}}>
                     Malone Franklyn
                 </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -43,10 +51,23 @@ function Trainer() {
                     </Typography>
                 </CardContent>
                 <CardActions sx={{paddingLeft:14,marginBottom:2}}>
-                    <InstagramIcon/>
-                    <LinkedInIcon/>
-                    <TwitterIcon/>
-                    <EmailIcon/>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{color: '#0077B7', backgroundColor: '#ededed',  }}>
+                            <LinkedInIcon />
+                        </IconButton>
+                    </a>  
+
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{ color: '#e95950' , backgroundColor: '#ededed',   }}>
+                            <InstagramIcon />
+                        </IconButton>
+                    </a>  
+
+                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{color: '#03A9F4', backgroundColor: '#ededed',  }}>
+                            <TwitterIcon />
+                        </IconButton>
+                    </a>
                 </CardActions>
             </Card>
             
@@ -57,7 +78,7 @@ function Trainer() {
                     title=""
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder', color:'green'}}>
                     Trace Rudolph
                 </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -65,10 +86,23 @@ function Trainer() {
                     </Typography>
                 </CardContent>
                 <CardActions sx={{paddingLeft:14,marginBottom:2}}>
-                    <InstagramIcon/>
-                    <LinkedInIcon/>
-                    <TwitterIcon/>
-                    <EmailIcon/>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{color: '#0077B7', backgroundColor: '#ededed',  }}>
+                            <LinkedInIcon />
+                        </IconButton>
+                    </a>  
+
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{ color: '#e95950' , backgroundColor: '#ededed',   }}>
+                            <InstagramIcon />
+                        </IconButton>
+                    </a>  
+
+                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{color: '#03A9F4', backgroundColor: '#ededed',  }}>
+                            <TwitterIcon />
+                        </IconButton>
+                    </a>
                 </CardActions>
             </Card>
 
@@ -79,7 +113,7 @@ function Trainer() {
                     title=""
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'bolder', color:'green'}}>
                     Xander Reilly
                 </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -87,10 +121,25 @@ function Trainer() {
                     </Typography>
                 </CardContent>
                 <CardActions sx={{paddingLeft:14,marginBottom:2}}>
-                    <InstagramIcon/>
-                    <LinkedInIcon/>
-                    <TwitterIcon/>
-                    <EmailIcon/>
+
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{color: '#0077B7', backgroundColor: '#ededed',  }}>
+                            <LinkedInIcon />
+                        </IconButton>
+                    </a>  
+
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{ color: '#e95950' , backgroundColor: '#ededed',   }}>
+                            <InstagramIcon />
+                        </IconButton>
+                    </a>  
+
+                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                        <IconButton sx={{color: '#03A9F4', backgroundColor: '#ededed',  }}>
+                            <TwitterIcon />
+                        </IconButton>
+                    </a>
+                
                 </CardActions>
             </Card>
 
@@ -101,7 +150,7 @@ function Trainer() {
                     marginBottom: -50, 
                     marginRight:-15,
                     backgroundColor: '#88C13E', 
-                    color: '#fff', 
+                    color: '#000', 
                     '&:hover': { backgroundColor: '#000',color: '#88C13E', },
                     padding: '10px 15px',
                     borderRadius: '20px',
