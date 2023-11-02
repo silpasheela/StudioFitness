@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { toast } from 'react-toastify';
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/material";
@@ -20,6 +21,7 @@ function Checkout() {
 
     useEffect(() => {
         dispatch(viewPlan(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[dispatch])
 
     const planData = useSelector((state) => {
@@ -30,7 +32,7 @@ function Checkout() {
         return state.auth.authState;
     })
 
-    console.log(authState)
+    console.log("my",authState)
 
     console.log(planData)
 
@@ -45,16 +47,48 @@ function Checkout() {
             if (response.status === 201) {
                 const data = response.data;
                 dispatch(updateAuth(data));
+                toast.success('Subscribed successfully!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 navigate('/user/dashboard');
                 console.log(data);
             } else {
                 console.error("Subscription creation failed.");
+                toast.error('Subscription creation failed!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         } catch (error) {
             console.error("Error creating subscription:", error);
+            toast.error('User already have an active subscription!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     };
-    
+
+
+
+    //
+
+
         return (
             <div>
                 <Stack

@@ -28,6 +28,7 @@ router.get('/trainer/:id',auth.authenticateToken,auth.isUser,userController.user
 router.post('/create-subscription', auth.authenticateToken,auth.isUser,subscriptionController.createSubscription);
 router.get('/subscription/:userId',auth.authenticateToken,auth.isUser,subscriptionController.getSubscription);
 router.put('/subscription/cancel/:userId',auth.authenticateToken,auth.isUser,subscriptionController.cancelSubscription);
+// router.put('/subscriptions/:userId/update', auth.authenticateToken,auth.isUser,subscriptionController.updateSubscription);
 router.get('/view-plans',userController.getAllPlans);
 router.get('/plan/:id',userController.getPlanById);
 

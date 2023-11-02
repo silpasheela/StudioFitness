@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {  } from 'react'
 import TrainerDetailedView from '../components/TrainerView/TrainerDetailedView';
 import NavBar from '../components/NavBar/NavBar';
 

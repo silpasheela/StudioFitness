@@ -831,3 +831,607 @@ const rows = useSelector(state => state.admin?.users?.services);
     //     return genderFilter.includes(trainer.gender);
     //     // return genderFilter.includes(trainer.gender) && (trainer.fullName.toLowerCase().includes(searchTerm.toLowerCase()) || trainer.service.toLowerCase().includes(searchTerm.toLowerCase()));
     // });
+
+
+
+
+
+
+
+//profile edit - user
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     let isValid = true;
+
+    //     console.log(formData)
+
+    //     if(!validateMobile(formData.mobileNumber)) {
+    //         errorData.mobileNumber = "Invalid mobile number";
+    //         isValid = false;
+    //     }
+
+    //     if(!validateAge(formData.age)) {
+    //         errorData.age = "Invalid Age";
+    //         isValid = false;
+    //     }
+
+    //     if(!validateHeight(formData.height)) {
+    //         errorData.height = "Invalid Height";
+    //         isValid = false;
+    //     }
+
+    //     if(!validateWeight(formData.weight)) {
+    //         errorData.weight = "Invalid Weight";
+    //         isValid = false;
+    //     }
+
+    //     setFormErrors(errorData);
+
+    //     if(isValid) {
+    //         try {
+    //             const {data} = await instance.put(`user/editprofile/${userId}`,formData);
+    //             console.log(data)
+    //             setFormData({...data?.user,_id:undefined})
+    //             toast.success('Profile updated successfully!', {
+    //                 position: "top-right",
+    //                 autoClose: 5000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //             });
+    //             navigate('/user/dashboard');
+    //         } catch (error) {
+    //             console.log(error); 
+    //             toast.success('Profile updated successfully!', {
+    //                 position: "top-right",
+    //                 autoClose: 5000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //             });
+    //         }
+    //     }
+
+    // };
+
+
+
+    
+const pages = ['Home','Services','Trainers','Contact'];
+const settings = ['Account','Logout'];
+
+function NavBar() {
+const [anchorElNav, setAnchorElNav] = useState(null)
+const [anchorElUser, setAnchorElUser] = useState(null)
+
+const navigate = useNavigate();
+
+const authState = useSelector((state) => {
+return state.auth.authState;
+})
+
+const handleOpenNavMenu = (event) => {
+setAnchorElNav(event.currentTarget);
+};
+const handleOpenUserMenu = (event) => {
+setAnchorElUser(event.currentTarget);
+};
+
+const handleCloseNavMenu = () => {
+setAnchorElNav(null);
+};
+
+const handleCloseUserMenu = () => {
+setAnchorElUser(null);
+};
+
+const handleLoginClick = () => {
+navigate('/login'); 
+};
+
+const handleAccountSettings = () => {
+navigate(`/${authState.role}/editprofile`); 
+};
+
+const dispatch = useDispatch();
+
+const handleLogout = () => {
+// dispatch(adminLogout());
+
+localStorage.removeItem('user')
+dispatch(removeAuth());
+navigate('/login')
+}
+
+return (
+<AppBar  sx={{ backgroundColor: '#000' }}>
+<Container maxWidth="xl">
+<Toolbar disableGutters>
+<div>
+<img className='logo' alt="logo" src="https://res.cloudinary.com/djd2rpgil/image/upload/f_auto,q_auto/ynhwgl1co8ww4vnlvitn"  />
+</div>
+    <Typography
+        variant="h6" noWrap component="a"
+    ></Typography>
+<Box>
+<IconButton
+size="large"
+aria-controls="menu-appbar"
+aria-haspopup="true"
+onClick={handleOpenNavMenu}
+>
+<MenuIcon />
+</IconButton>
+<Menu
+id="menu-appbar"
+anchorEl={anchorElNav}
+anchorOrigin={{
+vertical: 'bottom',
+horizontal: 'left',
+}}
+keepMounted
+transformOrigin={{
+vertical: 'top',
+horizontal: 'left',
+}}
+open={Boolean(anchorElNav)}
+onClose={handleCloseNavMenu}
+>
+{pages.map((page) => (
+<MenuItem key={page} onClick={handleCloseNavMenu}>
+    <Typography textAlign="center">{page}</Typography>
+</MenuItem>
+))}
+</Menu>
+</Box>
+<Typography
+variant="h5"
+noWrap
+component="a"
+> 
+</Typography>
+<Box>
+{pages.map((page) => (
+<Button
+key={page}
+onClick={handleCloseNavMenu}
+, }}
+>
+{page}
+</Button>
+))}
+</Box>
+<Box sx={{ flexGrow: 0 }}>
+{authState ? (
+<>
+<Tooltip title="Open settings">
+<IconButton onClick={handleOpenUserMenu}>
+    <Avatar alt="Remy Sharp" src={authState?.profilePicture} />
+</IconButton>
+</Tooltip>
+<Menu
+sx={{ mt: '45px' }}
+id="menu-appbar"
+anchorEl={anchorElUser}
+anchorOrigin={{
+vertical: 'top',
+horizontal: 'right',
+}}
+keepMounted
+transformOrigin={{
+vertical: 'top',
+horizontal: 'right',
+}}
+open={Boolean(anchorElUser)}
+onClose={handleCloseUserMenu}
+>
+{settings.map((setting) => (
+<MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleAccountSettings}>
+    <Typography textAlign="center">{setting}</Typography>
+</MenuItem>
+))}
+</Menu>
+</>
+) : (
+<Button 
+className='login-button-nav' 
+endIcon={<LockIcon />}
+onClick={handleLoginClick}
+>
+Login
+</Button>
+)}
+</Box>
+</Toolbar>
+</Container>
+</AppBar>
+);
+}
+
+
+export default NavBar
+
+
+
+
+
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+
+[`&.${tableCellClasses.head}`]: {
+backgroundColor: theme.palette.common.black,
+color: theme.palette.common.white,
+},
+[`&.${tableCellClasses.body}`]: {
+fontSize: 14,
+},
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+
+'&:nth-of-type(odd)': {
+backgroundColor: theme.palette.action.hover,
+},
+'&:last-child td, &:last-child th': {
+border: 0,
+},
+}));
+
+
+const IOSSwitch = styled((props) => (
+<Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+width: 42,
+height: 26,
+padding: 0,
+'& .MuiSwitch-switchBase': {
+padding: 0,
+margin: 2,
+transitionDuration: '300ms',
+'&.Mui-checked': {
+transform: 'translateX(16px)',
+color: '#fff',
+'& + .MuiSwitch-track': {
+backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
+opacity: 1,
+border: 0,
+},
+'&.Mui-disabled + .MuiSwitch-track': {
+opacity: 0.5,
+},
+},
+'&.Mui-focusVisible .MuiSwitch-thumb': {
+color: '#33cf4d',
+border: '6px solid #fff',
+},
+'&.Mui-disabled .MuiSwitch-thumb': {
+color:
+theme.palette.mode === 'light'
+? theme.palette.grey[100]
+: theme.palette.grey[600],
+},
+'&.Mui-disabled + .MuiSwitch-track': {
+opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+},
+},
+'& .MuiSwitch-thumb': {
+boxSizing: 'border-box',
+width: 22,
+height: 22,
+},
+'& .MuiSwitch-track': {
+borderRadius: 26 / 2,
+backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+opacity: 1,
+transition: theme.transitions.create(['background-color'], {
+duration: 500,
+}),
+},
+}));
+
+const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}) => {
+
+
+const [page, setPage] = useState(0);
+const [rowsPerPage, setRowsPerPage] = useState(5);
+
+const handleChangePage = (event, newPage) => {
+setPage(newPage);
+};
+
+const handleChangeRowsPerPage = (event) => {
+setRowsPerPage(parseInt(event.target.value, 10));
+setPage(0);
+};
+
+const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableContent?.length - page * rowsPerPage);
+
+return (
+<div
+style={{
+display: 'flex',
+justifyContent: 'center',
+alignItems: 'center',
+flexDirection: 'column',
+height: '75vh',
+}}
+>
+<Typography variant="h4" gutterBottom>
+{tableTitle}
+</Typography>
+<TableContainer component={Paper} style={{ maxWidth: 800 ,  }}>
+<Table sx={{ minWidth: 700 }} aria-label="customized table">
+{/* table headings */}
+<TableHead>
+<TableRow>
+{tableHead.map((column) => (
+    <StyledTableCell key={column.id}>{column.label}</StyledTableCell>
+))}
+</TableRow>
+</TableHead>
+
+<TableBody>
+{(rowsPerPage > 0
+? tableContent?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+: tableContent
+)?.map((row,index) => (
+<StyledTableRow key={index}>
+<StyledTableCell component="th" scope="row">
+{row?.fullName}
+</StyledTableCell>
+<StyledTableCell align="left">{row?.email}</StyledTableCell>
+<StyledTableCell align="left">{row?.gender}</StyledTableCell>
+<StyledTableCell align="left">
+<span style={{ color: row?.isActive ? 'green' : 'red' }}>
+{row?.isActive ? 'ACTIVE' : 'INACTIVE'}
+</span>
+</StyledTableCell>
+<StyledTableCell align="left">
+<Grid container alignItems="center">
+<Grid item>
+<Button variant="outlined" size="small" onClick={() => handleOpen(row)}>{<VisibilityOutlinedIcon />}</Button>
+</Grid>
+<Grid item sx={{ml:2}}>
+<FormGroup>
+<FormControlLabel
+control={<IOSSwitch sx={{ m: 1 }} 
+checked={row?.isActive}
+onChange={() => {handleBlocking(row._id)}} />}
+label=""
+/>
+</FormGroup>
+</Grid>
+</Grid>
+</StyledTableCell>
+
+</StyledTableRow>
+))}
+
+{emptyRows > 0 && (
+<TableRow style={{ height: 53 * emptyRows }}>
+<StyledTableCell colSpan={6} />
+</TableRow>
+)}
+</TableBody>
+</Table>
+<TablePagination
+rowsPerPageOptions={[5, 10, 25]}
+component="div"
+count={tableContent?.length}
+rowsPerPage={rowsPerPage}
+page={page}
+onPageChange={handleChangePage}
+onRowsPerPageChange={handleChangeRowsPerPage}
+/>
+</TableContainer>
+</div>
+);
+};
+
+export default DataTable;
+
+
+
+
+
+function Checkout() {
+
+const navigate = useNavigate();
+
+const date = new Date();
+const formattedDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+
+const { id } = useParams();
+
+const dispatch = useDispatch();
+
+useEffect(() => {
+dispatch(viewPlan(id));
+},[dispatch])
+
+const planData = useSelector((state) => {
+return state.data.data.plan
+})
+
+const authState = useSelector((state) => {
+return state.auth.authState;
+})
+
+console.log(authState)
+
+console.log(planData)
+
+const onToken = async (token) => {
+try {
+const response = await instance.post("user/create-subscription", {
+planId: `${planData.planId}`, 
+token: token.id,
+userId: `${authState._id}`, 
+});
+
+if (response.status === 201) {
+const data = response.data;
+dispatch(updateAuth(data));
+toast.success('Subscribed successfully!', {
+position: "top-right",
+autoClose: 5000,
+});
+navigate('/user/dashboard');
+console.log(data);
+} else {
+toast.error('Subscription creation failed!', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+});
+}
+} catch (error) {
+console.error("Error creating subscription:", error);
+toast.error('User already have an active subscription!', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+});
+}
+};
+return (
+<div>
+<Stack
+direction= { 'row'}
+spacing={5}
+sx={{
+  marginTop: '10rem',
+  padding: '2rem'
+}}>
+<Box>
+<Typography
+    variant='h4'>
+    Booking Info
+</Typography>
+<Stack direction= 'column' spacing={3} padding= '0 3.5rem'>
+<TextField
+    id="fullName"
+    label="Full name"
+    variant="outlined"
+    value={authState?.fullName}
+/>
+<TextField
+    id="email"
+    label="Email"
+    variant="outlined"
+    value={authState?.email}
+/>
+<TextField
+    id="phone"
+    label="Phone"
+    variant="outlined"
+    value={authState?.mobileNumber}
+/>
+<TextField
+    id="planName"
+    // label="Plan Name"
+    variant="outlined"
+    value={planData?.planName}
+/>
+</Stack>
+</Box>
+<Box>
+<Typography variant='h4' padding= '1rem' >Booking Summary</Typography>
+<Divider />
+<Stack padding='.8rem' direction='row' spacing={2}>
+<Box padding= '.3rem 0rem'>
+  <Typography
+      variant='subtitle1' 
+  >
+
+  </Typography>
+</Box>
+</Stack>
+<Box sx={{
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '.4rem 1.5rem'
+}}>
+<Typography
+  sx={{
+      fontSize: '1rem',
+      letterSpacing: '.05rem'
+  }}
+>
+  Date
+</Typography>
+<Typography  sx={{
+      fontSize: '1rem',
+      letterSpacing: '.05rem'
+}}>
+{formattedDate}
+</Typography>
+</Box>
+<Box>
+<Typography
+>
+  Plan
+</Typography>
+<Typography >
+{planData?.planName}
+</Typography>
+</Box>
+<Box>
+<Typography
+>
+  Validity
+</Typography>
+<Typography >
+1 Month
+</Typography>
+</Box>
+<Box >
+<Typography
+>
+  Amount
+</Typography>
+<Typography >
+Rs. {planData?.planAmount} /-
+</Typography>
+</Box>
+
+<Divider />
+<Box >
+<Typography
+>
+  Total
+</Typography>
+<Typography  >
+Rs. {planData?.planAmount} /-
+</Typography>
+</Box>
+<StripeCheckout
+stripeKey={process.env.REACT_APP_STRIPE_KEY}
+token={onToken}
+name="StudioFitness"
+description="Subscription Payment"
+amount={`${planData?.planAmount*100}`}
+currency="inr"
+/>
+</Box>
+</Stack>
+<Button onClick={()=> navigate('/viewplandetails')} 
+>Go Back</Button>
+</div>
+);
+}
+
+export default Checkout

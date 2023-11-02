@@ -26,26 +26,51 @@ const authenticateToken = (req,res,next) => {
     }
 }
 
-const isUser = async(req,res,next) => {
+// const isUser = async(req,res,next) => {
+//     try {
+//         // console.log("hei",req._id)
+//         const {email} = req.body
+//         // console.log("heyy",req.headers)
+//         // console.log(req.userId)
+//         const user = await User.findOne({ $or: [{ email: email }, { _id: req.userId }] });
+//         // console.log("hellooo",user)
+//         if(user.isActive) {
+//             next();
+//         }
+//         else {
+//             return res.status(400).json({
+//                 message: "You are not authorized to access this resource"
+//             })
+//         }
+//     } catch (error) {
+//         return res.status(500).json({
+//             message: "Internal Server error"
+//         })
+//     }
+// }
+
+const isUser = async (req, res, next) => {
     try {
-        // console.log("hei",req._id)
-        const {email} = req.body
-        // console.log("heyy",req.headers)
-        // console.log(req.userId)
+        const { email } = req.body;
         const user = await User.findOne({ $or: [{ email: email }, { _id: req.userId }] });
-        // console.log("hellooo",user)
-        if(user.isActive) {
-            next();
-        }
-        else {
-            return res.status(400).json({
-                message: "You are not authorized to access this resource"
-            })
+
+        if (user) {
+            if (user.isActive) {
+                next();
+            } else {
+                return res.status(400).json({
+                    message: "You are not authorized to access this resource"
+                });
+            }
+        } else {
+            return res.status(404).json({
+                message: "Invalid user credentials!"
+            });
         }
     } catch (error) {
         return res.status(500).json({
             message: "Internal Server error"
-        })
+        });
     }
 }
 
@@ -58,7 +83,7 @@ const isAdmin = async(req,res,next) => {
         }
         else {
             return res.status(400).json({
-                message: "You are not authorized to access this resource"
+                message: "Your account has been temporarily suspended!"
             })
         }
     } catch (error) {
@@ -68,22 +93,48 @@ const isAdmin = async(req,res,next) => {
     }
 }
 
-const isTrainer = async(req,res,next) => {
+// const isTrainer = async(req,res,next) => {
+//     try {
+//         const {email} = req.body;
+//         const trainer = await Trainer.findOne({ $or: [{ email: email }, { _id: req.userId }] });
+//         if(trainer.isActive) {
+//             next();
+//         }
+//         else {
+//             return res.status(400).json({
+//                 message: "You are not authorized to access this resource"
+//             })
+//         }
+//     } catch (error) {
+//         return res.status(500).json({
+//             message: "Internal Server error"
+//         })
+//     }
+// }
+
+
+const isTrainer = async (req, res, next) => {
     try {
-        const {email} = req.body;
+        const { email } = req.body;
         const trainer = await Trainer.findOne({ $or: [{ email: email }, { _id: req.userId }] });
-        if(trainer.isActive) {
-            next();
-        }
-        else {
-            return res.status(400).json({
-                message: "You are not authorized to access this resource"
-            })
+
+        if (trainer) {
+            if (trainer.isActive) {
+                next();
+            } else {
+                return res.status(400).json({
+                    message: "Your account has been temporarily suspended!"
+                });
+            }
+        } else {
+            return res.status(404).json({
+                message: "Invalid trainer credentials!"
+            });
         }
     } catch (error) {
         return res.status(500).json({
             message: "Internal Server error"
-        })
+        });
     }
 }
 

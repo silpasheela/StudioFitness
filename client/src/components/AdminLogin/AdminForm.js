@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from "@mui/material/Grid";
 import { Typography, Button } from '@mui/material';
-import { instance,uninterceptedApiInstance } from '../../api/axiosInstance';
+import { uninterceptedApiInstance } from '../../api/axiosInstance';
 import { setAuth } from '../../app/features/Auth/authSlice';
 
 

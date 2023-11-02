@@ -1,8 +1,11 @@
 import React from 'react'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { toast } from 'react-toastify';
 import { Box, Unstable_Grid2 as Grid,  } from '@mui/material';
 import {  Button, Card, CardActions, CardContent, Divider, CardHeader, TextField, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { instance } from '../../api/axiosInstance';
 
 function UserSubscription() {
@@ -16,14 +19,74 @@ function UserSubscription() {
     console.log("subsauth",subscriptionData)
 
 
+    // const handleCancelSubscription = async (e) => {
+    //     try {
+    //         const response = await instance.put(`user/subscription/cancel/${subscriptionData._id}`);
+    //         console.log(response);
+    //         toast.success('Cancellation successful!', {
+    //             position: "top-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //         });
+    //     } catch (error) {
+    //         console.log(error)
+    //         toast.error('Cancellation failed!', {
+    //             position: "top-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //         });
+    //     }
+    // }
+
     const handleCancelSubscription = async (e) => {
-        try {
-            const response = await instance.put(`user/subscription/cancel/${subscriptionData._id}`);
-            console.log(response);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+        confirmAlert({
+            title: 'Confirm to cancel',
+            message: 'Are you sure you want to cancel your subscription?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: async () => {
+                        try {
+                            const response = await instance.put(`user/subscription/cancel/${subscriptionData._id}`);
+                            console.log(response);
+                            toast.success('Cancellation successful!', {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        } catch (error) {
+                            console.log(error)
+                            toast.error('No active Subscription available!', {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        }
+                    }
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        });
+    };
+    
 
     return (
         <Grid
@@ -34,7 +97,6 @@ function UserSubscription() {
         >
             <Card sx={{width:'125vh',borderColor:'green', border:'1px solid'}}>
             <CardHeader
-                subheader="The information can be edited"
                 title="Subscription Details"
             />
             <CardContent sx={{ pt: 0, paddingLeft:5, paddingRight:5 }}>

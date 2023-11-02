@@ -360,8 +360,57 @@ const createSubscription = async (req, res) => {
 };
 
 
+// const updateSubscription = async (req, res) => {
+//     const userId = req.params.userId;
+//     const { newPlanId, token } = req.body; // Assuming you receive the new plan ID and payment token from the frontend.
+
+//     try {
+//         const user = await User.findById(userId);
+
+//         // Check if the user has an active subscription
+//         const activeSubscription = await Subscription.findOne({
+//             userId: userId,
+//             status: 'active',
+//         });
+
+//         if (!activeSubscription) {
+//             return res.status(400).json({ message: 'No active subscription found for this user.' });
+//         }
+
+//         // Fetch the new plan details
+//         const newPlan = await Plan.findOne({ planId: newPlanId });
+
+//         if (!newPlan) {
+//             return res.status(400).json({ message: 'Invalid new plan type.' });
+//         }
+
+//         // Update the subscription in Stripe
+//         await stripe.subscriptions.update(activeSubscription.subscriptionId, {
+//             items: [
+//                 {
+//                     id: activeSubscription.subscriptionItemId, // Use the subscription item ID from the original subscription
+//                     price: newPlan.planId, // Use the new plan ID
+//                 },
+//             ],
+//             default_payment_method: token, // Use the new payment method from the frontend
+//         });
+
+//         // Update the subscription details in your database
+//         activeSubscription.planId = newPlan._id;
+//         activeSubscription.amount = newPlan.planAmount;
+//         await activeSubscription.save();
+
+//         res.status(200).json({ message: 'Subscription successfully updated.' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Failed to update the subscription.' });
+//     }
+// };
+
+
 module.exports = {
     createSubscription,
     getSubscription,
     cancelSubscription,
+    // updateSubscription
 }

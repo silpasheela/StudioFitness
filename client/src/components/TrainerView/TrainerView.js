@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Link } from 'react-router-dom';
 
 function TrainerView({trainer}) {
 

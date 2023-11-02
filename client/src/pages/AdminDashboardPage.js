@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 import AdminSideBar from '../components/AdminSideBar/AdminSideBar'
 
 function AdminDashboardPage() {

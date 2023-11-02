@@ -1,4 +1,6 @@
 import {useEffect, useState} from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -75,12 +77,33 @@ function AdminUserData() {
 
     const tableContent = rows;
 
-    const handleBlocking = (id) => {
+    // const handleBlocking = (id) => {
 
-        dispatch(adminBlockUnblockUser(id)).then(() => {
-            dispatch(adminGetAllUsers());
-        })
-    }
+    //     dispatch(adminBlockUnblockUser(id)).then(() => {
+    //         dispatch(adminGetAllUsers());
+    //     })
+    // }
+
+    const handleBlocking = (id) => {
+        confirmAlert({
+            title: 'Confirmation',
+            message: 'Are you sure you want to proceed with this action?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        dispatch(adminBlockUnblockUser(id)).then(() => {
+                            dispatch(adminGetAllUsers());
+                        })
+                    }
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        });
+    };
+    
 
     const userTableProps = {
         tableHead,

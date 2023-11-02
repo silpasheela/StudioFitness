@@ -23,7 +23,7 @@ import { removeAuth } from '../../app/features/Auth/authSlice';
 
 
 const pages = ['Home','Services','Trainers','Contact'];
-const settings = ['Account','Logout'];
+const settings = ['Dashboard','Logout'];
 
 function NavBar() {
     const [anchorElNav, setAnchorElNav] = useState(null)
@@ -35,6 +35,7 @@ function NavBar() {
         return state.auth.authState;
     })
 
+    console.log("up",authState)
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -43,9 +44,46 @@ function NavBar() {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
+    // const handleCloseNavMenu = () => {
+    //     setAnchorElNav(null);
+    // };
+
+    const handleCloseNavMenu = (page) => {
         setAnchorElNav(null);
+        switch(page) {
+
+            case 'Home' :
+                navigate('/');
+                break;
+
+            case 'Services':
+                if (authState?.role === 'user') {
+                    if (authState?.subscriptionDetails?.status === 'active') {
+                        navigate('/user/subscription-details');
+                    } else if (authState?.subscriptionDetails?.status === 'canceled' || !authState?.subscriptionDetails?.status) {
+                        navigate('/viewplandetails');
+                    }
+                } else if(authState?.role === 'trainer'){
+                    navigate('/');
+                }
+                else{
+                    navigate('/login');
+                }
+                break;
+
+            case 'Trainers':
+                if (authState?.role === 'user') {
+                    navigate('/user/viewtrainers');
+                } else {
+                    navigate('/')
+                }
+                break;
+            // Add more cases as needed
+            default:
+                break;
+        }
     };
+    
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -55,9 +93,9 @@ function NavBar() {
         navigate('/login'); 
     };
 
-    const handleAccountSettings = () => {
+    const handleDashboard = () => {
         console.log("hyyyyyyy",authState)
-        navigate(`/${authState.role}/editprofile`); 
+        navigate(`/${authState.role}/dashboard`); 
     };
 
     const dispatch = useDispatch();
@@ -77,12 +115,6 @@ function NavBar() {
         <AppBar  sx={{ backgroundColor: '#000' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-                    {/* <img
-                        src=""
-                        alt="Your Image Icon Alt Text"
-                        style={{ display: { xs: 'none', md: 'flex' }, marginRight: '1rem' }}
-                    /> */}
                     <div>
                     <img className='logo' alt="logo" src="https://res.cloudinary.com/djd2rpgil/image/upload/f_auto,q_auto/ynhwgl1co8ww4vnlvitn"  />
                     </div>
@@ -131,8 +163,14 @@ function NavBar() {
                     display: { xs: 'block', md: 'none' },
                 }}
             >
-                {pages.map((page) => (
+                {/* {pages.map((page) => (
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
+                        <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                ))} */}
+
+                {pages.map((page) => (
+                    <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
                         <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
                 ))}
@@ -160,7 +198,8 @@ function NavBar() {
                 {pages.map((page) => (
                 <Button
                     key={page}
-                    onClick={handleCloseNavMenu}
+                    // onClick={handleCloseNavMenu}
+                    onClick={()=>handleCloseNavMenu(page)}
                     sx={{ my: 2, color: '#6B6B6B', display: 'block',
                     '&:hover': {
                     color: '#88C13E', // Change text color to #88C13E on hover
@@ -176,7 +215,7 @@ function NavBar() {
                 <>
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="Remy Sharp" src={authState.profilePicture} />
+                        <Avatar alt="Remy Sharp" src={authState?.profilePicture} />
                     </IconButton>
                 </Tooltip>
             <Menu
@@ -196,7 +235,7 @@ function NavBar() {
                 onClose={handleCloseUserMenu}
             >
                 {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleAccountSettings}>
+                    <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleDashboard}>
                         <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
                 ))}

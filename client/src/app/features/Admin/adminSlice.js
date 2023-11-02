@@ -90,7 +90,7 @@ export const adminGetAllTrainers = createAsyncThunk('admin/getAllTrainers', asyn
 
 export const adminBlockUnblockUser = createAsyncThunk('admin/blockUnblockUser', async(id, { rejectWithValue }) => {
     try {
-        const response = await instance.put(`${baseURL}admin/block-user/${id}`, { withCredentials: true });
+        const response = await instance.put(`admin/block-user/${id}`, { withCredentials: true });
         if (response.status === 200) {
             // console.log("im from adminslice",response.data)
             return response.data;

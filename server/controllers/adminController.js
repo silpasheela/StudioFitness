@@ -229,7 +229,9 @@ const blockUser = async(req,res) => {
     console.log(id)
     try {
         const user = await User.findOne({_id:id});
+        console.log("myuser",user.isActiveUser)
         user.isActive = !user.isActive;
+
         await user.save();
 
         console.log(user)
@@ -238,6 +240,7 @@ const blockUser = async(req,res) => {
             message: 'User status updated successfully'
         })
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: 'Internal server error'
         })
@@ -258,6 +261,7 @@ const searchTrainer = async(req,res) => {
             trainer
         })
     } catch (error) {
+        console.log(error);
         res.status(404).json({
             message: 'No trainer found'
         })

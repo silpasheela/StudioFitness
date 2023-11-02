@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
-import {instance,uninterceptedApiInstance} from '../../api/axiosInstance'
+import { toast } from 'react-toastify';
+import {uninterceptedApiInstance} from '../../api/axiosInstance'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from "@mui/material/Grid";
@@ -43,6 +44,7 @@ function Form({formType}) {
         confirmPassword: ''
     })
 
+    // eslint-disable-next-line no-unused-vars
     const [error, setError] = useState(null);
 
     let errorData = { email: "", password: "", name: "", mobileNumber: "", confirmPassword: "" };
@@ -58,6 +60,7 @@ function Form({formType}) {
         if (status === "failed") {
             setError("Google authentication failed")
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])   
 
 
@@ -161,6 +164,17 @@ function Form({formType}) {
                     const {response} = error;
                     console.log(response)
                     setError(response?.data?.message);
+
+                    toast.error(response?.data?.message, {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        
+                    });
                 }
             } else {
                 try {
@@ -174,6 +188,16 @@ function Form({formType}) {
                     const {response} = error;
                     console.log(response);
                     setError(response?.data?.message);
+
+                    toast.error(response?.data?.message, {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                 }
             }
         }
@@ -408,7 +432,7 @@ function Form({formType}) {
                     </Typography>
                 </Box>
             </Box>
-                {error && (
+                {/* {error && (
                     <Typography
                         sx={{
                             marginLeft: "2rem",
@@ -417,7 +441,7 @@ function Form({formType}) {
                         }}>
                         {error}
                     </Typography>
-                )}
+                )} */}
             </Grid>
         </Grid>
     );

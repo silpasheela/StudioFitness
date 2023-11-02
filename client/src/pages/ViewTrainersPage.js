@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import TrainerView from '../components/TrainerView/TrainerView';
 import { useDispatch, useSelector } from 'react-redux';
-import { viewAllTrainers } from '../app/features/Data/dataSlice';
 import Checkbox from '@mui/material/Checkbox';
 import { userViewAllTrainers } from '../app/features/User/userSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton, TextField, Typography } from '@mui/material';
-import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+import { TextField, } from '@mui/material';
 import NavBar from '../components/NavBar/NavBar';
+import NoTrainerAvailable from '../components/Shared/NoTrainerAvailable';
+import Loading from '../components/Shared/Loading';
 
 function ViewTrainersPage() {
     const dispatch = useDispatch();
@@ -49,7 +49,8 @@ function ViewTrainersPage() {
     console.log(trainers)
 
     if (!trainers) {
-        return <p>Loading...</p>;
+        // return <p>Loading...</p>;
+        return <Loading/>
     }
 
 
@@ -181,12 +182,7 @@ function ViewTrainersPage() {
             ))
             ) : (
             <>
-            <Typography variant="h3" sx={{marginTop:'50vh',}}>
-            {/* <IconButton sx={{ color: '#000' , fontSize:400}}>
-                <NoAccountsIcon />
-            </IconButton> */}
-            No trainers available.
-            </Typography>
+            <NoTrainerAvailable/>
             </>
             )}
         </div>

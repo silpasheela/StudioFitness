@@ -142,6 +142,7 @@ const userProfileUpdateValidation = Joi.object({
     }),
     profilePicture: Joi.string().optional(),
     bio: Joi.string().optional(),
+    stripeCustomerId:Joi.string().optional(),
 
 })
 

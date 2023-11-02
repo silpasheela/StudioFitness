@@ -104,6 +104,7 @@ function AdminServiceData() {
 
     useEffect(() => {
         dispatch(adminGetAllServices());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const rows = useSelector(state => state.admin?.users?.services);
@@ -157,6 +158,7 @@ function AdminServiceData() {
         description: '',
     });
 
+    // eslint-disable-next-line no-unused-vars
     const [formErrors, setFormErrors] = useState({
         service: '',
         description: '',

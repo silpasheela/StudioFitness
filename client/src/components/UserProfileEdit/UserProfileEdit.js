@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import './UserProfileEdit.css'
 import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid, Input } from '@mui/material';
 import { Avatar, Button, Card, CardActions, CardContent, Divider, CardHeader, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material';
@@ -10,6 +11,7 @@ import { instance } from '../../api/axiosInstance';
 
 function UserProfileEdit() {
         
+
     const navigate = useNavigate();
 
     const [userId, setUserId] = useState(null);
@@ -17,7 +19,7 @@ function UserProfileEdit() {
     const [formData, setFormData] = useState({
         
         fullName:'',
-        dateOfBirth:new Date(),
+        dateOfBirth:'',
         gender:'',
         mobileNumber:'',
         address: {
@@ -30,6 +32,8 @@ function UserProfileEdit() {
         weight:'',
         height:'',
     });
+
+    const [initialFormData, setInitialFormData] = useState(formData);
 
     const [editedUser, setEditedUser] = useState(null);
 
@@ -50,7 +54,7 @@ function UserProfileEdit() {
         height: ''
     })
 
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
 
     let errorData = { mobileNumber: "", age: "", weight: "", height: "" };
 
@@ -83,10 +87,13 @@ function UserProfileEdit() {
             console.log("mine", data);
             console.log("ID:", data.user._id);
             setUserId(data.user._id);
-            setFormData({...data.user,_id:undefined})
+            setFormData({...data.user,_id:undefined});
+            //
+            setInitialFormData({...data.user,_id:undefined});
 
         } catch (error) {
             console.log(error)
+
         }
     };
 
@@ -114,6 +121,8 @@ function UserProfileEdit() {
             });
         }
     };
+
+    //
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -144,15 +153,46 @@ function UserProfileEdit() {
         setFormErrors(errorData);
 
         if(isValid) {
-            try {
-                const {data} = await instance.put(`user/editprofile/${userId}`,formData);
-                console.log(data)
-                setFormData({...data?.user,_id:undefined})
-            } catch (error) {
-                console.log(error); 
+            if (JSON.stringify(formData) !== JSON.stringify(initialFormData)) {
+                try {
+                    const {data} = await instance.put(`user/editprofile/${userId}`,formData);
+                    console.log(data)
+                    setFormData({...data?.user,_id:undefined})
+                    toast.success('Profile updated successfully!', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    navigate('/user/dashboard');
+                } catch (error) {
+                    console.log(error); 
+                    toast.error('Error in updating profile', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            } else {
+                // Display an info toast message when no changes have been made
+                toast.info('No changes were made.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         }
-
     };
 
     const handleProfileImageChange = (e) => {
@@ -175,9 +215,27 @@ function UserProfileEdit() {
             console.log("filedata",fileData)
             setEditedUser(response.data);
             console.log("editeddata",editedUser)
+            toast.success('Profile Picture uploaded successfully!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
 
         } catch (error) {
-            console.log(error); 
+            console.log(error);
+            toast.success('Profile updated successfully!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            }); 
         }
     }
 
@@ -547,4 +605,4 @@ function UserProfileEdit() {
     )
 }
 
-export default UserProfileEdit
+export default UserProfileEdit  

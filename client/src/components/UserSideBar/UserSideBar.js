@@ -3,9 +3,9 @@ import Paper from '@mui/material/Paper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import HomeIcon from '@mui/icons-material/Home';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ function UserSideBar() {
                 borderRadius:'0'
             }}>
                 <MenuList sx={{width:'45vh', paddingTop:'4.5vh'}}>
-                    <MenuItem sx={{
+                    <MenuItem onClick={() => navigate('/user/editprofile')} sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',
                         fontFamily: 'inherit',
@@ -32,7 +32,7 @@ function UserSideBar() {
                         '&:hover': {
                             backgroundColor: '#333',
                         }
-                    }}><HomeIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/>My Dashboard</MenuItem>
+                    }}><ManageAccountsIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/>Account Settings</MenuItem>
                     <MenuItem onClick={() => navigate('/user/subscription-details')} sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',

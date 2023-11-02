@@ -6,7 +6,6 @@ import LandingTwo from '../components/LandingSection/LandingTwo';
 import Plans from '../components/Plans/Plans';
 import Testimonials from '../components/Testimonials/Testimonials';
 import Footer from '../components/Footer/Footer';
-import Demos from '../components/demo/Demos';
 
 
 function LandingPage() {
@@ -17,7 +16,6 @@ function LandingPage() {
             <LandingTwo/>
             <Trainer/>
             <Plans/>
-            {/* <Demos/> */}
             <Testimonials/>
             <Footer/>
         </React.Fragment>

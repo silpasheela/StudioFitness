@@ -1,4 +1,6 @@
 import {useEffect, useState} from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -87,12 +89,33 @@ function AdminTrainerData() {
 
     const tableContent = rows;
 
-    const handleBlocking = (id) => {
+    // const handleBlocking = (id) => {
 
-        dispatch(adminBlockUnblockTrainer(id)).then(() => {
-            dispatch(adminGetAllTrainers());
-        })
-    }
+    //     dispatch(adminBlockUnblockTrainer(id)).then(() => {
+    //         dispatch(adminGetAllTrainers());
+    //     })
+    // }
+
+    const handleBlocking = (id) => {
+        confirmAlert({
+            title: 'Confirmation',
+            message: 'Are you sure you want to proceed with this action?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        dispatch(adminBlockUnblockTrainer(id)).then(() => {
+                            dispatch(adminGetAllTrainers());
+                        })
+                    }
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        });
+    };
+    
 
     const trainerTableProps = {
         tableHead,

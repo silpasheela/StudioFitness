@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid, Input, InputLabel, Select, MenuItem } from '@mui/material';
 import { Avatar, Button, Card, CardActions, CardContent, Divider, CardHeader, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -29,6 +30,9 @@ function TrainerProfileEdit() {
         service:'',
     });
 
+    const [initialFormData, setInitialFormData] = useState(formData);
+
+
     const [editedUser, setEditedUser] = useState(null);
 
     const [fileData, setFileData] = useState({
@@ -44,6 +48,7 @@ function TrainerProfileEdit() {
     const dispatch = useDispatch();
 
 
+    // eslint-disable-next-line no-unused-vars
     const [formErrors, setFormErrors] = useState({
 
         mobileNumber: '',
@@ -69,6 +74,8 @@ function TrainerProfileEdit() {
             setUserId(data.trainer._id);
             setFormData({...data.trainer,_id:undefined})
 
+            setInitialFormData({...data.trainer,_id:undefined});
+
         } catch (error) {
             console.log(error)
         }
@@ -78,6 +85,7 @@ function TrainerProfileEdit() {
         fetchData();
         //
         dispatch(viewAllServices());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -115,49 +123,80 @@ function TrainerProfileEdit() {
 
         setFormErrors(errorData);
 
-
-
         if(isValid) {
 
-        const {
-            mobileNumber,
-            street,
-            city,
-            state,
-            zip,
-            qualification,
-            service,
-            gender,
-        } = formData;
-    
+            const {
+                mobileNumber,
+                street,
+                city,
+                state,
+                zip,
+                qualification,
+                service,
+                gender,
+            } = formData;
+        
+            //
+            if (JSON.stringify(formData) !== JSON.stringify(initialFormData)) {
 
-        try {
-            const trainerData = new FormData();
+                try {
+                    const trainerData = new FormData();
 
-            trainerData.set('mobileNumber', mobileNumber);
-            trainerData.set('street', street);
-            trainerData.set('city', city);
-            trainerData.set('state', state);
-            trainerData.set('zip', zip);
-            trainerData.set('qualification', qualification);
-            trainerData.set('certificate', editedCertificate);
-            trainerData.set('service', service);
-            trainerData.set('gender', gender);
+                    trainerData.set('mobileNumber', mobileNumber);
+                    trainerData.set('street', street);
+                    trainerData.set('city', city);
+                    trainerData.set('state', state);
+                    trainerData.set('zip', zip);
+                    trainerData.set('qualification', qualification);
+                    trainerData.set('certificate', editedCertificate);
+                    trainerData.set('service', service);
+                    trainerData.set('gender', gender);
 
-            const dataObject = Object.fromEntries(trainerData);
+                    const dataObject = Object.fromEntries(trainerData);
 
-            // console.log("my trainer data", {dataObject});
-            const {data} = await instance.put(`trainer/editprofile/${userId}`,dataObject,
-            {    headers: {
-                'Content-Type': 'multipart/form-data',
-            }}
-            );
-            console.log(data)
-            setFormData({...data?.user,_id:undefined})
-        } catch (error) {
-            console.log(error); 
+                    // console.log("my trainer data", {dataObject});
+                    const {data} = await instance.put(`trainer/editprofile/${userId}`,dataObject,
+                    {    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }}
+                    );
+                    console.log(data)
+                    setFormData({...data?.user,_id:undefined})
+                    toast.success('Profile updated successfully!', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    navigate('/trainer/dashboard');
+                } catch (error) {
+                    console.log(error); 
+                    toast.error('Profile updation failed!', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            } else {
+                // Display an info toast message when no changes have been made
+                toast.info('No changes were made.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
-    }
     };
 
     const handleProfileImageChange = (e) => {
@@ -165,7 +204,6 @@ function TrainerProfileEdit() {
         setEditedProfileImage(imageFile);
 
     };
-
 
 
     const uploadImage = async(e) => {
@@ -180,15 +218,33 @@ function TrainerProfileEdit() {
             console.log("filedata",fileData)
             setEditedUser(response.data);
             console.log("editeddata",editedUser)
+            toast.success('Profile Picture uploaded successfully!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
 
         } catch (error) {
             console.log(error); 
+            toast.error('Profile Picture uploading failed!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 
 
     return (
-        <Stack sx={{backgroundColor:'#fff'}}>
+        <Stack sx={{marginTop:'4.5rem'}}>
         <Box
             component="main"
             sx={{
@@ -199,9 +255,9 @@ function TrainerProfileEdit() {
             <Container maxWidth="lg">
             <Stack spacing={3}>
                 <div>
-                <Typography variant="h4" sx={{color:'#6EC72D'}}>
+                {/* <Typography variant="h4" sx={{color:'#6EC72D'}}>
                     Account Settings
-                </Typography>
+                </Typography> */}
                 </div>
                 <div>
                 <Grid

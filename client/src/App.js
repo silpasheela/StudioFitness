@@ -1,4 +1,6 @@
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import LandingPage from './pages/LandingPage';
 import SignUp from './components/SignUp/SignUp';
 import LogIn from './components/LogIn/LogIn';
@@ -15,21 +17,19 @@ import TrainerDashboardPage from './pages/TrainerDashboardPage';
 import Demos from './components/demo/Demos'
 import DemoModel from './pages/DemoModel';
 import UserProfileEditPage from './pages/UserProfileEditPage';
-import TrainerProfileEdit from './components/TrainerProfileEdit/TrainerProfileEdit';
 import AdminServiceDataPage from './pages/AdminServiceDataPage';
 import ViewTrainersPage from './pages/ViewTrainersPage';
 import TrainerDetailsPage from './pages/TrainerDetailsPage';
 import PlanDetailsPage from './pages/PlanDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
-import UserSideBar from './components/UserSideBar/UserSideBar';
 import UserSubscriptionPage from './pages/UserSubscriptionPage';
+import TrainerProfileEditPage from './pages/TrainerProfileEditPage';
 
 
 function App() {
   return (
     <div className="App">
-        {/* <LandingPage/> */}
-        {/* <Form/> */}
+        <ToastContainer />
         <Routes>
           <Route path='/' element={<LandingPage/>}></Route>
           <Route path='/signup' element={<SignUp/>}></Route>
@@ -44,8 +44,7 @@ function App() {
           <Route path='/user/dashboard' element={<UserDashboardPage/>}></Route>
           <Route path='/trainer/dashboard' element={<TrainerDashboardPage/>}></Route>
           <Route path='/user/editprofile' element={<UserProfileEditPage/>}></Route>
-          {/* <Route path='/user/login' element={<DemoModel/>}></Route> */}
-          <Route path='/trainer/editprofile' element={<TrainerProfileEdit/>}></Route>
+          <Route path='/trainer/editprofile' element={<TrainerProfileEditPage/>}></Route>
           <Route path='/admin/service/details' element={<AdminServiceDataPage/>}></Route>
           <Route path='/user/viewtrainers' element={<ViewTrainersPage/>}></Route>
           <Route path='/user/trainer/:id' element={<TrainerDetailsPage/>}></Route>
