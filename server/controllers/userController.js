@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const Trainer = require('../models/trainerModel');
 const Plan = require('../models/planModel');
+const Appointment = require('../models/appointmentModel');
 const {getHashedPassword,verifyPassword} = require('../utils/password');
 const {signUpValidation,loginValidation,userProfileUpdateValidation,profilePictureValidation} = require('../utils/validation');
 const {getToken, verifyToken} = require('../utils/token');
@@ -342,6 +343,7 @@ const userProfileUpdate = async(req,res) => {
     }
 }
 
+
 const userProfilePictureEdit = async(req,res) => {
 
     const {error} = profilePictureValidation.validate(req.body);
@@ -412,6 +414,7 @@ const userProfilePictureEdit = async(req,res) => {
 
 }
 
+
 const userGetAllTrainers = async(req,res) => {
     
     try {
@@ -432,6 +435,7 @@ const userGetAllTrainers = async(req,res) => {
         })
     }
 }
+
 
 const userGetTrainer = async(req,res) => {
     const {id} = req.params;
@@ -508,6 +512,262 @@ const getPlanById = async(req,res) => {
 }
 
 
+
+const userGetSlots = async (req, res) => {
+
+    console.log("slot", req.params);
+    try {
+        const trainerId = req.params.trainerId;
+
+        const trainer = await Trainer.findById(trainerId);
+        console.log(trainer)
+
+        if (!trainer) {
+            return res.status(404).json({ error: 'Trainer not found' });
+        }
+
+        // Get the current date and time
+        const currentDateTime = new Date();
+
+        // Filter and sort slots
+        const filteredSlots = trainer.availableSlots
+            .map((slot) => ({
+                _id: slot._id,  // Include the _id of the date slot
+                date: new Date(slot.date),
+                slots: slot.slots.filter((s) => {
+                    const slotDateTime = new Date(slot.date);
+                    const startTime = new Date(`1970-01-01T${s.startTime}`);
+                    slotDateTime.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0);
+
+                    // Compare the start time with the current time
+                    return slotDateTime > currentDateTime;
+                })
+                .sort((a, b) => new Date(`1970-01-01T${a.startTime}`) - new Date(`1970-01-01T${b.startTime}`)),  // Sort the slots
+            }))
+            .filter((slot) => slot.slots.length > 0)
+            .sort((a, b) => a.date - b.date);
+
+        // Format the time as AM/PM in the 'Asia/Kolkata' time zone
+            filteredSlots.forEach((slot) => {
+                slot.slots.forEach((s) => {
+                    const startTime = new Date(`1970-01-01T${s.startTime}`);
+                    const endTime = new Date(`1970-01-01T${s.endTime}`);
+                    const options = { hour: 'numeric', minute: 'numeric', hour12: true, timeZone: 'Asia/Kolkata' };
+                    s.startTime = startTime.toLocaleString('en-IN', options);
+                    s.endTime = endTime.toLocaleString('en-IN', options);
+                });
+            });
+        // Check if there are no available slots
+        if (filteredSlots.length === 0) {
+            return res.json({ message: 'No slots available for this trainer' });
+        }
+
+        console.log("filslots",filteredSlots);
+        return res.status(200).json({ slots: filteredSlots });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Failed to fetch slots' });
+    }
+};
+
+
+
+
+const userBookAppointment = async (req, res) => {
+
+    try {
+        const { slotId, dateId } = req.body;
+        const userId = req.userId;
+        const trainerId = req.params.trainerId;
+
+        console.log("trainerId",trainerId)
+        console.log("slotId",slotId)
+        console.log(req.body);
+
+        // Check if the user has an active subscription with a Premium plan
+        const user = await User.findById(userId).populate({
+            path: 'subscriptionDetails',
+            populate: {
+                path: 'planId',
+                model: 'Plan'
+            }
+        });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        console.log('mysub',user?.subscriptionDetails?.planId?.planName);
+        if (!user.subscriptionDetails || user.subscriptionDetails.status !== 'active' || !user.subscriptionDetails.planId || user.subscriptionDetails.planId.planName !== 'Premium') {
+            return res.status(403).json({ error: 'You need an active Premium subscription to book a slot.' });
+        }
+
+        const trainer = await Trainer.findOne({
+            _id: trainerId,
+            'availableSlots._id': dateId,
+            'availableSlots.slots._id': slotId,
+        });
+
+        if (!trainer) {
+
+            return res.status(404).json({ error: 'Slot not found' });
+
+        }
+
+        const slotDate = trainer.availableSlots.id(dateId).date;
+        const slotStartTime = trainer.availableSlots.id(dateId).slots.id(slotId).startTime;
+        const slotEndTime = trainer.availableSlots.id(dateId).slots.id(slotId).endTime;
+
+        if (!slotDate || !slotStartTime || !slotEndTime) {
+
+            return res.status(400).json({ error: 'Invalid slot' });
+
+        }
+
+        const isBooked = await Appointment.findOne({
+            userId,
+            slotDate,
+            slotStartTime,
+            isCancelled: false,
+        });
+
+        if (isBooked) {
+
+            return res.status(400).json({ error: 'You have already booked a slot at the same date and time with another trainer.' });
+
+        }
+
+        const currentDateTime = new Date();
+        const slotDateTime = new Date(`${slotDate} ${slotStartTime}`);
+
+        if (slotDateTime <= currentDateTime) {
+
+            return res.status(400).json({ error: 'Slot date and time cannot be in the past' });
+
+        }
+
+        const appointment = new Appointment({
+            userId,
+            trainerId: trainer._id,
+            slotDate,
+            slotStartTime,
+            slotEndTime,
+            dateId,
+            slotId,
+        });
+
+        // Update the status field in the trainer model
+        const trainerAvailableSlots = trainer.availableSlots.id(dateId);
+        const slot = trainerAvailableSlots.slots.id(slotId);
+        slot.status = true;
+
+        // Save the changes to the trainer model
+        await trainer.save();
+
+        await appointment.save();
+
+        return res.status(201).json({ success: 'Appointment booked successfully' });
+
+    } catch (error) {
+
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.userId === 1) {
+
+            return res.status(400).json({ error: 'You have already booked a slot at the same date and time.' });
+
+        } else {
+
+            console.error(error);
+            return res.status(500).json({ error: 'Failed to book appointment' });
+
+        }
+    }
+};
+
+
+
+const userGetAppointments = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const currentDate = new Date().toISOString();
+    
+        const appointments = await Appointment.find({
+            userId,
+            slotDate: { $gte: currentDate }, // Filter out past slots
+            isCancelled: false, // Filter out cancelled appointments
+        })
+            .populate('trainerId', 'fullName') // Add more fields as needed
+            .select('trainerId slotDate slotStartTime slotEndTime isTrainerApproved isCancelled')
+            .sort({ slotDate: 1, slotStartTime: 1 }); // Sort by slotDate in ascending order, then slotStartTime
+
+        if (appointments.length === 0) {
+            // No appointments found for the user
+            return res.status(404).json({ success: true, message: 'No appointments found' });
+        }
+
+        res.status(200).json({ success: true, appointments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Failed to retrieve appointments' });
+    }
+};
+
+
+
+const userCancelAppointment = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const appointmentId = req.params.appointmentId;
+    
+        // Find the appointment by ID and populate the associated trainer
+        const appointment = await Appointment.findById(appointmentId).populate('trainerId');
+    
+        if (!appointment) {
+            return res.status(404).json({ error: 'Appointment not found' });
+        }
+    
+        // Check if the appointment is already canceled
+        if (appointment.isCancelled) {
+            return res.status(400).json({ error: 'Appointment is already canceled' });
+        }
+    
+        // Check if the appointment is approved by the trainer
+        if (appointment.isTrainerApproved === 'approved') {
+            return res.status(403).json({ error: 'Cannot cancel an approved appointment' });
+        }
+    
+        // Reset the status in the trainer model
+        const trainerId = appointment.trainerId._id;
+        const dateId = appointment.dateId;
+        const slotId = appointment.slotId;
+    
+        const trainer = await Trainer.findOne({
+            _id: trainerId,
+            'availableSlots._id': dateId,
+            'availableSlots.slots._id': slotId,
+        });
+    
+        if (!trainer) {
+            return res.status(404).json({ error: 'Trainer not found' });
+        }
+    
+        const slot = trainer.availableSlots.id(dateId).slots.id(slotId);
+        slot.status = false;
+    
+        // Save the changes to the trainer model
+        await trainer.save();
+    
+        // Mark the appointment as cancelled
+        appointment.isCancelled = true;
+        await appointment.save();
+    
+        return res.status(200).json({ success: true, message: 'Appointment canceled successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Failed to cancel appointment' });
+    }
+};
+
+
+
 module.exports = {
     userSignUp,
     userEmailVerification,
@@ -523,5 +783,9 @@ module.exports = {
     userGetAllTrainers,
     userGetTrainer,
     getAllPlans,
-    getPlanById
+    getPlanById,
+    userGetSlots,
+    userBookAppointment,
+    userGetAppointments,
+    userCancelAppointment,
 }

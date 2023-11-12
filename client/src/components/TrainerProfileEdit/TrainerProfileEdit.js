@@ -4,7 +4,6 @@ import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid, Input, Input
 import { Avatar, Button, Card, CardActions, CardContent, Divider, CardHeader, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useNavigate } from 'react-router-dom';
-
 import { instance } from '../../api/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewAllServices } from '../../app/features/Data/dataSlice';
@@ -468,21 +467,21 @@ function TrainerProfileEdit() {
                                 </Grid> */}
 
                                 <Grid xs={12} md={6} sx={{paddingTop:0}}>
-            <InputLabel htmlFor="service" style={{fontSize:11}}>Services</InputLabel>
-            <Select
-                fullWidth
-                label="Services"
-                name="service"
-                onChange={handleChange}
-                value={formData?.service}
-            >
-                {servicedata?.map((service) => (
-                    <MenuItem key={service?._id} value={service?._id}>
-                        {service?.service}
-                    </MenuItem>
-                ))}
-            </Select>
-        </Grid>
+                                    <InputLabel htmlFor="service" style={{fontSize:11}}>Services</InputLabel>
+                                    <Select
+                                        fullWidth
+                                        label="Services"
+                                        name="service"
+                                        onChange={handleChange}
+                                        value={formData?.service}
+                                    >
+                                        {servicedata?.map((service) => (
+                                            <MenuItem key={service?._id} value={service?._id}>
+                                                {service?.service}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </Grid>
 
                                 <Grid
                                 xs={12}
@@ -580,7 +579,7 @@ function TrainerProfileEdit() {
                             Save details
                             </Button>
                             <Button variant="contained" 
-                                    onClick={() => navigate('/user/dashboard')}
+                                    onClick={() => navigate('/trainer/dashboard')}
                                     sx={{
                                         backgroundColor: '#161616', 
                                         color: '#6EC72D',

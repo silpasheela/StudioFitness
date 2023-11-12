@@ -1435,3 +1435,187 @@ currency="inr"
 }
 
 export default Checkout
+
+
+
+//sidebar visibility control
+
+                    {/* <MenuItem onClick={() => navigate('/user/viewtrainers')} sx={{
+                        fontSize:'25px',
+                        fontWeight:'bolder',
+                        fontFamily:'inherit',
+                        color:'#88C13E',
+                        borderBottom: '1px solid #555',
+                        '&:hover': {
+                            backgroundColor: '#333',
+                        }
+                    }}><PersonAddIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> Book My Trainer</MenuItem> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function TrainerAppointmentsView() {
+const dispatch = useDispatch();
+const [page, setPage] = useState(0);
+const [rowsPerPage, setRowsPerPage] = useState(5);
+const [filter, setFilter] = useState('all');
+
+useEffect(() => {
+dispatch(trainerGetAppointment())
+}, [])
+
+const data = useSelector(state => state?.appointment?.appointment?.appointments) || []
+
+const handleChangePage = (event, newPage) => {
+setPage(newPage);
+};
+
+const handleFilterChange = (event) => {
+setFilter(event.target.value);
+};
+
+const filteredData = data?.filter(appointment => {
+if (filter === 'all') return true;
+return filter === appointment?.isTrainerApproved;
+});
+
+return (
+<div style={{marginTop:'-40vh'}}>
+<select value={filter} onChange={handleFilterChange}>
+<option value="all">All</option>
+<option value="approved">Approved</option>
+<option value="pending">Pending</option>
+<option value="rejected">Rejected</option>
+</select>
+{filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((appointment, index) => (
+<Card key={index} >
+<CardContent>
+<Typography variant="h4" component="div" >
+APPOINTMENT {index + 1}
+</Typography>
+<Typography variant="body1" style={{ 
+color: 'white',
+marginBottom: '8px',                     
+}}>
+<PersonIcon  />
+<b style={{ color: '#706e6e' }}>Client:</b>  {appointment.userId.fullName}
+</Typography>
+<Typography variant="body1" >
+<EventIcon  />
+<b style={{ color: '#706e6e' }}>Date:</b> {new Date(appointment?.slotDate).toLocaleDateString()}
+</Typography>
+<Typography variant="body1" >
+<AccessTimeIcon />
+<span>
+<b style={{ color: '#706e6e' }}>Time:</b> {appointment?.slotStartTime} - {appointment?.slotEndTime}
+</span>                        
+</Typography>
+<Typography variant="body1">
+{appointment?.isTrainerApproved === 'approved' && <CheckCircleIcon style={{  color: '#4CAF50',verticalAlign: 'middle' }} />}
+{appointment?.isTrainerApproved === 'rejected' && <CancelIcon style={{  color: '#FF0000',verticalAlign: 'middle' }} />}
+{appointment?.isTrainerApproved === 'pending' && <CheckCircleIcon style={{ color: '#FFC107',verticalAlign: 'middle' }} />}
+<b style={{ color: '#706e6e' }}>Status:</b> {appointment?.isTrainerApproved.charAt(0).toUpperCase() + appointment?.isTrainerApproved.slice(1)}
+</Typography>
+{appointment?.isTrainerApproved === 'rejected' && (
+<Typography variant="body1" >
+<b style={{ color: '#706e6e' }}>Rejection Reason:</b> {appointment.rejectionReason}
+</Typography>
+)}
+{appointment?.isTrainerApproved === 'pending' && (
+<Box >
+<Button onClick={() => confirmAlert({
+title: 'Confirm to approve',
+message: 'Are you sure to approve this appointment?',
+buttons: [
+{
+label: 'Yes',
+onClick: () => handleApproval(appointment._id)
+},
+{
+label: 'No',
+}
+]
+})}
+variant="contained" >
+Approve
+</Button>
+<Button onClick={() => confirmAlert({
+customUI: ({ onClose }) => {
+let reason = '';
+return (
+<div className='custom-ui'>
+<h1>Rejection Reason</h1>
+<TextField
+label="Reason"
+variant="outlined"
+onChange={(e) => reason = e.target.value}
+/>
+<Button variant="contained" color="primary" onClick={onClose} style={{ margin: '10px' }}>
+Cancel
+</Button>
+<Button variant="contained" color="secondary" onClick={() => {
+handleRejection(appointment._id, reason);
+onClose();
+}}
+>
+Confirm
+</Button>
+</div>
+);
+}
+})}
+variant="contained" >
+Reject
+</Button>
+</Box>
+)}
+{appointment?.isTrainerApproved !== 'pending' && (
+<Box sx={{ marginTop: 2 }}>
+<Button variant="contained" color="primary" disabled>
+Approve
+</Button>
+<Button variant="contained" color="secondary" disabled>
+Reject
+</Button>
+</Box>
+)}
+</CardContent>
+</Card>
+))}
+<MobileStepper
+variant="dots"
+steps={Math.ceil(filteredData.length / rowsPerPage)}
+position="static"
+activeStep={page}
+nextButton={
+<Button size="small" onClick={handleChangePage} disabled={page >= Math.ceil(filteredData.length / rowsPerPage) - 1}>
+Next
+<KeyboardArrowRight />
+</Button>
+}
+backButton={
+<Button size="small" onClick={handleChangePage} disabled={page <= 0}>
+<KeyboardArrowLeft />
+Back
+</Button>
+}
+/>
+</div>
+);
+}

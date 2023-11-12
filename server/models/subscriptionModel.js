@@ -6,13 +6,11 @@ const subscriptionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
         // type: String
-
     },
     planId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Plan'
         // type: String
-
     },
     subscriptionId: {
         type: String

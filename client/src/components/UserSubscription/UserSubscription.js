@@ -4,9 +4,10 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { toast } from 'react-toastify';
 import { Box, Unstable_Grid2 as Grid,  } from '@mui/material';
 import {  Button, Card, CardActions, CardContent, Divider, CardHeader, TextField, } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import {  useSelector } from 'react-redux';
+import { useNavigate, } from 'react-router-dom';
+import {  useDispatch, useSelector } from 'react-redux';
 import { instance } from '../../api/axiosInstance';
+import {subsAuth} from '../../app/features/Auth/authSlice'
 
 function UserSubscription() {
 
@@ -19,32 +20,7 @@ function UserSubscription() {
     console.log("subsauth",subscriptionData)
 
 
-    // const handleCancelSubscription = async (e) => {
-    //     try {
-    //         const response = await instance.put(`user/subscription/cancel/${subscriptionData._id}`);
-    //         console.log(response);
-    //         toast.success('Cancellation successful!', {
-    //             position: "top-right",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //         });
-    //     } catch (error) {
-    //         console.log(error)
-    //         toast.error('Cancellation failed!', {
-    //             position: "top-right",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //         });
-    //     }
-    // }
+    const dispatch = useDispatch()
 
     const handleCancelSubscription = async (e) => {
         confirmAlert({
@@ -57,6 +33,8 @@ function UserSubscription() {
                         try {
                             const response = await instance.put(`user/subscription/cancel/${subscriptionData._id}`);
                             console.log(response);
+                            //update subs details in authstate
+                            dispatch(subsAuth());
                             toast.success('Cancellation successful!', {
                                 position: "top-right",
                                 autoClose: 5000,
@@ -87,7 +65,7 @@ function UserSubscription() {
         });
     };
     
-
+    console.log("my pid",subscriptionData?.subscriptionDetails?.planId);
     return (
         <Grid
         xs={12}
@@ -113,7 +91,7 @@ function UserSubscription() {
                         fullWidth
                         label="Plan"
                         disabled
-                        value={subscriptionData?.subscriptionDetails?.amount === 999 ? 'Standard Plan' : 'Premium Plan'}
+                        value={subscriptionData?.subscriptionDetails?.planId === process.env.REACT_APP_PREMIUM_ID ? 'Premium Plan' : 'Standard Plan'}
                     />
                     </Grid>
                     <Grid

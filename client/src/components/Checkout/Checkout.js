@@ -6,7 +6,7 @@ import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/materia
 import { instance } from '../../api/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewPlan } from '../../app/features/Data/dataSlice';
-import { updateAuth } from '../../app/features/Auth/authSlice';
+import { subsAuth, updateAuth } from '../../app/features/Auth/authSlice';
 
 function Checkout() {
 
@@ -47,6 +47,7 @@ function Checkout() {
             if (response.status === 201) {
                 const data = response.data;
                 dispatch(updateAuth(data));
+                dispatch(subsAuth())
                 toast.success('Subscribed successfully!', {
                     position: "top-right",
                     autoClose: 5000,
@@ -56,7 +57,7 @@ function Checkout() {
                     draggable: true,
                     progress: undefined,
                 });
-                navigate('/user/dashboard');
+                navigate('/user/subscription-details');
                 console.log(data);
             } else {
                 console.error("Subscription creation failed.");

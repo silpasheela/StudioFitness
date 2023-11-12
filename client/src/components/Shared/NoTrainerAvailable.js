@@ -1,6 +1,6 @@
 import React from 'react'
 import Lottie from 'lottie-react';
-import animationData from './Animations/Animation - 1698907920382.json'// Replace with your animation JSON file
+import animationData from './Animations/Animation - 1698907920382.json'
 
 
 

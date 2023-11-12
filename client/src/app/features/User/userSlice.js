@@ -40,9 +40,9 @@ export const updateUserProfile = createAsyncThunk('user/updateUserProfile', asyn
         // return response.data
         if (response.status === 200) {
             return response.data.user;
-          } else {
-            return rejectWithValue('Failed to update user profile');
-          }
+        } else {
+        return rejectWithValue('Failed to update user profile');
+        }
     } catch (error) {
         return rejectWithValue(error.response.data);
     }
@@ -101,6 +101,26 @@ export const userGetSubscriptionDetails = createAsyncThunk('user/userGetSubscrip
             return response.data;
         } else {
             return rejectWithValue('Failed to fetch Subscription data');
+        }
+    } catch (error) {
+        return rejectWithValue('Network error');
+    }
+})
+
+
+
+//GET TRAINER SLOT DETAILS BY USER
+
+export const userGetAvailableSlots = createAsyncThunk('user/userGetAvailableSlots', async(trainerId, {rejectWithValue}) => {
+    console.log(trainerId)
+    try {
+        const response = await instance.get(`user/view-slots/${trainerId}`, { withCredentials: true });
+        console.log(response.data)
+
+        if(response.status === 200) {
+            return response.data;
+        } else {
+            return rejectWithValue('Failed to fetch slot data');
         }
     } catch (error) {
         return rejectWithValue('Network error');
@@ -179,6 +199,18 @@ const userSlice = createSlice({
             state.user = action.payload;
         })
         .addCase(userGetSubscriptionDetails.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        })
+
+        .addCase(userGetAvailableSlots.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(userGetAvailableSlots.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+        })
+        .addCase(userGetAvailableSlots.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         })

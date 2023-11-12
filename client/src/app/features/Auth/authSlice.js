@@ -22,10 +22,27 @@ const authSlice = createSlice({
         updateAuth: (state, action) => {
             state.authState = {...state.authState,...action.payload}
             console.log("state.authState",state.authState)
-        }
+        },
+
+        // subsAuth: (state) => {
+        //     if (state.authState && state.authState.subscriptionDetails) {
+        //         state.authState.subscriptionDetails.status = 'canceled';
+        //     }
+        // },        
+
+        subsAuth: (state) => {
+            if (state.authState && state.authState.subscriptionDetails) {
+                if(state.authState.subscriptionDetails.status === 'canceled') {
+                    state.authState.subscriptionDetails.status = 'active';
+                }
+                else if(state.authState.subscriptionDetails.status === 'active') {
+                    state.authState.subscriptionDetails.status = 'canceled';
+                }
+            }
+        },  
     }
 })
 
 
 export default authSlice.reducer;
-export const {setAuth,removeAuth,updateAuth} = authSlice.actions;
+export const {setAuth,removeAuth,updateAuth,subsAuth} = authSlice.actions;

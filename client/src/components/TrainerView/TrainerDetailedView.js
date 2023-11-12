@@ -1,6 +1,7 @@
 import { Box, Button, Stack, Typography, } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetTrainer } from '../../app/features/User/userSlice';
 import Tab from '@mui/material/Tab';
@@ -14,10 +15,20 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import Rating from '@mui/material/Rating';
+import TrainerSlotView from './TrainerSlotView';
+import { instance } from '../../api/axiosInstance';
 
 
 
 function TrainerDetailedView() {
+
+
+    const navigate = useNavigate();
+
+
+    const [slotId,setSlotId] = useState(null)
+    const [dateId,setDateId] = useState(null)
+
 
     const [value, setValue] = useState('1');
 
@@ -42,8 +53,48 @@ function TrainerDetailedView() {
     console.log("sasi")
 
 
+    const handleBookSlot = (slotId,dateId) => {
+        console.log("heloooooooooooi",slotId,dateId);
+        setSlotId(slotId)
+        setDateId(dateId)
+
+    }
+
+    const handleFinalBooking = async () => {
+        console.log("hel",slotId,dateId);
+
+        try {
+            const response = await instance.post(`user/book-appointment/${id}`,{slotId,dateId});
+            console.log(response)
+            if(response.status === 201) {
+                toast.success('Appointment booked successfully!', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                navigate('/user/booking-success');
+            }
+        } catch (error) {
+            console.log(error.response.data.error);
+            toast.error(`${error.response.data.error}`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
+
     return (
-        <Stack direction={'column'} sx={{width: '75%', border:2, backgroundColor:'#000', paddingTop:5, borderColor:'#6EC72D', borderRadius:10, marginTop:'15vh'}}>
+        <Stack direction={'column'} sx={{width: '75%', border:2, backgroundColor:'#000', paddingTop:5, borderColor:'#6EC72D', borderRadius:10, marginTop:'25vh',marginLeft:'26.5vh'}}>
             <Box sx={{display:'flex',flexDirection:'row', justifyContent:'space-around'}}>
             <Box>
             <Avatar sx={{height:250,width:250}} alt={trainer?.fullName} src={trainer?.profilePicture} />
@@ -86,7 +137,8 @@ function TrainerDetailedView() {
                 add feedback
             </Button>
             <Button fullWidth sx={{marginTop:1.5, backgroundColor:'#6EC72D', color:'#fff',
-            '&:hover': { backgroundColor: '#6EC72D' , color: '#000'} }}>book slot</Button>
+            '&:hover': { backgroundColor: '#6EC72D' , color: '#000'} }}
+            onClick={handleFinalBooking}>book slot</Button>
             </Box>
             </Box>
     
@@ -106,13 +158,15 @@ function TrainerDetailedView() {
                         },
                     }}
                     >
-                    <Tab label="Overview" value="1"   />
+                    <Tab label="Availability" value="1"   />
                     <Tab label="Reviews" value="2" 
                     
                     />
                 </TabList>
                 </Box>
-                <TabPanel sx={{color:'#757575'}} align='left' value="1">Strength training is another key part of a fitness training plan. Muscular fitness can help you increase bone strength and muscle fitness. And it can help you stay at a healthy weight or lose weight. It also can improve your skills in doing everyday activities. Aim to do strength training of all the major muscle groups at least twice a week.</TabPanel>
+                <TabPanel sx={{color:'#757575'}} align='left' value="1">
+                    <TrainerSlotView handleBookSlot={handleBookSlot} />
+                </TabPanel>
                 <TabPanel sx={{color:'#fff'}} value="2">Item Two</TabPanel>
             </TabContext>
             </Box>

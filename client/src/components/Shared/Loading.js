@@ -1,6 +1,6 @@
 import React from 'react'
 import Lottie from 'lottie-react';
-import loadingAnimationData from './Animations/Animation - Loading1.json'
+import loadingAnimationData from './Animations/Animation - Loading2.json'
 
 function Loading() {
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { viewAllPlans } from "../app/features/Data/dataSlice";
-import PlanDetails from "../components/PlanDetails.js/PlanDetails"
+import PlanDetails from "../components/PlanDetails/PlanDetails"
 import { Container, Grid } from '@mui/material';
 import {Typography} from "@mui/material";
 import NavBar from "../components/NavBar/NavBar";

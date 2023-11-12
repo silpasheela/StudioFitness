@@ -24,6 +24,9 @@ import PlanDetailsPage from './pages/PlanDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
 import UserSubscriptionPage from './pages/UserSubscriptionPage';
 import TrainerProfileEditPage from './pages/TrainerProfileEditPage';
+import TrainerAddSlotPage from './pages/TrainerAddSlotPage';
+import BookingSuccess from './components/Shared/BookingSuccess';
+import TrainerAppoinmentsPage from './pages/TrainerAppoinmentsPage';
 
 
 function App() {
@@ -51,6 +54,11 @@ function App() {
           <Route path='/viewplandetails' element={<PlanDetailsPage/>}></Route>
           <Route path='/user/checkout/:id' element={<CheckoutPage/>}></Route>
           <Route path='/user/subscription-details' element={<UserSubscriptionPage/>}></Route>
+          <Route path='/trainer/addslot' element={<TrainerAddSlotPage/>}></Route>
+          <Route path='/user/booking-success' element={<BookingSuccess/>}></Route>
+          <Route path='/trainer/view-appointments' element={<TrainerAppoinmentsPage/>}></Route>
+
+
           {/* <Route path="*" element={<LandingPage />} /> */}
 
           {/* <Route path="/demo" element={<DemoModel />} /> */}

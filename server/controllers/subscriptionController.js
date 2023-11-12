@@ -304,7 +304,7 @@ const createSubscription = async (req, res) => {
         const paymentMethod = await stripe.paymentMethods.create({
             type: 'card',
             card: { token },
-          });
+        });
 
         // Create a customer in Stripe
         const customer = await stripe.customers.create({

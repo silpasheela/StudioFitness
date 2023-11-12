@@ -33,6 +33,12 @@ router.get('/view-plans',userController.getAllPlans);
 router.get('/plan/:id',userController.getPlanById);
 
 
+router.get('/view-slots/:trainerId',auth.authenticateToken,auth.isUser,userController.userGetSlots);
+router.post('/book-appointment/:trainerId',auth.authenticateToken,auth.isUser,userController.userBookAppointment);
+router.get('/view-appointments',auth.authenticateToken,auth.isUser,userController.userGetAppointments);
+router.put('/cancel-appointment/:appointmentId',auth.authenticateToken,auth.isUser,userController.userCancelAppointment);
+
+
 
 
 

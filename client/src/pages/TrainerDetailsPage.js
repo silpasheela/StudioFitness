@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar/NavBar';
 function TrainerDetailsPage() {
 
     return (
-        <div className='loginpage'>
+        <div className=''>
             <NavBar/>
             <TrainerDetailedView/>
         </div>

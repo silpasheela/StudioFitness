@@ -3,15 +3,18 @@ import Paper from '@mui/material/Paper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import EventIcon from '@mui/icons-material/Event';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function UserSideBar() {
+
+function TrainerSideBar() {
+
 
     const navigate = useNavigate();
 
@@ -29,7 +32,7 @@ function UserSideBar() {
                 borderRadius:'0'
             }}>
                 <MenuList sx={{width:'45vh', paddingTop:'4.5vh'}}>
-                    <MenuItem onClick={() => navigate('/user/editprofile')} sx={{
+                    <MenuItem onClick={() => navigate('/trainer/editprofile')} sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',
                         fontFamily: 'inherit',
@@ -39,33 +42,9 @@ function UserSideBar() {
                             backgroundColor: '#333',
                         }
                     }}><ManageAccountsIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/>Account Settings</MenuItem>
-                    <MenuItem onClick={() => navigate('/user/subscription-details')} sx={{
-                        fontSize:'25px',
-                        fontWeight:'bolder',
-                        fontFamily: 'inherit',
-                        color:'#88C13E',
-                        borderBottom: '1px solid #555',
-                        '&:hover': {
-                            backgroundColor: '#333',
-                        }
-                    }}><SubscriptionsIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> My Subscriptions</MenuItem>
 
 
-                    {authState.subscriptionDetails && authState.subscriptionDetails.status === 'active' && authState.subscriptionDetails.planId === "653cb9aa8befae2d5b0cd1be" && (
-                        <MenuItem onClick={() => navigate('/user/viewtrainers')} sx={{
-                            fontSize:'25px',
-                            fontWeight:'bolder',
-                            fontFamily:'inherit',
-                            color:'#88C13E',
-                            borderBottom: '1px solid #555',
-                            '&:hover': {
-                                backgroundColor: '#333',
-                            }
-                        }}><PersonAddIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> Book My Trainer</MenuItem>
-                    )}
-
-
-                    <MenuItem sx={{
+                    <MenuItem onClick={() => navigate('/trainer/addslot')} sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',
                         fontFamily:'inherit',
@@ -74,7 +53,19 @@ function UserSideBar() {
                         '&:hover': {
                             backgroundColor: '#333',
                         }
-                    }}><OndemandVideoIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> My Classes</MenuItem>
+                    }}><MoreTimeIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> Add my Slot</MenuItem>
+
+                    <MenuItem onClick={() => navigate('/trainer/view-appointments')} sx={{
+                        fontSize:'25px',
+                        fontWeight:'bolder',
+                        fontFamily: 'inherit',
+                        color:'#88C13E',
+                        borderBottom: '1px solid #555',
+                        '&:hover': {
+                            backgroundColor: '#333',
+                        }
+                    }}><EventIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/>My Appointments</MenuItem>
+
                     <MenuItem sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',
@@ -90,4 +81,4 @@ function UserSideBar() {
     )
 }
 
-export default UserSideBar
+export default TrainerSideBar
