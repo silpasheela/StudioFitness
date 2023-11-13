@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { trainerGetAppointment } from '../../app/features/Appointment/appointmentSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { userGetAppointment } from '../../app/features/Appointment/appointmentSlice';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
 import Typography from '@mui/material/Typography';
@@ -19,20 +19,22 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
-function TrainerAppointmentsView() {
+function UserAppointments() {
 
     const dispatch = useDispatch();
+
     const [page, setPage] = useState(0);
     const rowsPerPage = 2;
     const [filter, setFilter] = useState('all');
 
+
     useEffect(() => {
-        dispatch(trainerGetAppointment())
+        dispatch(userGetAppointment())
     }, [])
 
     const data = useSelector(state => state?.appointment?.appointment?.appointments) || []
+
+    console.log("user apmnt",data)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -41,73 +43,44 @@ function TrainerAppointmentsView() {
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
     };
-    
-    const handleApproval = async(appointmentId) => {
-        try {
-            const response = await instance.put(`trainer/approve-appointment/${appointmentId}`)
-            console.log(response.data);
-            dispatch(trainerGetAppointment());
-            toast.success("Appointment approved successfully!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-
-        } catch (error) {
-            console.log(error);
-            toast.error("An error occurred while approving the appointment.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            
-        }
-    }
-    
-    const handleRejection = async(appointmentId,reason) => {
-        try {
-            const response = await instance.put(`trainer/reject-appointment/${appointmentId}`, { reason })
-            console.log(response.data);
-            dispatch(trainerGetAppointment());
-            toast.success("Appointment rejected successfully!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-
-        } catch (error) {
-            console.log(error);
-            toast.error("An error occurred while rejecting the appointment.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
-    }
 
     const filteredData = data?.filter(appointment => {
         if (filter === 'all') return true;
         return filter === appointment?.isTrainerApproved;
     });
-    
+
+
+    const handleCancellation = async (appointmentId) => {
+
+        try {
+            const response = await instance.put(`user/cancel-appointment/${appointmentId}`)
+            console.log(response.data);
+            dispatch(userGetAppointment());
+            toast.success("Appointment cancelled successfully!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } catch (error) {
+            console.log(error);
+            toast.error("An error occurred while cancelling the appointment.", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     return (
-        <div style={{marginTop:'-40vh'}}>
+        <div style={{marginTop:'-45vh'}}>
             <select value={filter} onChange={handleFilterChange} style={{ marginBottom: '10px', padding: '8px', borderRadius: '4px', fontSize: '16px',marginLeft:'100vh' }}>
                 <option value="all">All</option>
                 <option value="approved">Approved</option>
@@ -134,7 +107,7 @@ function TrainerAppointmentsView() {
                                 marginBottom: '8px',                     
                             }}>
                             <PersonIcon style={{ marginBottom: '8px',verticalAlign: 'middle',marginRight:'8px' }} />
-                            <b style={{ color: '#808080' }}>Client:</b>  {appointment.userId.fullName}
+                            <b style={{ color: '#808080' }}>Trainer:</b>  {appointment?.trainerId?.fullName}
                         </Typography>
                         <Typography variant="body1" style={{ color: 'white', marginBottom: '8px',}}>
                             <EventIcon style={{ marginBottom: '8px',verticalAlign: 'middle' ,marginRight:'8px'}} />
@@ -154,18 +127,18 @@ function TrainerAppointmentsView() {
                         </Typography>
                         {appointment?.isTrainerApproved === 'rejected' && (
                             <Typography variant="body1" style={{ color: 'white' ,marginBottom: '8px',}}>
-                            <b style={{ color: '#808080' }}>Rejection Reason:</b> {appointment.rejectionReason}
+                            <b style={{ color: '#808080' }}>Rejection Reason:</b> {appointment?.rejectionReason}
                             </Typography>
                         )}
                         {appointment?.isTrainerApproved === 'pending' && (
                             <Box sx={{ marginTop: 2 , }}>
                                 <Button onClick={() => confirmAlert({
-                                    title: 'Confirm to approve',
-                                    message: 'Are you sure to approve this appointment?',
+                                    title: 'Confirm to Cancel',
+                                    message: 'Are you sure to cancel this appointment?',
                                     buttons: [
                                         {
                                             label: 'Yes',
-                                            onClick: () => handleApproval(appointment._id)
+                                            onClick: () => handleCancellation(appointment._id)
                                         },
                                         {
                                             label: 'No',
@@ -173,36 +146,8 @@ function TrainerAppointmentsView() {
                                         }
                                     ]
                                     })}
-                                variant="contained" sx={{backgroundColor:'green',color:'#fff','&:hover': { backgroundColor:'#fff',color:'green'}}}>
-                                    Approve
-                                </Button>
-                                <Button onClick={() => confirmAlert({
-                                    customUI: ({ onClose }) => {
-                                        let reason = '';
-                                        return (
-                                            <div className='custom-ui'>
-                                            <h1>Rejection Reason</h1>
-                                            <TextField
-                                                label="Reason"
-                                                variant="outlined"
-                                                onChange={(e) => reason = e.target.value}
-                                            />
-                                            <Button variant="contained" sx={{backgroundColor:'#000','&:hover': { backgroundColor:'#000',color:'green'}}} onClick={onClose} style={{ margin: '10px' }}>
-                                                Cancel
-                                            </Button>
-                                            <Button variant="contained" sx={{backgroundColor:'green','&:hover': { backgroundColor:'green',color:'#000'}}} onClick={() => {
-                                                handleRejection(appointment._id, reason);
-                                                onClose();
-                                                }}
-                                                >
-                                                Confirm
-                                                </Button>
-                                            </div>
-                                        );
-                                    }
-                                })}
-                                variant="contained" sx={{backgroundColor:'red',color:'#fff','&:hover': { backgroundColor:'#fff',color:'red'}}} style={{ marginLeft: '10px' }}>
-                                    Reject
+                                variant="contained" sx={{backgroundColor:'#FF0000',color:'#fff','&:hover': { backgroundColor:'#fff',color:'#FF0000'}}}>
+                                    Cancel
                                 </Button>
                             </Box>
                         )}
@@ -233,4 +178,4 @@ function TrainerAppointmentsView() {
     );
 }
 
-export default TrainerAppointmentsView
+export default UserAppointments

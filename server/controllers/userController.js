@@ -695,7 +695,7 @@ const userGetAppointments = async (req, res) => {
             isCancelled: false, // Filter out cancelled appointments
         })
             .populate('trainerId', 'fullName') // Add more fields as needed
-            .select('trainerId slotDate slotStartTime slotEndTime isTrainerApproved isCancelled')
+            .select('trainerId slotDate slotStartTime slotEndTime isTrainerApproved isCancelled rejectionReason')
             .sort({ slotDate: 1, slotStartTime: 1 }); // Sort by slotDate in ascending order, then slotStartTime
 
         if (appointments.length === 0) {

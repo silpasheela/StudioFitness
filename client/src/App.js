@@ -27,6 +27,7 @@ import TrainerProfileEditPage from './pages/TrainerProfileEditPage';
 import TrainerAddSlotPage from './pages/TrainerAddSlotPage';
 import BookingSuccess from './components/Shared/BookingSuccess';
 import TrainerAppoinmentsPage from './pages/TrainerAppoinmentsPage';
+import UserAppointmentsPage from './pages/UserAppointmentsPage';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
           <Route path='/trainer/addslot' element={<TrainerAddSlotPage/>}></Route>
           <Route path='/user/booking-success' element={<BookingSuccess/>}></Route>
           <Route path='/trainer/view-appointments' element={<TrainerAppoinmentsPage/>}></Route>
+          <Route path='/user/view-appointments' element={<UserAppointmentsPage/>}></Route>
 
 
           {/* <Route path="*" element={<LandingPage />} /> */}

@@ -15,17 +15,16 @@ function UserSubscriptionPage() {
     console.log("subsauth",subscriptionData)
 
     return (
-    <>
-    <NavBar/>
-    <UserSideBar/>
-
-    {/* <UserSubscription/> */}
-
-    {    subscriptionData?.subscriptionDetails?.status === 'active' 
-      ? <UserSubscription /> 
-      : <NoActiveSubscription/>
-    }
-    </>
+      <div className='user-subscription' style={{height:'46.2rem'}}>
+        <>
+          <NavBar/>
+          <UserSideBar/>
+          {    subscriptionData?.subscriptionDetails?.status === 'active' 
+            ? <UserSubscription /> 
+            : <NoActiveSubscription/>
+          }
+        </>
+    </div>
   )
 }
 

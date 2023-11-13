@@ -7,6 +7,7 @@ import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import EventIcon from '@mui/icons-material/Event';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,13 +23,13 @@ function UserSideBar() {
     console.log("sidebar auth",authState);
 
     return (
-        <Stack direction="row" spacing={4} sx={{width: '10vh', height: '330px',paddingLeft:'0',paddingTop:'16.55vh' }}>
+        <Stack direction="row" spacing={4} sx={{width: '10vh', height: '350px',paddingLeft:'0',paddingTop:'16.55vh' }}>
             <Paper sx={{
                 background: 'black',
                 color: '#fff',
                 borderRadius:'0'
             }}>
-                <MenuList sx={{width:'45vh', paddingTop:'4.5vh'}}>
+                <MenuList sx={{minWidth:'50vh', paddingTop:'4.5vh'}}>
                     <MenuItem onClick={() => navigate('/user/editprofile')} sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',
@@ -64,6 +65,16 @@ function UserSideBar() {
                         }}><PersonAddIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> Book My Trainer</MenuItem>
                     )}
 
+                    <MenuItem onClick={() => navigate('/user/view-appointments')} sx={{
+                        fontSize:'25px',
+                        fontWeight:'bolder',
+                        fontFamily: 'inherit',
+                        color:'#88C13E',
+                        borderBottom: '1px solid #555',
+                        '&:hover': {
+                            backgroundColor: '#333',
+                        }
+                    }}><EventIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> My Appointments</MenuItem>
 
                     <MenuItem sx={{
                         fontSize:'25px',

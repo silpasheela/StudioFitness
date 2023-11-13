@@ -200,7 +200,7 @@ function TrainerViewSlot() {
 
     return (
         <>
-        <div style={{ marginTop: '35px' }}>
+        <div style={{ marginTop: '35px', marginLeft:'49vh' }}>
             <Slider {...settings} style={{ width: '50%', margin: 'auto' }}>
                 {slots.map((dateSlot) => (
                 <div key={dateSlot.date}>
@@ -224,7 +224,7 @@ function TrainerViewSlot() {
                             <Button
                             variant="outlined"
                             sx={{
-                                width: '45%',
+                                width: '30%',
                                 marginBottom: 2,
                                 backgroundColor: '#000',
                                 color: '#6EC72D',

@@ -6,12 +6,14 @@ import TrainerSideBar from '../components/TrainerSideBar/TrainerSideBar'
 
 function TrainerAddSlotPage() {
     return (
+        <div style={{height:'1250px'}} className='add-slot'>
         <>
             <NavBar/>
             <TrainerSideBar/>
             <TrainerAddSlot/>
             <TrainerViewSlot/>
         </>
+        </div>
     )
 }
 

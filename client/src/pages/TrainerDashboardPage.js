@@ -4,10 +4,12 @@ import TrainerSideBar from '../components/TrainerSideBar/TrainerSideBar'
 
 function TrainerDashboardPage() {
   return (
-    <>
-    <NavBar/>
-    <TrainerSideBar/>
-    </>
+    <div className='dashboard' style={{height:'46.2rem'}}>
+      <>
+      <NavBar/>
+      <TrainerSideBar/>
+      </>
+    </div>
   )
 }
 

@@ -31,7 +31,7 @@ function TrainerSideBar() {
                 color: '#fff',
                 borderRadius:'0'
             }}>
-                <MenuList sx={{width:'45vh', paddingTop:'4.5vh'}}>
+                <MenuList sx={{minWidth:'50vh', paddingTop:'4.5vh'}}>
                     <MenuItem onClick={() => navigate('/trainer/editprofile')} sx={{
                         fontSize:'25px',
                         fontWeight:'bolder',

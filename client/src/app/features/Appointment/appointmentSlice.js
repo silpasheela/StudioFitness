@@ -25,7 +25,7 @@ export const trainerGetAppointment = createAsyncThunk('trainer/trainerGetAppoint
             return response.data;
         } else {
         // If the response is not successful, handle it here
-            return rejectWithValue('Failed to fetch user data');
+            return rejectWithValue('Failed to fetch appointment data');
         }
     } catch (error) {
         return rejectWithValue('Network error');
@@ -34,7 +34,25 @@ export const trainerGetAppointment = createAsyncThunk('trainer/trainerGetAppoint
 
 
 
+//USER GET ALL APPOINTMENTS
 
+export const userGetAppointment = createAsyncThunk('user/userGetAppointment', async (_, { rejectWithValue }) => {
+
+    try {
+        
+        const response = await instance.get(`user/view-appointments`, { withCredentials: true })
+
+        if (response.status === 200) {
+            console.log(response.data)
+            return response.data;
+        } else {
+        // If the response is not successful, handle it here
+            return rejectWithValue('Failed to fetch appointment data');
+        }
+    } catch (error) {
+        return rejectWithValue('Network error');
+    }
+})
 
 
 
@@ -53,6 +71,18 @@ const appointmentSlice = createSlice({
             state.appointment = action.payload;
         })
         .addCase(trainerGetAppointment.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        })
+
+        .addCase(userGetAppointment.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(userGetAppointment.fulfilled, (state, action) => {
+            state.loading = false;
+            state.appointment = action.payload;
+        })
+        .addCase(userGetAppointment.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         })

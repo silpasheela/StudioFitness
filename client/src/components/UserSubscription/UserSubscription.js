@@ -11,6 +11,7 @@ import {subsAuth} from '../../app/features/Auth/authSlice'
 
 function UserSubscription() {
 
+
     const navigate = useNavigate();
 
     const subscriptionData = useSelector((state) => {
@@ -73,7 +74,7 @@ function UserSubscription() {
         lg={8}
         sx={{marginTop:'-36vh', marginLeft:'30rem', }}
         >
-            <Card sx={{width:'125vh',borderColor:'green', border:'1px solid'}}>
+            <Card sx={{width:'125vh',borderColor:'green', border:'1px solid',}} style={{backgroundColor: 'rgba(228, 233, 237, 0.9)', }}>
             <CardHeader
                 title="Subscription Details"
             />

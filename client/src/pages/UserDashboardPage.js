@@ -5,10 +5,13 @@ import UserSideBar from '../components/UserSideBar/UserSideBar'
 function UserDashboardPage() {
 
   return (
-    <>
-      <NavBar/>
-      <UserSideBar/>
-    </>
+
+    <div className='user-dashboard' style={{height:'46.2rem'}}>
+      <>
+        <NavBar/>
+        <UserSideBar/>
+      </>
+    </div>
   )
 }
 
