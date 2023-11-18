@@ -4,7 +4,7 @@ import '../components/ForgotPassword/ForgotPassword.css'
 
 function PasswordForgot() {
   return (
-    <div className='forgotpassword'>
+    <div className='dashboard'>
         <ForgotPassword/>
     </div>
   )

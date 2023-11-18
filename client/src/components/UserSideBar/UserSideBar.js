@@ -52,7 +52,7 @@ function UserSideBar() {
                     }}><SubscriptionsIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> My Subscriptions</MenuItem>
 
 
-                    {authState.subscriptionDetails && authState.subscriptionDetails.status === 'active' && authState.subscriptionDetails.planId === "653cb9aa8befae2d5b0cd1be" && (
+                    {authState?.subscriptionDetails && authState?.subscriptionDetails?.status === 'active' && authState?.subscriptionDetails?.planId === process.env.REACT_APP_PREMIUM_ID && (
                         <MenuItem onClick={() => navigate('/user/viewtrainers')} sx={{
                             fontSize:'25px',
                             fontWeight:'bolder',
@@ -65,16 +65,18 @@ function UserSideBar() {
                         }}><PersonAddIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> Book My Trainer</MenuItem>
                     )}
 
-                    <MenuItem onClick={() => navigate('/user/view-appointments')} sx={{
-                        fontSize:'25px',
-                        fontWeight:'bolder',
-                        fontFamily: 'inherit',
-                        color:'#88C13E',
-                        borderBottom: '1px solid #555',
-                        '&:hover': {
-                            backgroundColor: '#333',
-                        }
-                    }}><EventIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> My Appointments</MenuItem>
+                    {authState?.subscriptionDetails && authState?.subscriptionDetails?.status === 'active' && authState?.subscriptionDetails?.planId === process.env.REACT_APP_PREMIUM_ID && (
+                        <MenuItem onClick={() => navigate('/user/view-appointments')} sx={{
+                            fontSize:'25px',
+                            fontWeight:'bolder',
+                            fontFamily: 'inherit',
+                            color:'#88C13E',
+                            borderBottom: '1px solid #555',
+                            '&:hover': {
+                                backgroundColor: '#333',
+                            }
+                        }}><EventIcon fontSize="large" sx={{paddingRight:'20px',color:'#fff'}}/> My Appointments</MenuItem>
+                    )}
 
                     <MenuItem sx={{
                         fontSize:'25px',

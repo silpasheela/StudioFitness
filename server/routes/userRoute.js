@@ -17,7 +17,6 @@ router.post('/login',auth.isUser,userController.userSignIn);
 router.get('/logout',userController.userLogOut);
 router.get('/dashboard',auth.authenticateToken,auth.isUser,userController.userDashboard);
 router.put('/reset-password',userController.userPasswordReset);
-// router.put('/new-password/:token',userController.userNewPassword);
 router.put('/new-password',userController.userNewPassword);
 
 router.put('/editprofile/:id',auth.authenticateToken,auth.isUser,userController.userProfileUpdate);
@@ -28,7 +27,6 @@ router.get('/trainer/:id',auth.authenticateToken,auth.isUser,userController.user
 router.post('/create-subscription', auth.authenticateToken,auth.isUser,subscriptionController.createSubscription);
 router.get('/subscription/:userId',auth.authenticateToken,auth.isUser,subscriptionController.getSubscription);
 router.put('/subscription/cancel/:userId',auth.authenticateToken,auth.isUser,subscriptionController.cancelSubscription);
-// router.put('/subscriptions/:userId/update', auth.authenticateToken,auth.isUser,subscriptionController.updateSubscription);
 router.get('/view-plans',userController.getAllPlans);
 router.get('/plan/:id',userController.getPlanById);
 

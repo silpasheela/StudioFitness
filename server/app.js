@@ -35,6 +35,12 @@ app.use('/admin',adminRouter);
 const trainerRouter = require('./routes/trainerRoute');
 app.use('/trainer',trainerRouter);
 
+const chatRouter = require('./routes/chatRoute');
+app.use('/chat',chatRouter);
+
+const messageRouter = require('./routes/messageRoute');
+app.use('/message',messageRouter);
+
 connectDB()
 .then(() => {
     app.listen(PORT, () => {

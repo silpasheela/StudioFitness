@@ -50,3 +50,12 @@
     position: relative;
     background-position: center center;
 }
+
+
+.planpage {
+    background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819680/theme/uq3bwxrukbptjyexnovd.jpg);
+    background-size: cover;
+    height: '1000px';
+    position: relative;
+    background-position: center center;
+}

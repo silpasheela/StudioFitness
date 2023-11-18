@@ -25,9 +25,9 @@ function PlanDetails({plan}) {
             margin: 'auto',
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
             borderRadius: 3,
-            border: '2px solid',
+            border: '1px solid',
             borderColor:'green',
-            backgroundColor: '#000',
+            backgroundColor: 'rgba(60, 60, 60, 0.85)', 
             height:350,
             transform: 'skewY(-4deg)',
             transition: 'all 0.5s',
@@ -47,9 +47,9 @@ function PlanDetails({plan}) {
                     fontWeight: 'bold',
                     color: '#6EC72D',
                 }}>₹{plan.planAmount}/-</Typography>
-                <ul style={{color:'#757575',fontSize: 20, fontStyle:'italic', listStyle: 'none', padding: 0,  }} >
+                <ul style={{color:'#fff',fontSize: 20, fontStyle:'italic', listStyle: 'none', padding: 0,fontFamily:'inherit' }} >
                 {plan.features.map((feature, index) => (
-                    <li key={index} style={{borderBottom: '0.15px dashed #757575'}} >{feature}</li>
+                    <li key={index} style={{borderBottom: '0.15px dashed #000'}} >{feature}</li>
                 ))}
                 </ul>
                 <Button variant="contained" sx={{marginTop:'5%',backgroundColor:'#6EC72D',fontWeight:'bold', color:'#000',

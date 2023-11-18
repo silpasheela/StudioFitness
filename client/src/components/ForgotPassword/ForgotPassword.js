@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
-import { instance } from '../../api/axiosInstance';
+import { instance, uninterceptedApiInstance } from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -57,7 +57,7 @@ function ForgotPassword() {
         e.preventDefault();
         let isValid = true;
 
-        if(!validateEmail(formData.email)) {
+        if(!validateEmail(formData?.email)) {
             errorData.email = "Invalid email format";
             isValid = false;
         }
@@ -68,10 +68,10 @@ function ForgotPassword() {
         if(isValid) {
             
             const role = isUser ? "user" : "trainer";
-            console.log(formData.email)
+            console.log(formData?.email)
             console.log(role)
             try {
-                const {data} = await instance.put(`http://localhost:4000/${role}/reset-password`,formData);
+                const {data} = await uninterceptedApiInstance.put(`${role}/reset-password`,formData);
                 console.log(data)
                 // setEmailSent(true);
                 // let {token} = data;
@@ -79,91 +79,94 @@ function ForgotPassword() {
                 navigate('/reset-password-email', { state: { role: role} });
             } catch (error) {
                 const {response} = error;
-                console.log(response.data.message);
-                setError(response.data.message);
+                console.log(response?.data?.message);
+                setError(response?.data?.message);
             }
         }
     }
 
     return(
     
-        <div className='forgotpassword' style={{height:'739px'}}>
+        <div className='' style={{height:'100vh'}}>
         <>
-        <Box 
-            component='form'
-            autoComplete='off'
-            onSubmit={(e) => {
-                handleSubmit(e)
-            }}
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "75px",
-                borderRadius: "5px",
-                padding: "1.5rem",
-                width: { lg: "35%", md: "35%", sm: "10rem" },
-                marginLeft: '30rem',
-                // marginTop:'12rem',
-                paddingTop:'12.5rem'
-            }}>
-            <Box
+        <div style={{paddingTop:'25vh'}}>
+            <Box 
+                component='form'
+                autoComplete='off'
+                onSubmit={(e) => {
+                    handleSubmit(e)
+                }}
                 sx={{
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: "-3rem",
+                    flexDirection: "column",
+                    gap: "75px",
+                    borderRadius: "10px",
+                    padding: "2.5rem",
+                    width: { lg: "35%", md: "35%", sm: "10rem" },
+                    marginLeft: '30rem',
+                    backgroundColor: 'rgba(210, 210, 210, 0.8)', 
+                    backdropFilter: 'blur(8px)',
                 }}>
-                <Typography
+                <Box
                     sx={{
-                        color:'#000',
-                        fontSize: { lg: "1.6rem", md: "1rem", sm: ".9rem" },
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: "-3rem",
                     }}>
-                        {isUser ? `User Reset` : `Trainer Reset`}
-                </Typography>
-                <Typography
-                    sx={{
-                        fontSize: { lg: "1rem", md: "1rem", sm: ".7rem" },
-                        color: "#6EC72D",
-                        paddingTop: { lg: ".6rem", md: ".5rem", sm: ".2rem" },
-                        cursor: "pointer",  
-                        '&:hover': {
-                            color: '#848b94',
-                        },
-                        textDecoration: 'none',                                  
-                    }}
-                    onClick = {() => setIsUser(!isUser)}>
-                    {isUser ? 'Are you a trainer ?' : 'Are you a user ?'}
-                </Typography>
-            </Box>
-            <TextField
-                        label="Email" 
-                        variant="outlined"
+                    <Typography
                         sx={{
-                            width: "100%",
-                            height: ".1rem",
-                        }}
-                        name='email'
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        error={Boolean(formErrors.email)}
-                        helperText={formErrors.email}
-                        >
-            </TextField>
-            <Button
-                        variant="contained"
-                        type='submit'
-                        sx={{ 
-                            width: '25%', 
-                            backgroundColor: '#6EC72D', 
-                            color: '#161616',
-                            marginTop: "3rem",
-                            borderRadius: "5px", 
-                            marginLeft: "11rem",
-                            '&:hover': { backgroundColor: '#6EC72D' , color: '#fff'} 
+                            color:'#000',
+                            fontSize: { lg: "1.6rem", md: "1rem", sm: ".9rem" },
+                            fontFamily:'inherit'
                         }}>
-                    Reset 
-            </Button>
-        </Box>
+                            {isUser ? `User Password Reset` : `Trainer Password Reset`}
+                    </Typography>
+                    <Typography
+                        sx={{
+                            fontSize: { lg: "1rem", md: "1rem", sm: ".7rem" },
+                            color: "green",
+                            paddingTop: { lg: ".6rem", md: ".5rem", sm: ".2rem" },
+                            cursor: "pointer",  
+                            '&:hover': {
+                                color: '#848b94',
+                            },
+                            textDecoration: 'none',                                  
+                        }}
+                        onClick = {() => setIsUser(!isUser)}>
+                        {isUser ? 'Are you a trainer ?' : 'Are you a user ?'}
+                    </Typography>
+                </Box>
+                <TextField
+                            label="Email" 
+                            variant="outlined"
+                            sx={{
+                                width: "100%",
+                                height: ".1rem",
+                            }}
+                            name='email'
+                            value={formData?.email}
+                            onChange={handleInputChange}
+                            error={Boolean(formErrors?.email)}
+                            helperText={formErrors?.email}
+                            >
+                </TextField>
+                <Button
+                            variant="contained"
+                            type='submit'
+                            sx={{ 
+                                width: '25%', 
+                                backgroundColor: '#6EC72D', 
+                                color: '#161616',
+                                marginTop: "3rem",
+                                borderRadius: "5px", 
+                                marginLeft: "12.5rem",
+                                '&:hover': { backgroundColor: '#6EC72D' , color: '#fff'} 
+                            }}>
+                        Reset 
+                </Button>
+            </Box>
+        </div>
         <div>
             {error && (
                 <Typography
