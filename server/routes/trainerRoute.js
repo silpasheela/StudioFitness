@@ -1,7 +1,11 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/authMiddleware')
-const trainerController = require('../controllers/trainerController')
+const auth = require('../middleware/authMiddleware');
+const trainerController = require('../controllers/trainerController');
+const videoController = require('../controllers/videoController');
+const multer = require('multer');
+const upload = multer();
+
 
 
 router.post('/signup',trainerController.trainerSignUp);
@@ -25,6 +29,20 @@ router.delete('/slots/delete-by-date/:dateId',auth.authenticateToken,auth.isTrai
 router.get('/view-appointments',auth.authenticateToken,auth.isTrainer,trainerController.trainerGetAppointments);
 router.put('/approve-appointment/:appointmentId',auth.authenticateToken,auth.isTrainer,trainerController.trainerApproveAppointment);
 router.put('/reject-appointment/:appointmentId',auth.authenticateToken,auth.isTrainer,trainerController.trainerRejectAppointment);
+
+
+router.get(
+    "/view-appointments/:id",
+    auth.authenticateToken,
+    //   auth.isTrainer,
+    trainerController.getAppointmentDetails
+);
+
+
+// router.post('/upload-class',auth.authenticateToken,auth.isTrainer,videoController.trainerUploadVideo);
+
+router.post('/upload-class', auth.authenticateToken, auth.isTrainer, upload.array('video', 1), videoController.trainerUploadVideo);
+
 
 
 module.exports = router

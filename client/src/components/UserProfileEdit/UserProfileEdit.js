@@ -191,6 +191,7 @@ function UserProfileEdit() {
                     draggable: true,
                     progress: undefined,
                 });
+                navigate('/user/dashboard');
             }
         }
     };

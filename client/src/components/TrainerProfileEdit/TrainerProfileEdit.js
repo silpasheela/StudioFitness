@@ -194,6 +194,7 @@ function TrainerProfileEdit() {
                     draggable: true,
                     progress: undefined,
                 });
+                navigate('/trainer/dashboard');
             }
         }
     };

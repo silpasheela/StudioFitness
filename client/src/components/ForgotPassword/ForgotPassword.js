@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
-import { instance, uninterceptedApiInstance } from '../../api/axiosInstance';
+import { uninterceptedApiInstance } from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 

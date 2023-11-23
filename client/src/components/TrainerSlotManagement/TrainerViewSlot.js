@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Grid, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, } from '@mui/material';
+import {IconButton, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Slider from 'react-slick'; 
@@ -11,10 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import moment from 'moment';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import LockIcon from '@mui/icons-material/Lock';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Tooltip from '@mui/material/Tooltip';
 
 
 
@@ -114,6 +111,7 @@ function TrainerViewSlot() {
             const formattedEndTime = moment(editedEndTime, 'HH:mm').format('HH:mm');
 
             // Make an API call to update the slot
+            // eslint-disable-next-line no-unused-vars
             const response = await instance.put(`trainer/slot-update/${selectedSlotId}`, {
                 date: selectedDate,
                 startTime: formattedStartTime,

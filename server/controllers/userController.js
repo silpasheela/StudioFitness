@@ -309,22 +309,10 @@ const userProfileUpdate = async(req,res) => {
                 message: `User doesn't exist`
             })
         }
-        // upload.single('profilePicture')(req,res,async(error) => {
             try {
-                // if(error) {
-                //     return res.status(500).json({
-                //         message: 'Image upload error'
-                //     });
-                // }
-                // if(req.file) {
-                //     const userProfilePicture = await cloudinary.uploader.upload(req.file.path,{folder:'Users'});
-                //     updateInfo.profilePicture = userProfilePicture.secure_url;
-                //     // console.log(userProfilePicture)
-                // }
                 const projection = { password:0,email:0,role:0,subscriptionDetails:0,emailVerificationToken:0,isEmailVerified:0,resetPasswordToken:0,isActive:0,googleId:0,__v:0,bio:0 };
                 
                 const updateInfo = await User.findByIdAndUpdate(req.userId,req.body,{ new: true, runValidators: true, projection })
-                console.log("updateInfo",updateInfo)
                 res.status(200).json({
                     message: 'Profile updated successfully',
                     user:updateInfo
@@ -335,7 +323,6 @@ const userProfileUpdate = async(req,res) => {
                     message: 'Error in updating user data'
                 });
             }
-        // })
     } catch (error) {
         res.status(500).json({
             message: 'Internal server error'

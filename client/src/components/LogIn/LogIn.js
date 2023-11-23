@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react"
 import './LogIn.css'
 import Form from '../Shared/Form'

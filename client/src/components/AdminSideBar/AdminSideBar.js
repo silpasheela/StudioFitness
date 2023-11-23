@@ -1,5 +1,5 @@
-import {React,useEffect,useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {React,useState} from 'react';
+import { useDispatch, } from 'react-redux';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,12 +18,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SupervisedUserCircleSharpIcon from '@mui/icons-material/SupervisedUserCircleSharp';
-// import MailIcon from '@mui/icons-material/Mail';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import './AdminSideBar.css'
 import {adminLogout} from '../../app/features/Admin/adminSlice'
@@ -115,15 +114,6 @@ export default function PersistentDrawerLeft() {
         navigate('/admin/login')
     }
 
-    // let adminLogoutStatus = useSelector((state) => {
-    //     return state.admin
-    // })
-
-    // useEffect(() => {
-    //     if(adminLogoutStatus.success) {
-
-    //     }
-    // })
 
     return (
         <Box sx={{ display: 'flex'}}>

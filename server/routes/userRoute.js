@@ -1,11 +1,12 @@
-require('../utils/googleStrategy')
-require('../utils/jwtStrategy')
-const express = require('express')
+require('../utils/googleStrategy');
+require('../utils/jwtStrategy');
+const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/authMiddleware')
-const userController = require('../controllers/userController')
-const subscriptionController = require('../controllers/subscriptionController')
-const passport = require('passport')
+const auth = require('../middleware/authMiddleware');
+const userController = require('../controllers/userController');
+const subscriptionController = require('../controllers/subscriptionController');
+const videoController = require('../controllers/videoController');
+const passport = require('passport');
 
 
 router.use(passport.initialize());
@@ -38,6 +39,9 @@ router.put('/cancel-appointment/:appointmentId',auth.authenticateToken,auth.isUs
 
 
 
+
+router.get('/view-classes',auth.authenticateToken,auth.isUser,videoController.userGetAllVideos);
+router.get('/view-class/:id',auth.authenticateToken,auth.isUser,videoController.userGetVideoClass);
 
 
 
