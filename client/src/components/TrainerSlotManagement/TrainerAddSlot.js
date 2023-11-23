@@ -49,7 +49,6 @@ function TrainerAddSlot() {
             });
 
             if (!response.data.success) {
-                // alert('Failed to add slot');
                 console.log("err",response.data)
                 return;
             }

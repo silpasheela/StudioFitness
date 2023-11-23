@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,7 +10,7 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import { adminBlockUnblockTrainer, adminGetAllTrainers, adminVerifyTrainer, adminGetTrainer } from '../../app/features/Admin/adminSlice'
+import { adminBlockUnblockTrainer, adminGetAllTrainers, adminVerifyTrainer, } from '../../app/features/Admin/adminSlice'
 import Modal from '@mui/material/Modal';
 import DataTable from '../DataTable/DataTable'
 
@@ -56,7 +56,8 @@ function AdminTrainerData() {
 
     const handleToggleActive = (id) => {
         dispatch(adminVerifyTrainer(id)).then(() => {
-            dispatch(adminGetTrainer(id));
+            // dispatch(adminGetTrainer(id));
+            dispatch(adminGetAllTrainers());
             console.log("dispatch",id)
         })
     }
@@ -89,12 +90,6 @@ function AdminTrainerData() {
 
     const tableContent = rows;
 
-    // const handleBlocking = (id) => {
-
-    //     dispatch(adminBlockUnblockTrainer(id)).then(() => {
-    //         dispatch(adminGetAllTrainers());
-    //     })
-    // }
 
     const handleBlocking = (id) => {
         confirmAlert({
@@ -135,9 +130,9 @@ function AdminTrainerData() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={{ ...style, width: 400, padding: 1.5, bgcolor: '#000',borderRadius:10,}}>
+                <Box sx={{ ...style, width: 400, padding: 1.5,borderRadius:10,}}>
                     {selectedUser && (
-                    <Card sx={{bgcolor: '#e4f5ce',}}>
+                    <Card sx={{bgcolor: '#fff',}}>
                         <CardContent>
                         <Box display="flex" justifyContent="flex-end">
                             <IconButton onClick={handleClose}>
@@ -145,12 +140,12 @@ function AdminTrainerData() {
                             </IconButton>
                         </Box>
                         <Box display="flex" alignItems="center" justifyContent="center" marginBottom={2}>
-                            <Avatar sx={{ width: 80, height: 80 }}>
-                            {/* Replace with user's profile picture if available */}
-                            {selectedUser.fullName.charAt(0)}
+                        <Avatar sx={{ width: 125, height: 125 }} 
+                            src = {selectedUser?.profilePicture}
+                            alt = {selectedUser?.fullName.charAt(0)}>
                             </Avatar>
                         </Box>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" textAlign="center">
+                        <Typography id="modal-modal-title" variant="h4" component="h2" textAlign="center" fontFamily={'fantasy'}>
                             {selectedUser.fullName}
                         </Typography>
                         <Divider sx={{ marginY: 2 }} />
@@ -183,10 +178,13 @@ function AdminTrainerData() {
                         />
                         <Button 
                             variant="contained" 
-                            color="primary" 
+                            sx={{marginRight:'15px',backgroundColor: '#6EC72D', 
+                                color: '#000',
+                                borderRadius: "5px", 
+                                '&:hover': { backgroundColor: '#6EC72D' , color: '#fff'}}}
                             onClick={() => window.open(selectedUser.certificate, "_blank")}
                         >
-                            View Certificate
+                            Certificate
                         </Button>
                         <FormControlLabel
                             control={
@@ -194,9 +192,10 @@ function AdminTrainerData() {
                                 checked={selectedUser.isAdminVerified}
                                 onChange={() => handleToggleActive(selectedUser._id)}
                                 name="isAdminVerified"
+                                style={{ color: '#4CAF50' }}
                             />
                             }
-                            label={selectedUser.isAdminVerified ? "Verified" : "Suspended"}
+                            label={selectedUser.isAdminVerified ? "Verified" : "Not Verified"}
                         />
                         </CardContent>
                     </Card>

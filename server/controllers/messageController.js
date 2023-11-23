@@ -2,88 +2,90 @@ const Message = require("../models/messageModel");
 const Conversation = require("../models/conversationModel");
 
 const sentMessage = async (req, res) => {
-  const { content, role } = req.body;
-  try {
-    const { chatId } = req.params;
-    const sender = req.userId;
 
-    const chat = await Conversation.findById(chatId);
-    if (!chat) {
-      return res.status(404).json({ error: "Chat not found" });
+    const { content, role } = req.body;
+    try {
+        const { chatId } = req.params;
+        const sender = req.userId;
+
+        const chat = await Conversation.findById(chatId);
+        if (!chat) {
+        return res.status(404).json({ error: "Chat not found" });
+        }
+        const newMessage = new Message({
+        conversation: chatId,
+        sender: sender,
+        senderModel: role,
+        content: content,
+        });
+
+        const latestMessage = await newMessage.save();
+
+        const savedMessage = await Message.findById(latestMessage._id)
+        .populate({
+            path: "sender",
+            select: "fullName email profilePicture",
+        })
+        .populate({
+            path: "conversation",
+            populate: {
+            path: "participants.trainer participants.user",
+            select: "fullName email profilePicture",
+            },
+        });
+
+        chat.latestMessage = savedMessage._id;
+        await chat.save();
+
+        return res.status(201).json(savedMessage);
+    } catch (err) {
+            res.status(500).json({
+            errorInfo: "Internal Server Error",
+        });
     }
-    const newMessage = new Message({
-      conversation: chatId,
-      sender: sender,
-      senderModel: role,
-      content: content,
-    });
-
-    const latestMessage = await newMessage.save();
-
-    const savedMessage = await Message.findById(latestMessage._id)
-      .populate({
-        path: "sender",
-        select: "fullName email profilePicture",
-      })
-      .populate({
-        path: "conversation",
-        populate: {
-          path: "participants.trainer participants.user",
-          select: "fullName email profilePicture",
-        },
-      });
-
-    chat.latestMessage = savedMessage._id;
-    await chat.save();
-
-    return res.status(201).json(savedMessage);
-  } catch (err) {
-    res.status(500).json({
-      errorInfo: "Internal Server Error",
-    });
-  }
 };
 
 const recieveMessage = async (req, res) => {
-  try {
-    const { chatId } = req.params;
 
-    const messages = await Message.find({ conversation: chatId })
-      .sort({ updatedAt: 1 })
-      .populate({
-        path: "conversation",
-        populate: {
-          path: "latestMessage",
-          populate: {
+    try {
+        const { chatId } = req.params;
+
+        const messages = await Message.find({ conversation: chatId })
+        .sort({ updatedAt: 1 })
+        .populate({
+            path: "conversation",
+            populate: {
+            path: "latestMessage",
+            populate: {
+                path: "sender",
+                select: "fullName email profilePicure",
+            },
+            },
+        })
+        .populate({
+            path: "conversation",
+            populate: {
+            path: "participants.trainer participants.user",
+            select: "fullName email profilePicture",
+            },
+        })
+        .populate({
             path: "sender",
-            select: "fullName email profilePicure",
-          },
-        },
-      })
-      .populate({
-        path: "conversation",
-        populate: {
-          path: "participants.trainer participants.user",
-          select: "fullName email profilePicture",
-        },
-      })
-      .populate({
-        path: "sender",
-        select: "fullName email profilePicture",
-      });
+            select: "fullName email profilePicture",
+        });
 
-    if (messages.length === 0) {
-      return res
-        .status(200)
-        .json({ message: "No messages found in the conversation" });
+        if (messages.length === 0) {
+        return res
+            .status(200)
+            .json({ message: "No messages found in the conversation" });
+        }
+
+        return res.status(200).json(messages);
+    } catch (err) {
+        res.status(500).json({
+        errorInfo: "Internal Server Error",
+        });
     }
-
-    return res.status(200).json(messages);
-  } catch (err) {
-    res.status(500).json({
-      errorInfo: "Internal Server Error",
-    });
-  }
 };
 
 module.exports = {

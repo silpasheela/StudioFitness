@@ -3,12 +3,13 @@
     background-size: cover;
     height: '100%';
     position: relative;
+    background-repeat: no-repeat;
     background-position: center center;
 }
 
 
 .add-slot{
-    background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699821930/theme/ottjxzbmxb6byiufqsoo.jpg);
+    background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1700747640/theme/qvpkvps4k2kdrkpxhgjk.png);
     background-size: cover;
     height: '1000px';
     position: relative;
@@ -44,7 +45,7 @@
 
 
 .common-background-user {
-    background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699873342/theme/a5qos29onxvhiynpzpfl.jpg);
+    background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819680/theme/aueilaujmmp7lpuiifzt.webp);
     background-size: cover;
     height: '1000px';
     position: relative;

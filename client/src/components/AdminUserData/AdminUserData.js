@@ -126,7 +126,7 @@ function AdminUserData() {
             >
                 <Box sx={{ ...style, width: 400, padding: 1.5,borderRadius:5,}}>
                     {selectedUser && (
-                    <Card sx={{bgcolor: '#e4f5ce',}}>
+                    <Card sx={{bgcolor: '#fff',}}>
                         <CardContent>
                         <Box display="flex" justifyContent="flex-end">
                             <IconButton onClick={handleClose}>
@@ -134,13 +134,13 @@ function AdminUserData() {
                             </IconButton>
                         </Box>
                         <Box display="flex" alignItems="center" justifyContent="center" marginBottom={2}>
-                            <Avatar sx={{ width: 80, height: 80 }}>
-                            {/* Replace with user's profile picture if available */}
-                            {selectedUser.fullName.charAt(0)}
+                            <Avatar sx={{ width: 125, height: 125 }} 
+                            src = {selectedUser?.profilePicture}
+                            alt = {selectedUser?.fullName.charAt(0)}>
                             </Avatar>
                         </Box>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" textAlign="center">
-                            {selectedUser.fullName}
+                        <Typography id="modal-modal-title" variant="h4" component="h2" textAlign="center" fontFamily={'fantasy'}>
+                            {selectedUser?.fullName}
                         </Typography>
                         <Divider sx={{ marginY: 2 }} />
                         <TextField
@@ -180,6 +180,7 @@ function AdminUserData() {
                             margin="normal"
                             disabled // disable the field
                         />
+                        
                         </CardContent>
                     </Card>
                     )}

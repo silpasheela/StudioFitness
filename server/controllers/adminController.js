@@ -290,6 +290,7 @@ const blockTrainer = async(req,res) => {
 
 
 const verifyTrainerCertificate = async(req,res) => {
+    
     const {id} = req.params;
     console.log(id);
 

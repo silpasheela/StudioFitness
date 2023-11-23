@@ -21,7 +21,7 @@ function ViewTrainersPage() {
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
-    //
+
 
     const [genderFilter, setGenderFilter] = useState([]);
     

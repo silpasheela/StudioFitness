@@ -17,6 +17,7 @@ import { useMediaQuery } from "@mui/material";
 import { instance } from "./../../api/axiosInstance";
 
 function ChatUI({ role }) {
+
     const searchUrl = role === "trainer" ? `/chat/getusers` : `/chat/gettrainers`;
     const createChatUrl =
         role === "trainer" ? `/chat/trainer/create` : `/chat/user/create`;
@@ -189,9 +190,9 @@ function ChatUI({ role }) {
         <Stack
         direction={isSmallScreen ? "column" : "row"}
         sx={{
-            marginTop: "5rem",
+            marginTop: "10rem",
             padding: "0 4rem",
-            // marginLeft: { lg: "-25rem", md: "-25rem", sm: "-7rem", xs: "1rem" },
+
         }}>
         {/* Conversation list */}
         <Stack
@@ -204,6 +205,7 @@ function ChatUI({ role }) {
             height: "30rem",
             borderRadius: ".4rem",
             marginBottom: "1rem",
+            backgroundColor:'#F9F9F9'
             }}>
             <Box
             sx={{
@@ -215,7 +217,7 @@ function ChatUI({ role }) {
                 sx={{
                 width: "100%",
                 border: "1px dotted rgba(14,14,14,0.3)",
-                borderRadius: ".3rem",
+                borderRadius: ".5rem",
                 }}
                 value={searchValue}
                 onChange={handleSearchChange}
@@ -247,7 +249,7 @@ function ChatUI({ role }) {
                     borderRadius: ".3rem",
                     marginBottom: ".5rem",
                     backgroundColor:
-                    conversationId === conversation._id ? "#a1f59d" : "",
+                    conversationId === conversation._id ? "#98fa50" : "",
                 }}
                 onClick={() => {
                     setConversationId(conversation._id);
@@ -264,7 +266,7 @@ function ChatUI({ role }) {
                     height: "2.5rem",
                     objectFit: "cover",
                     marginRight: ".5rem",
-                    borderRadius: ".2rem",
+                    borderRadius: "2rem",
                     }}
                 />
                 <Box>
@@ -370,11 +372,8 @@ function ChatUI({ role }) {
             borderRadius: ".2rem",
             padding: "1rem",
             boxSizing: "border-box",
+            backgroundImage: 'url("https://res.cloudinary.com/djd2rpgil/image/upload/v1700734239/theme/a5bt0weztbidais7od3y.jpg")', 
             }}>
-
-            
-
-
             <Box>
             <Stack
                 sx={{
@@ -426,14 +425,15 @@ function ChatUI({ role }) {
                 {conversationId && (
                 <textarea
                     style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    paddingRight: "2.5rem",
-                    outline: "none",
-                    resize: "none",
-                    border: ".5px #496b78 solid",
-                    borderRadius: ".3rem",
+                        width: "100%",
+                        padding: "0.5rem",
+                        paddingRight: "2.5rem",
+                        outline: "none",
+                        resize: "none",
+                        border: ".5px #496b78 solid",
+                        borderRadius: "2rem",
                     }}
+                    placeholder="Message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={(e) => {

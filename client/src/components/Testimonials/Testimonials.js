@@ -22,7 +22,7 @@ function Testimonials() {
                     <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bolder', color:'#fff'}}>
                     Brenda Frazier
                 </Typography>
-                    <Typography variant="body2" sx={{ fontStyle: 'italic', color: '#99D76C' ,fontFamily: 'cursive'}}>
+                    <Typography variant="body2" sx={{ fontStyle: 'italic', color: '#99D76C' ,fontFamily: 'cursive',fontSize:'13px'}}>
                     "Fitness within is the cleanest and most organized gym I've ever seen! I have no words to say how wonderful they are! Domenic makes you feel super comfortable, Kaitlyn helps you eat better and healthy!"
                     </Typography>
                 </CardContent>
@@ -38,7 +38,7 @@ function Testimonials() {
                     <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bolder', color:'#fff'}}>
                     Vivian Estrada
                 </Typography>
-                    <Typography variant="body2" sx={{ fontStyle: 'italic', color: '#99D76C',fontFamily: 'cursive' }}>
+                    <Typography variant="body2" sx={{ fontStyle: 'italic', color: '#99D76C',fontFamily: 'cursive',fontSize:'13px' }}>
                     "Since joining Fitness Within one year ago, I have become stronger and I have lost 38lbs.  The workouts are always different, hard and fun!  The trainers will push you harder than though you could go."
                     </Typography>
                 </CardContent>
@@ -54,7 +54,7 @@ function Testimonials() {
                     <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bolder', color:'#fff'}}>
                     Martin Alex
                 </Typography>
-                    <Typography variant="body2" sx={{ fontStyle: 'italic', color: '#99D76C', fontFamily: 'cursive',}}>
+                    <Typography variant="body2" sx={{ fontStyle: 'italic', color: '#99D76C', fontFamily: 'cursive', fontSize:'13px'}}>
                     "I will have been training at Fitness Within 3 years December 2020. Since working out here I am stronger and in better shape than at any other time in my life. I find every class and every trainer are different.!"
                     </Typography>
                 </CardContent>
