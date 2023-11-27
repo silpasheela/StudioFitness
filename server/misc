@@ -279,3 +279,564 @@ subs {
   trial_settings: { end_behavior: { missing_payment_method: 'create_invoice' } },
   trial_start: null
 }
+
+
+
+
+const getAllTrainers = async(req,res) => {
+    
+  try {
+      const trainers = await Trainer.find({}, { password: 0 }).populate('service','service-_id');
+
+      if(trainers) {
+          return res.status(200).json({
+              trainers,
+              message: `Trainer details fetched successfully`
+          })
+      }
+      res.status(404).json({
+          message:'No Trainer data available!'
+      })
+  } catch (error) {
+      res.status(500).json({
+          message: 'Internal server error'
+      })
+  }
+}
+
+
+this is the fetchall trainers controller.. i want another controller such that it uses mongodb aggregation to group the trainer based on the  
+service
+and total count of trainer under particular service so that i can display it on the admin dashboard... the sample data that can be fetched using getAllTrainers api is as shown below
+
+{
+  "trainers": [
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "6536807bd63c57184426b717",
+          "fullName": "Nina Ryan",
+          "mobileNumber": "7845614525",
+          "email": "nina@yahoo.in",
+          "role": "trainer",
+          "emailVerificationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3ODQ1NjE0NTI1IiwiZW1haWwiOiJuaW5hQHlhaG9vLmluIiwiaWF0IjoxNjk4MDcwNjUxLCJleHAiOjE2OTgwNzc4NTF9.RrYpI2JTLDbKnRshvdMR-x4oUGDne10onti5ofCZSG0",
+          "isEmailVerified": false,
+          "isAdminVerified": false,
+          "isActive": true,
+          "comments": [],
+          "availableSlots": [
+              {
+                  "date": "2023-11-06T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "16:00",
+                          "endTime": "17:00",
+                          "status": false,
+                          "_id": "65467a6b232dc0f85a64d3f0"
+                      }
+                  ],
+                  "_id": "65467a6b232dc0f85a64d3ef"
+              },
+              {
+                  "date": "2023-11-22T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "17:30",
+                          "endTime": "18:30",
+                          "status": false,
+                          "_id": "654f0fcb5082129bd2c1b21f"
+                      }
+                  ],
+                  "_id": "654f0fcb5082129bd2c1b21e"
+              }
+          ],
+          "__v": 2,
+          "certificate": "null",
+          "city": "New Val",
+          "gender": "female",
+          "qualification": "ACSM",
+          "service": {
+              "service": "Power"
+          },
+          "state": "ME",
+          "street": "7417 Evelynn Parkway",
+          "zip": "43792",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698073418/v0rq7clnrj0gpeyuhsek.jpg"
+      },
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "653681e9d63c57184426b735",
+          "fullName": "Sonya Mullen",
+          "mobileNumber": "9846654784",
+          "email": "sonya@yahoo.com",
+          "role": "trainer",
+          "emailVerificationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ODQ2NjU0Nzg0IiwiZW1haWwiOiJzb255YUB5YWhvby5jb20iLCJpYXQiOjE2OTgwNzEwMTcsImV4cCI6MTY5ODA3ODIxN30.CSGCjd-wsaR09s4PDyfXuZ7qBehRSjaTrcmOFz9W5ko",
+          "isEmailVerified": false,
+          "isAdminVerified": true,
+          "isActive": true,
+          "comments": [],
+          "availableSlots": [
+              {
+                  "date": "2023-11-05T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "16:00",
+                          "endTime": "17:00",
+                          "status": false,
+                          "_id": "65467e41028ad98acc6510d0"
+                      }
+                  ],
+                  "_id": "65467e41028ad98acc6510cf"
+              }
+          ],
+          "__v": 1,
+          "certificate": "null",
+          "city": "Considineberg",
+          "gender": "male",
+          "qualification": "NSCA",
+          "service": {
+              "service": "Full body"
+          },
+          "state": "NV",
+          "street": "9350 Mraz Course",
+          "zip": "37778",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698073141/p1swmjkcb8et8zh0ba61.jpg"
+      },
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "65368210d63c57184426b738",
+          "fullName": "Norma Singleton",
+          "mobileNumber": "8456812356",
+          "email": "norma@gmail.com",
+          "role": "trainer",
+          "emailVerificationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4NDU2ODEyMzU2IiwiZW1haWwiOiJub3JtYUBnbWFpbC5jb20iLCJpYXQiOjE2OTgwNzEwNTYsImV4cCI6MTY5ODA3ODI1Nn0.RCLcI8wJBbq02A9wPjLTSe0njGJTDPbfG52ThLu2TZ0",
+          "isEmailVerified": false,
+          "isAdminVerified": false,
+          "isActive": true,
+          "comments": [],
+          "availableSlots": [
+              {
+                  "date": "2023-11-05T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "16:00",
+                          "endTime": "17:00",
+                          "status": false,
+                          "_id": "65467e12028ad98acc6510c9"
+                      }
+                  ],
+                  "_id": "65467e12028ad98acc6510c8"
+              }
+          ],
+          "__v": 1,
+          "certificate": "null",
+          "city": "East Budbury",
+          "gender": "male",
+          "qualification": "CSCS",
+          "service": {
+              "service": "Aerobics"
+          },
+          "state": "UT",
+          "street": "9656 Candice Way",
+          "zip": "68722",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698073283/brvg6ujlikh24kl3teqd.jpg"
+      },
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "65368174d63c57184426b72a",
+          "fullName": "Victoria Fay",
+          "mobileNumber": "8479577785",
+          "email": "victoria@gmail.com",
+          "role": "trainer",
+          "emailVerificationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4NDc5NTc3Nzg1IiwiZW1haWwiOiJ2aWN0b3JpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTgwNzA5MDAsImV4cCI6MTY5ODA3ODEwMH0.86F2os8zgC7R6j62rAg4UaF2YbYYK3M3NG338GWa32E",
+          "isEmailVerified": false,
+          "isAdminVerified": false,
+          "isActive": true,
+          "comments": [],
+          "availableSlots": [
+              {
+                  "date": "2023-11-07T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "16:00",
+                          "endTime": "17:00",
+                          "status": false,
+                          "_id": "65468216da42482d879a1660"
+                      }
+                  ],
+                  "_id": "65468216da42482d879a165f"
+              }
+          ],
+          "__v": 1,
+          "certificate": "null",
+          "city": "Tobyberg",
+          "gender": "male",
+          "qualification": "NASM",
+          "service": {
+              "service": "Cardio"
+          },
+          "state": "WA",
+          "street": "613 Abernathy Plaza",
+          "zip": "11682",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698073022/yvtvwjppjqpk8pa5m8z1.jpg"
+      },
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "651cf750b1932c058f5fc543",
+          "fullName": "Jaison Gerold",
+          "gender": "male",
+          "mobileNumber": "7954785243",
+          "email": "svvastikaindia@gmail.com",
+          "role": "trainer",
+          "isVerified": false,
+          "isEmailVerified": true,
+          "isAdminVerified": false,
+          "comments": [],
+          "availableSlots": [],
+          "__v": 0,
+          "isActive": true,
+          "city": "Vernstad",
+          "qualification": "B.Tech, AFAA",
+          "service": {
+              "service": "Cardio"
+          },
+          "state": "Illinois",
+          "street": "123 Edward",
+          "zip": "44902",
+          "certificate": "null",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1697998809/h6bms2ziu59yoirzsluo.jpg"
+      },
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "65367fd6d63c57184426b706",
+          "fullName": "Emma Holland",
+          "mobileNumber": "7201545651",
+          "email": "emma@gmail.com",
+          "role": "trainer",
+          "emailVerificationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MjAxNTQ1NjUxIiwiZW1haWwiOiJlbW1hQGdtYWlsLmNvbSIsImlhdCI6MTY5ODA3MDQ4NiwiZXhwIjoxNjk4MDc3Njg2fQ.53kpCbOFjA0wXHDkxeJkazoqGq-evJE6eDs7g3twyzc",
+          "isEmailVerified": false,
+          "isAdminVerified": false,
+          "isActive": true,
+          "comments": [],
+          "availableSlots": [
+              {
+                  "date": "2023-11-04T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "15:30",
+                          "endTime": "16:30",
+                          "status": false,
+                          "_id": "65460c0aee53bcd800e559a4"
+                      }
+                  ],
+                  "_id": "65460c0aee53bcd800e559a3"
+              },
+              {
+                  "date": "2023-11-05T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "13:30",
+                          "endTime": "14:30",
+                          "status": false,
+                          "_id": "65460c33ee53bcd800e559bb"
+                      },
+                      {
+                          "startTime": "14:30",
+                          "endTime": "15:30",
+                          "status": false,
+                          "_id": "65460c3bee53bcd800e559cb"
+                      },
+                      {
+                          "startTime": "15:30",
+                          "endTime": "16:30",
+                          "status": false,
+                          "_id": "65460c43ee53bcd800e559dd"
+                      },
+                      {
+                          "startTime": "16:30",
+                          "endTime": "17:30",
+                          "status": false,
+                          "_id": "65460c4aee53bcd800e559f1"
+                      },
+                      {
+                          "startTime": "17:30",
+                          "endTime": "18:30",
+                          "status": false,
+                          "_id": "65460c5fee53bcd800e55a1b"
+                      },
+                      {
+                          "startTime": "18:30",
+                          "endTime": "19:30",
+                          "status": false,
+                          "_id": "65460c65ee53bcd800e55a33"
+                      },
+                      {
+                          "startTime": "19:30",
+                          "endTime": "20:30",
+                          "status": false,
+                          "_id": "65460c71ee53bcd800e55a65"
+                      },
+                      {
+                          "startTime": "20:30",
+                          "endTime": "21:30",
+                          "status": false,
+                          "_id": "65460c79ee53bcd800e55a81"
+                      },
+                      {
+                          "startTime": "21:30",
+                          "endTime": "22:30",
+                          "status": false,
+                          "_id": "65460c7fee53bcd800e55a9f"
+                      },
+                      {
+                          "startTime": "22:30",
+                          "endTime": "23:30",
+                          "status": false,
+                          "_id": "65460c87ee53bcd800e55abf"
+                      }
+                  ],
+                  "_id": "65460c33ee53bcd800e559ba"
+              },
+              {
+                  "date": "2023-11-06T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "13:00",
+                          "endTime": "14:00",
+                          "status": false,
+                          "_id": "65474464ca4dfbfd64d0aa3c"
+                      }
+                  ],
+                  "_id": "65474253ca4dfbfd64d0a979"
+              },
+              {
+                  "date": "2023-11-15T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "10:00",
+                          "endTime": "11:00",
+                          "status": false,
+                          "_id": "65474c46ca4dfbfd64d0aaf0"
+                      }
+                  ],
+                  "_id": "65474c46ca4dfbfd64d0aaef"
+              },
+              {
+                  "date": "2023-11-22T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "14:30",
+                          "endTime": "15:30",
+                          "status": false,
+                          "_id": "65476948ca4dfbfd64d0ac7b"
+                      },
+                      {
+                          "startTime": "15:30",
+                          "endTime": "16:30",
+                          "status": true,
+                          "_id": "65476948ca4dfbfd64d0acad"
+                      },
+                      {
+                          "startTime": "16:30",
+                          "endTime": "17:30",
+                          "status": false,
+                          "_id": "65476948ca4dfbfd64d0ace1"
+                      },
+                      {
+                          "startTime": "20:30",
+                          "endTime": "21:30",
+                          "status": false,
+                          "_id": "65476948ca4dfbfd64d0ad17"
+                      },
+                      {
+                          "startTime": "18:30",
+                          "endTime": "19:30",
+                          "status": true,
+                          "_id": "655073532e573ffc340ddb76"
+                      },
+                      {
+                          "startTime": "19:30",
+                          "endTime": "20:30",
+                          "status": true,
+                          "_id": "655073532e573ffc340ddbb2"
+                      },
+                      {
+                          "startTime": "13:30",
+                          "endTime": "14:30",
+                          "status": false,
+                          "_id": "655073532e573ffc340ddcb6"
+                      }
+                  ],
+                  "_id": "65476948ca4dfbfd64d0ac4a"
+              },
+              {
+                  "date": "2023-11-07T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "16:00",
+                          "endTime": "17:00",
+                          "status": false,
+                          "_id": "65476ed9ca4dfbfd64d0b3c6"
+                      },
+                      {
+                          "startTime": "17:00",
+                          "endTime": "18:00",
+                          "status": false,
+                          "_id": "65476f07ca4dfbfd64d0e420"
+                      }
+                  ],
+                  "_id": "65476ed9ca4dfbfd64d0b3c5"
+              },
+              {
+                  "date": "2023-11-17T00:00:00.000Z",
+                  "slots": [],
+                  "_id": "654fb3632e573ffc340dd755"
+              },
+              {
+                  "date": "2023-11-12T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "13:30",
+                          "endTime": "14:30",
+                          "status": false,
+                          "_id": "65507b8c2e573ffc340ddeb6"
+                      }
+                  ],
+                  "_id": "654fb3972e573ffc340dd840"
+              },
+              {
+                  "date": "2023-11-13T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "12:45",
+                          "endTime": "13:45",
+                          "status": false,
+                          "_id": "65507ba12e573ffc340ddf8b"
+                      }
+                  ],
+                  "_id": "65507ba12e573ffc340ddf8a"
+              },
+              {
+                  "date": "2023-11-30T00:00:00.000Z",
+                  "slots": [],
+                  "_id": "65509f0e2e573ffc340debde"
+              },
+              {
+                  "date": "2023-11-24T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "14:00",
+                          "endTime": "15:00",
+                          "status": true,
+                          "_id": "655dbd8df7eed0beace0ad98"
+                      },
+                      {
+                          "startTime": "15:00",
+                          "endTime": "16:00",
+                          "status": true,
+                          "_id": "65604dc096cf9441016bd53f"
+                      },
+                      {
+                          "startTime": "17:00",
+                          "endTime": "18:00",
+                          "status": true,
+                          "_id": "65604fc1dd9ffa62b7e01bd8"
+                      },
+                      {
+                          "startTime": "16:30",
+                          "endTime": "17:30",
+                          "status": true,
+                          "_id": "65606354dd9ffa62b7e02347"
+                      }
+                  ],
+                  "_id": "655dbd8df7eed0beace0ad97"
+              },
+              {
+                  "date": "2023-11-23T00:00:00.000Z",
+                  "slots": [
+                      {
+                          "startTime": "09:30",
+                          "endTime": "10:30",
+                          "status": true,
+                          "_id": "655e421d8b91e1dc65ef8964"
+                      }
+                  ],
+                  "_id": "655e421d8b91e1dc65ef8963"
+              }
+          ],
+          "__v": 89,
+          "certificate": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698736199/bqf588k41ldozq31tdr9.pdf",
+          "city": "abc",
+          "gender": "female",
+          "qualification": "ZIN Certified",
+          "service": {
+              "service": "Zumba"
+          },
+          "state": "ND",
+          "street": "abc",
+          "zip": "55958",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698072558/wxxf27gya5cijagtarqg.jpg"
+      },
+      {
+          "likes": {
+              "user": []
+          },
+          "ratings": {
+              "user": []
+          },
+          "_id": "65367f71d63c57184426b6fe",
+          "fullName": "Bethany Gamble",
+          "mobileNumber": "9458424541",
+          "email": "bethany@gmail.com",
+          "role": "trainer",
+          "emailVerificationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5NDU4NDI0NTQxIiwiZW1haWwiOiJiZXRoYW55QGdtYWlsLmNvbSIsImlhdCI6MTY5ODA3MDM4NSwiZXhwIjoxNjk4MDc3NTg1fQ.nC4FqZP__6gyhBY7kqwT6vt1BYn-k1E9QQnW3uRdCJQ",
+          "isEmailVerified": false,
+          "isAdminVerified": false,
+          "isActive": false,
+          "comments": [],
+          "availableSlots": [],
+          "__v": 0,
+          "certificate": "null",
+          "city": "Jefferyfurt",
+          "gender": "female",
+          "qualification": "ACE-CPT",
+          "service": {
+              "service": "Cardio"
+          },
+          "state": "NH",
+          "street": "9317 Rohan Vista",
+          "zip": "79160",
+          "profilePicture": "https://res.cloudinary.com/dk81bsiz2/image/upload/v1698072538/nssbfiawvlt2ucoc11rt.jpg"
+      },
+  ],
+  "message": "Trainer details fetched successfully"
+}

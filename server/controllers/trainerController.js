@@ -735,7 +735,9 @@ const trainerGetAppointments = async (req,res) => {
 
     try {
         const trainerId = req.userId; 
-        const currentDate = new Date().toISOString();
+        // const currentDate = new Date().toISOString();
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); 
     
         const appointments = await Appointment.find({
             trainerId,

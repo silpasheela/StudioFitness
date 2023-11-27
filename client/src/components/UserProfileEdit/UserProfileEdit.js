@@ -225,10 +225,11 @@ function UserProfileEdit() {
                 draggable: true,
                 progress: undefined,
             });
+            navigate('/user/dashboard');
 
         } catch (error) {
             console.log(error);
-            toast.success('Profile updated successfully!', {
+            toast.error('Error in updating profile!', {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -237,6 +238,7 @@ function UserProfileEdit() {
                 draggable: true,
                 progress: undefined,
             }); 
+            navigate('/user/dashboard');
         }
     }
 

@@ -674,7 +674,9 @@ const userBookAppointment = async (req, res) => {
 const userGetAppointments = async (req, res) => {
     try {
         const userId = req.userId;
-        const currentDate = new Date().toISOString();
+        // const currentDate = new Date().toISOString();
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); 
     
         const appointments = await Appointment.find({
             userId,

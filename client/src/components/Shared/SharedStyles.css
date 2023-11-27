@@ -60,3 +60,11 @@
     position: relative;
     background-position: center center;
 }
+
+
+.video-page {
+    /* height: '1000px'; */
+    position: relative;
+    background-position: center center;
+    background-color: black;
+}

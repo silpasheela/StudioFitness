@@ -3,6 +3,8 @@ const User = require('../models/userModel');
 const Plan = require('../models/planModel')
 const Trainer = require('../models/trainerModel');
 const Service = require('../models/serviceModel');
+const Appointment = require('../models/appointmentModel');
+const Subscriptions = require('../models/subscriptionModel')
 const {verifyPassword} = require('../utils/password');
 const {loginValidation} = require('../utils/validation');
 const {getToken} = require('../utils/token');
@@ -144,7 +146,8 @@ const getUser = async(req,res) => {
 const getAllTrainers = async(req,res) => {
     
     try {
-        const trainers = await Trainer.find({}, { password: 0 });
+        // const trainers = await Trainer.find({}, { password: 0 }).populate('service','service-_id');
+        const trainers = await Trainer.find({}, { password: 0 })
 
         if(trainers) {
             return res.status(200).json({
@@ -290,7 +293,7 @@ const blockTrainer = async(req,res) => {
 
 
 const verifyTrainerCertificate = async(req,res) => {
-    
+
     const {id} = req.params;
     console.log(id);
 
@@ -484,6 +487,204 @@ const addPlan = async (req,res) => {
 } 
 
 
+
+const getAllAppointments = async(req,res) => {
+    console.log("serv out came");
+
+    try {
+        const appointments = await Appointment.find({});
+        console.log("serv in came");
+        if(appointments) {
+            return res.status(200).json({
+                appointments,
+                message: `appointments fetched successfully`
+            })
+        }
+        res.status(404).json({
+            message:'No user data available!'
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+}
+
+//appointments pie chart
+
+const getAppointmentStatusCounts = async (req, res) => {
+    try {
+    const aggregatePipeline = [
+        {
+        $group: {
+            _id: '$isCancelled',
+            count: { $sum: 1 },
+        },
+        },
+        {
+        $project: {
+            _id: 0,
+            status: '$_id',
+            count: 1,
+        },
+        },
+    ];
+
+    const appointmentStatusCounts = await Appointment.aggregate(aggregatePipeline);
+
+    res.status(200).json({
+        appointmentStatusCounts,
+        message: 'Appointment status counts fetched successfully',
+    });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Internal server error',
+        });
+    }
+};
+
+
+
+const getAllSubscriptions = async(req,res) => {
+
+    try {
+        const subscriptions = await Subscriptions.find({});
+        if(subscriptions) {
+            return res.status(200).json({
+                subscriptions,
+                message: `subscriptions fetched successfully`
+            })
+        }
+        res.status(404).json({
+            message:'No subscriptions data available!'
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+}
+
+
+const getTotalRevenue = async(req, res) => {
+    try {
+        const revenueByPlan = await Subscriptions.aggregate([
+            {
+                $match: {
+                    paymentStatus: 'paid'
+                }
+            },
+            {
+                $addFields: {
+                    amount: {
+                        $toInt: '$amount' // or $toDouble if the amount is a floating point number
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: '$amount',
+                    totalRevenue: {
+                        $sum: '$amount'
+                    },
+                    count: {
+                        $sum: 1
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    plan: '$_id',
+                    totalRevenue: 1,
+                    count: 1
+                }
+            }
+        ]);
+
+        if (revenueByPlan) {
+            return res.status(200).json({
+                revenueByPlan,
+                message: `Revenue by plan fetched successfully`
+            });
+        }
+
+        res.status(404).json({
+            message:'No subscriptions data available!'
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+};
+
+
+const getTrainersByService = async (req, res) => {
+
+    try {
+        const groupedTrainers = await Trainer.aggregate([
+            {
+                $lookup: {
+                    from: 'services', 
+                    localField: 'service',
+                    foreignField: '_id',
+                    as: 'service'
+                }
+            },
+            {
+                $unwind: '$service'
+            },
+            {
+                $group: {
+                    _id: '$service._id',
+                    serviceName: { $first: '$service.service' }, 
+                    totalTrainers: { $sum: 1 },
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    service: {
+                        _id: '$_id',
+                        name: '$serviceName', 
+                    },
+                    totalTrainers: 1,
+                }
+            }
+        ]);
+
+        if (groupedTrainers && groupedTrainers.length > 0) {
+            return res.status(200).json({
+                groupedTrainers,
+                message: 'Trainers grouped by service fetched successfully'
+            });
+        }
+
+        res.status(404).json({
+            message: 'No Trainer data available!'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = {
     adminLogIn,
     adminLogOut,
@@ -502,5 +703,10 @@ module.exports = {
     getAllServices,
     deactivateService,
     addPlan,
+    getAllAppointments,
+    getAppointmentStatusCounts,
+    getAllSubscriptions,
+    getTotalRevenue,
+    getTrainersByService,
 
 }

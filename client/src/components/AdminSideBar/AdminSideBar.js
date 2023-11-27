@@ -92,11 +92,16 @@ export default function PersistentDrawerLeft() {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (setting) => {
         setAnchorElUser(null);
+        if (setting === 'Logout') {
+            handleAdminLogout();
+        } else if (setting === 'Dashboard') {
+            navigate('/admin/dashboard');
+        }
     };
 
-    const settings = [ 'Logout'];
+    const settings = ['Dashboard', 'Logout'];
 
     const navigate = useNavigate();
     
@@ -113,6 +118,8 @@ export default function PersistentDrawerLeft() {
         dispatch(removeAuth());
         navigate('/admin/login')
     }
+
+    
 
 
     return (
@@ -136,7 +143,7 @@ export default function PersistentDrawerLeft() {
             <Box sx={{ flexGrow: 1 }} />
             <Tooltip title="Logout">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User Avatar" src="" />
+                <Avatar alt="Admin Avatar" src="https://res.cloudinary.com/djd2rpgil/image/upload/v1698057230/trainers/tq8io2zpprnhlosanxiv.jpg" />
                 </IconButton>
             </Tooltip>
             </Toolbar>
@@ -196,12 +203,13 @@ export default function PersistentDrawerLeft() {
             horizontal: 'right',
             }}
             open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
+            onClose={() => handleCloseUserMenu('')}
         >
             {settings.map((setting) => (
-            <MenuItem key={setting} onClick={setting === 'Logout' ? handleAdminLogout : handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-            </MenuItem>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                        <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+            
             ))}
         </Menu>
         </Box>

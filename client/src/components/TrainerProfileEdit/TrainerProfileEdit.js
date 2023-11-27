@@ -227,6 +227,7 @@ function TrainerProfileEdit() {
                 draggable: true,
                 progress: undefined,
             });
+            navigate('/trainer/dashboard');
 
         } catch (error) {
             console.log(error); 
@@ -239,6 +240,7 @@ function TrainerProfileEdit() {
                 draggable: true,
                 progress: undefined,
             });
+            navigate('/trainer/dashboard');
         }
     }
 

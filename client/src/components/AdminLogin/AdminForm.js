@@ -106,7 +106,7 @@ function AdminForm() {
                     textAlign: 'center',
                     marginLeft: '-10rem'
                 }}>
-                    <img src='https://www.pngall.com/wp-content/uploads/2018/04/Gym-Download-PNG.png' style={{width: "25rem", height: "25rem"}} alt=''/>
+                    <img src='https://res.cloudinary.com/djd2rpgil/image/upload/v1699891406/theme/o7h0yeecny118945ytmx.png' style={{width: "25rem", height: "25rem"}} alt=''/>
                 </Box>
             </Grid>
             <Grid

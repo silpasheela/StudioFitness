@@ -1,5 +1,6 @@
 import React from 'react'
 import AdminSideBar from '../components/AdminSideBar/AdminSideBar'
+import AdminCharts from '../components/AdminDashboardCharts/AdminCharts'
 
 function AdminDashboardPage() {
 
@@ -9,7 +10,10 @@ function AdminDashboardPage() {
   // })
 
   return (
-    <AdminSideBar/>
+    <>
+      <AdminSideBar/>
+      <AdminCharts/>
+    </>
   )
 }
 

@@ -372,10 +372,10 @@ function TrainerAppointmentsView() {
                     disabled={page === 0}
                     style={{ color: 'green' }}
                 >
-                    <KeyboardArrowLeft/>
+                    <KeyboardArrowLeft />
                     Back
                 </Button>
-                <span style={{ margin: '0 10px', color: 'green' }}>{page + 1}</span>
+                <span style={{ margin: '0 10px', color: 'green' }}>{`Page ${page + 1} of ${Math.ceil(filteredData.length / rowsPerPage)}`}</span>
                 <Button
                     size="small"
                     onClick={() => handlePaginationChange(page + 1)}
@@ -383,7 +383,7 @@ function TrainerAppointmentsView() {
                     style={{ color: 'green' }}
                 >
                     Next
-                    <KeyboardArrowRight/>
+                    <KeyboardArrowRight />
                 </Button>
             </div>
             </>

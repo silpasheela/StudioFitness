@@ -162,27 +162,29 @@ function UserAppointments() {
                         </CardContent>
                     </Card>
                 ))}
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <Button
-                        size="small"
-                        onClick={() => handlePaginationChange(page - 1)}
-                        disabled={page === 0}
-                        style={{ color: 'green' }}
-                    >
-                        <KeyboardArrowLeft/>
-                        Back
-                    </Button>
-                    <span style={{ margin: '0 10px', color: 'green' }}>{page + 1}</span>
-                    <Button
-                        size="small"
-                        onClick={() => handlePaginationChange(page + 1)}
-                        disabled={page >= Math.ceil(filteredData.length / rowsPerPage) - 1}
-                        style={{ color: 'green' }}
-                    >
-                        Next
-                        <KeyboardArrowRight/>
-                    </Button>
-                </div>
+
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <Button
+                    size="small"
+                    onClick={() => handlePaginationChange(page - 1)}
+                    disabled={page === 0}
+                    style={{ color: 'green' }}
+                >
+                    <KeyboardArrowLeft />
+                    Back
+                </Button>
+                <span style={{ margin: '0 10px', color: 'green' }}>{`Page ${page + 1} of ${Math.ceil(filteredData.length / rowsPerPage)}`}</span>
+                <Button
+                    size="small"
+                    onClick={() => handlePaginationChange(page + 1)}
+                    disabled={page >= Math.ceil(filteredData.length / rowsPerPage) - 1}
+                    style={{ color: 'green' }}
+                >
+                    Next
+                    <KeyboardArrowRight />
+                </Button>
+            </div>
+            
             </>
         )}
         </div>

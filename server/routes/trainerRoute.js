@@ -42,6 +42,7 @@ router.get(
 // router.post('/upload-class',auth.authenticateToken,auth.isTrainer,videoController.trainerUploadVideo);
 
 router.post('/upload-class', auth.authenticateToken, auth.isTrainer, upload.array('video', 1), videoController.trainerUploadVideo);
+router.get('/view-uploads',auth.authenticateToken,auth.isUser,videoController.trainerGetAllVideos);
 
 
 

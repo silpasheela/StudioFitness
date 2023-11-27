@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { toast } from 'react-toastify';
@@ -11,6 +11,12 @@ import {subsAuth} from '../../app/features/Auth/authSlice'
 
 function UserSubscription() {
 
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(subsAuth());
+    },[dispatch])
 
     const navigate = useNavigate();
 
@@ -21,9 +27,8 @@ function UserSubscription() {
     console.log("subsauth",subscriptionData)
 
 
-    const dispatch = useDispatch()
-
     const handleCancelSubscription = async (e) => {
+
         confirmAlert({
             title: 'Confirm to cancel',
             message: 'Are you sure you want to cancel your subscription?',
@@ -67,6 +72,7 @@ function UserSubscription() {
     };
     
     console.log("my pid",subscriptionData?.subscriptionDetails?.planId);
+
     return (
         <Grid
         xs={12}

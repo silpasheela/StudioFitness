@@ -43,6 +43,8 @@ function Checkout() {
                 token: token.id,
                 userId: `${authState._id}`, 
             });
+
+            //to be checked if reqd
     
             if (response.status === 201) {
                 const data = response.data;
@@ -85,9 +87,6 @@ function Checkout() {
         }
     };
 
-
-
-    //
 
 
         return (

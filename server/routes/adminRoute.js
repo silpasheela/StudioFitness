@@ -21,6 +21,12 @@ router.post('/add-service',auth.authenticateToken,auth.isAdmin,adminController.a
 router.get('/all-services',auth.authenticateToken,auth.isAdmin,adminController.getAllServices);
 router.put('/deactivate-service/:id',auth.authenticateToken,auth.isAdmin,adminController.deactivateService);
 router.post('/add-plan',auth.authenticateToken,auth.isAdmin,adminController.addPlan);
+router.get('/all-appointments',auth.authenticateToken,auth.isAdmin,adminController.getAllAppointments);
+router.get('/appointment-status-chart',auth.authenticateToken,auth.isAdmin,adminController.getAppointmentStatusCounts);
+router.get('/all-subscriptions',auth.authenticateToken,auth.isAdmin,adminController.getAllSubscriptions);
+router.get('/revenue-by-plan',auth.authenticateToken,auth.isAdmin,adminController.getTotalRevenue);
+router.get('/trainers-by-service',auth.authenticateToken,auth.isAdmin,adminController.getTrainersByService);
+
 
 
 

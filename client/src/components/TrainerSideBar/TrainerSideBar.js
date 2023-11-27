@@ -7,6 +7,7 @@ import MoreTimeIcon from "@mui/icons-material/MoreTime";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EventIcon from "@mui/icons-material/Event";
 import ChatIcon from "@mui/icons-material/Chat";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -91,6 +92,25 @@ function TrainerSideBar() {
                 sx={{ paddingRight: "20px", color: "#fff" }}
                 />
                 My Appointments
+            </MenuItem>
+
+            <MenuItem
+                onClick={() => navigate("/trainer/videos")}
+                sx={{
+                fontSize: "25px",
+                fontWeight: "bolder",
+                fontFamily: "inherit",
+                color: "#88C13E",
+                borderBottom: "1px solid #555",
+                "&:hover": {
+                    backgroundColor: "#333",
+                },
+                }}>
+                <FileUploadIcon
+                fontSize="large"
+                sx={{ paddingRight: "20px", color: "#fff" }}
+                />
+                Upload Classes
             </MenuItem>
 
             <MenuItem

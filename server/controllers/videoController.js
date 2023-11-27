@@ -39,6 +39,30 @@ const trainerUploadVideo = async (req, res) => {
 };
 
 
+const trainerGetAllVideos = async (req,res) => {
+
+    try {
+        // Fetch all the video details from the database
+        const videos = await Video.find({});
+
+        if (!videos) {
+            return res.status(404).json({
+                message: 'No videos found',
+            });
+        }
+
+        res.status(200).json({
+            message: 'Videos fetched successfully!',
+            videos: videos,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Error in fetching videos',
+        });
+    }
+}
+
 
 const userGetAllVideos = async (req,res) => {
 
@@ -94,6 +118,7 @@ const userGetVideoClass = async (req,res) => {
 module.exports = {
     trainerUploadVideo,
     userGetAllVideos,
-    userGetVideoClass
+    userGetVideoClass,
+    trainerGetAllVideos
 
 }
