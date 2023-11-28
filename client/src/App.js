@@ -35,6 +35,7 @@ import PageNotFound from "./components/Shared/PageNotFound";
 import TrainerVideoPage from "./pages/TrainerVideoPage";
 import UserClassesPage from "./pages/UserClassesPage";
 import AdminAppointmentsPage from "./pages/AdminAppointmentsPage";
+import BMICalculator from "./components/BMICalculator/BMICalculator";
 
 function App() {
   return (
@@ -73,7 +74,7 @@ function App() {
         
 
 
-        {/* <Route path="/demo" element={<DemoModel />} /> */}
+        <Route path="/demo" element={<BMICalculator />} />
 
         <Route path="/trainer/chat" element={<TrainerChat />}></Route>
         <Route path="/user/chat" element={<UserChat />}></Route>

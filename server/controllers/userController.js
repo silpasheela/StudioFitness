@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const Trainer = require('../models/trainerModel');
 const Plan = require('../models/planModel');
 const Appointment = require('../models/appointmentModel');
+const axiosInstance = require('../utils/axiosHelper');
 const {getHashedPassword,verifyPassword} = require('../utils/password');
 const {signUpValidation,loginValidation,userProfileUpdateValidation,profilePictureValidation} = require('../utils/validation');
 const {getToken, verifyToken} = require('../utils/token');
@@ -757,6 +758,30 @@ const userCancelAppointment = async (req, res) => {
 
 
 
+const calculateBMI = async (req, res) => {
+
+    try {
+        const { height, weight } = req.body;
+
+        if (!height || !weight) {
+            return res.status(400).json({ error: 'Height, weight are required fields.' });
+        }
+
+        const response = await axiosInstance.get('/bmi', {
+            params: { height, weight,system: 'metric' },
+        });
+
+        const bmiResult = response.data;
+        res.status(200).json(bmiResult);
+
+    } catch (error) {
+        console.error('Error calculating BMI:', error.response.data);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
 module.exports = {
     userSignUp,
     userEmailVerification,
@@ -777,4 +802,5 @@ module.exports = {
     userBookAppointment,
     userGetAppointments,
     userCancelAppointment,
+    calculateBMI,
 }

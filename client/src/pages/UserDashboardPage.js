@@ -5,6 +5,7 @@ import UserSideBar from "../components/UserSideBar/UserSideBar";
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
 import VideoChatIcon from "@mui/icons-material/VideoChat";
+import BMICalculator from "../components/BMICalculator/BMICalculator";
 
 function UserDashboardPage() {
   const [socket, setSocket] = useState(null);
@@ -50,10 +51,11 @@ function UserDashboardPage() {
   }, [socket]);
 
   return (
-    <div className="user-dashboard" style={{ height: "46.2rem" }}>
+    <div className="dashboard" style={{ height: "46.2rem" }}>
       <>
         <NavBar />
         <UserSideBar />
+        <BMICalculator/>
         {call && (
           <a
             onClick={() => {

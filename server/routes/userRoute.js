@@ -44,6 +44,7 @@ router.get('/view-classes',auth.authenticateToken,auth.isUser,videoController.us
 router.get('/view-class/:id',auth.authenticateToken,auth.isUser,videoController.userGetVideoClass);
 
 
+router.post('/calculate-bmi',auth.authenticateToken,auth.isUser,userController.calculateBMI);
 
 
 
