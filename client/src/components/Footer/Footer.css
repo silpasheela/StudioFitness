@@ -57,3 +57,40 @@
 .MuiSvgIcon-root.MuiTwitter-fontSizeLarge {
     color: #fff; 
 }
+
+
+
+.default-submit-btn {
+    background-color: #88C13E;
+    color: #fff;
+    /* border-radius: 5px; */
+    width: 100px;
+    height: 54px;
+    border: none;
+    font-size: 14px;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+
+.default-submit-btn:hover{
+    background-color: #121212;
+    color: #88C13E;
+    cursor: pointer;
+}
+
+
+.submitform{
+    height: 50px;
+    /* border-radius: 5px; */
+    border-color: #88C13E;
+    width: 250px;
+    color: #5B5B5B;
+    padding-left: 10px;
+    font-size: 16px;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+
+
+
+

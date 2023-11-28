@@ -11,6 +11,7 @@ import './Footer.css';
 
 function Footer() {
         return (
+        <>
         <div style={{ marginTop: 50 }}>
         <div className="footer">
             <div className="container1">
@@ -32,6 +33,14 @@ function Footer() {
                 <p style={{color:'#9F9F9F'}}>Email: info@studiofitness.com</p>
                 <p style={{color:'#9F9F9F'}}>Phone: (123) 456-7890</p>
             </div>
+
+            <div style={{marginRight:'-10vh',marginTop:'13vh'}}>
+                <input type="text" className="submitform" placeholder="Enter your email address"/>
+                <span className="input-group-btn">
+                    <button className="default-submit-btn" type="button">SUBSCRIBE</button>
+                </span>
+            </div>
+
             </div>
     
             <div className="socialIcons" style={{}}>
@@ -51,12 +60,14 @@ function Footer() {
                 <LinkedInIcon  />
             </IconButton>
             </div>
+
     
             <div className="copyRight" style={{color:'#9F9F9F', fontSize:'12px'}}>
             ©2023 by Silpa Sreekumar. All rights reserved.
             </div>
         </div>
         </div>
+        </>
     );
 }
 
