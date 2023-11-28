@@ -34,8 +34,6 @@ function AdminUserData() {
 
     const rows = useSelector(state => state.admin.users.users);
 
-    console.log("hellllllllllooooooo",rows)
-
     //modal
     const [open, setOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -77,12 +75,6 @@ function AdminUserData() {
 
     const tableContent = rows;
 
-    // const handleBlocking = (id) => {
-
-    //     dispatch(adminBlockUnblockUser(id)).then(() => {
-    //         dispatch(adminGetAllUsers());
-    //     })
-    // }
 
     const handleBlocking = (id) => {
         confirmAlert({

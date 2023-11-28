@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { } from 'react'
 import UserSubscription from '../components/UserSubscription/UserSubscription'
 import UserSideBar from '../components/UserSideBar/UserSideBar'
 import NavBar from '../components/NavBar/NavBar'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import NoActiveSubscription from '../components/Shared/NoActiveSubscription'
 
 function UserSubscriptionPage() {

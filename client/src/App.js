@@ -33,6 +33,8 @@ import UserChat from "./pages/UserChat";
 import VideoCall from "./components/VideoCall/VideoCall";
 import PageNotFound from "./components/Shared/PageNotFound";
 import TrainerVideoPage from "./pages/TrainerVideoPage";
+import UserClassesPage from "./pages/UserClassesPage";
+import AdminAppointmentsPage from "./pages/AdminAppointmentsPage";
 
 function App() {
   return (
@@ -66,6 +68,9 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
 
         <Route path="/trainer/videos" element={<TrainerVideoPage/>}></Route>
+        <Route path="/user/view-classes" element={<UserClassesPage/>}></Route>
+        <Route path="/admin/appointment/details" element={<AdminAppointmentsPage/>}></Route>
+        
 
 
         {/* <Route path="/demo" element={<DemoModel />} /> */}

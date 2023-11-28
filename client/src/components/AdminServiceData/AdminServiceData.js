@@ -18,6 +18,8 @@ import { Button, Grid  } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminBlockUnblockService, adminGetAllServices } from '../../app/features/Admin/adminSlice';
 import { instance } from '../../api/axiosInstance';
+import { GlobalStyles } from '@mui/material';
+
 
 
 
@@ -222,8 +224,14 @@ function AdminServiceData() {
             height: '75vh',
         }}
         >
-        <Typography variant="h4" gutterBottom>
-            Services Management
+        <GlobalStyles styles={{
+            '*::-webkit-scrollbar': {
+                width: '0px',
+                background: 'transparent',
+            },
+        }} />
+        <Typography variant="h4" gutterBottom sx={{fontWeight:'bold'}}>
+            SERVICES MANAGEMENT
             {/* table content */}
         </Typography>
 
@@ -245,12 +253,12 @@ function AdminServiceData() {
         </Grid>
 
         <TableContainer component={Paper} style={{ maxWidth: 800 ,  }}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Table sx={{ minWidth: 700, }} aria-label="customized table">
             {/* table headings */}
                 <TableHead>
                     <TableRow>
                         {tableHead?.map((column) => 
-                            { return (<StyledTableCell key={column.id}>{column.label}</StyledTableCell>)}
+                            { return (<StyledTableCell key={column.id} sx={{fontWeight:'bold',fontSize:'20px'}}>{column.label}</StyledTableCell>)}
                         )}
                     </TableRow>
                 </TableHead>

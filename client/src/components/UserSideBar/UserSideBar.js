@@ -124,6 +124,7 @@ function UserSideBar() {
                 )}
 
             <MenuItem
+                onClick={() => navigate("/user/view-classes")}
                 sx={{
                 fontSize: "25px",
                 fontWeight: "bolder",

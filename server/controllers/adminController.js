@@ -489,15 +489,13 @@ const addPlan = async (req,res) => {
 
 
 const getAllAppointments = async(req,res) => {
-    console.log("serv out came");
 
     try {
-        const appointments = await Appointment.find({});
-        console.log("serv in came");
+        const appointments = await Appointment.find({}).populate('userId','fullName').populate('trainerId','fullName');
         if(appointments) {
             return res.status(200).json({
                 appointments,
-                message: `appointments fetched successfully`
+                message: `Appointments fetched successfully`
             })
         }
         res.status(404).json({

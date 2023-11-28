@@ -170,7 +170,7 @@ export default function PersistentDrawerLeft() {
             </DrawerHeader>
             <Divider />
             <List>
-            {['Users', 'Trainers', 'Services', 'Dummy2'].map((text, index) => (
+            {['Users', 'Trainers', 'Services', 'Appointments'].map((text, index) => (
                 <ListItem key={text} button onClick={() => handleClick(text.toLowerCase().slice(0, -1))}>
                 {/* <Link to={`/${text.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}> */}
                     <ListItemButton>

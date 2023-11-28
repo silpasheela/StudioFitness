@@ -14,6 +14,8 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import { Button,Grid  } from '@mui/material';
+import { GlobalStyles } from '@mui/material';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
@@ -114,9 +116,16 @@ const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}
             alignItems: 'center',
             flexDirection: 'column',
             height: '75vh',
+
         }}
         >
-        <Typography variant="h4" gutterBottom>
+        <GlobalStyles styles={{
+            '*::-webkit-scrollbar': {
+                width: '0px',
+                background: 'transparent',
+            },
+        }} />
+        <Typography variant="h4" gutterBottom sx={{fontWeight:'bold'}}>
             {tableTitle}
             {/* table content */}
         </Typography>
@@ -126,7 +135,7 @@ const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}
                 <TableHead>
                     <TableRow>
                         {tableHead.map((column) => (
-                            <StyledTableCell key={column.id}>{column.label}</StyledTableCell>
+                            <StyledTableCell key={column.id} sx={{fontWeight:'bold',fontSize:'20px'}}>{column.label}</StyledTableCell>
                         ))}
                     </TableRow>
                 </TableHead>
@@ -160,7 +169,6 @@ const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}
                                         onChange={() => {handleBlocking(row._id)}} />}
                                         label=""
                                     />
-                                    {/* {console.log("hooooooo",row._id)} */}
                                 </FormGroup>
                             </Grid>
                         </Grid>
