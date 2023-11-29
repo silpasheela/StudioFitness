@@ -14,8 +14,6 @@ import AdminTrainerDataPage from "./pages/AdminTrainerDataPage";
 import AdminUserDataPage from "./pages/AdminUserDataPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
 import TrainerDashboardPage from "./pages/TrainerDashboardPage";
-// import Demos from "./components/demo/Demos";
-// import DemoModel from "./pages/DemoModel";
 import UserProfileEditPage from "./pages/UserProfileEditPage";
 import AdminServiceDataPage from "./pages/AdminServiceDataPage";
 import ViewTrainersPage from "./pages/ViewTrainersPage";
@@ -35,51 +33,43 @@ import PageNotFound from "./components/Shared/PageNotFound";
 import TrainerVideoPage from "./pages/TrainerVideoPage";
 import UserClassesPage from "./pages/UserClassesPage";
 import AdminAppointmentsPage from "./pages/AdminAppointmentsPage";
-import BMICalculator from "./components/BMICalculator/BMICalculator";
 
 function App() {
   return (
     <div className="App">
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/login" element={<LogIn />}></Route>
-        <Route path="/forgot-password" element={<PasswordForgot />}></Route>
-        <Route path="/reset-password-email" element={<PasswordResetEmail />}></Route>
-        <Route path="/:role/reset-password-token/:token" element={<PasswordResetPage />}></Route>
-        <Route path="/admin/login" element={<AdminLoginPage />}></Route>
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />}></Route>
-        <Route path="/admin/user/details" element={<AdminUserDataPage />}></Route>
-        <Route path="/admin/trainer/details" element={<AdminTrainerDataPage />}></Route>
-        <Route path="/user/dashboard" element={<UserDashboardPage />}></Route>
-        <Route path="/trainer/dashboard" element={<TrainerDashboardPage />}></Route>
-        <Route path="/user/editprofile" element={<UserProfileEditPage />}></Route>
-        <Route path="/trainer/editprofile" element={<TrainerProfileEditPage />}></Route>
-        <Route path="/admin/service/details" element={<AdminServiceDataPage />}></Route>
-        <Route path="/user/viewtrainers" element={<ViewTrainersPage />}></Route>
-        <Route path="/user/trainer/:id" element={<TrainerDetailsPage />}></Route>
-        <Route path="/viewplandetails" element={<PlanDetailsPage />}></Route>
-        <Route path="/user/checkout/:id" element={<CheckoutPage />}></Route>
-        <Route path="/user/subscription-details" element={<UserSubscriptionPage />}></Route>
-        <Route path="/trainer/addslot" element={<TrainerAddSlotPage />}></Route>
-        <Route path="/user/booking-success" element={<BookingSuccess />}></Route>
-        <Route path="/trainer/view-appointments" element={<TrainerAppoinmentsPage />}></Route>
-        <Route path="/user/view-appointments" element={<UserAppointmentsPage />}></Route>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/forgot-password" element={<PasswordForgot />} />
+        <Route path="/reset-password-email" element={<PasswordResetEmail />} />
+        <Route path="/:role/reset-password-token/:token" element={<PasswordResetPage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+        <Route path="/admin/user/details" element={<AdminUserDataPage />} />
+        <Route path="/admin/trainer/details" element={<AdminTrainerDataPage />} />
+        <Route path="/user/dashboard" element={<UserDashboardPage />} />
+        <Route path="/trainer/dashboard" element={<TrainerDashboardPage />} />
+        <Route path="/user/editprofile" element={<UserProfileEditPage />} />
+        <Route path="/trainer/editprofile" element={<TrainerProfileEditPage />} />
+        <Route path="/admin/service/details" element={<AdminServiceDataPage />} />
+        <Route path="/user/viewtrainers" element={<ViewTrainersPage />} />
+        <Route path="/user/trainer/:id" element={<TrainerDetailsPage />} />
+        <Route path="/viewplandetails" element={<PlanDetailsPage />} />
+        <Route path="/user/checkout/:id" element={<CheckoutPage />} />
+        <Route path="/user/subscription-details" element={<UserSubscriptionPage />} />
+        <Route path="/trainer/addslot" element={<TrainerAddSlotPage />} />
+        <Route path="/user/booking-success" element={<BookingSuccess />} />
+        <Route path="/trainer/view-appointments" element={<TrainerAppoinmentsPage />} />
+        <Route path="/user/view-appointments" element={<UserAppointmentsPage />} />
+        <Route path="/trainer/videos" element={<TrainerVideoPage/>} />
+        <Route path="/user/view-classes" element={<UserClassesPage/>} />
+        <Route path="/admin/appointment/details" element={<AdminAppointmentsPage/>} />
+        <Route path="/trainer/chat" element={<TrainerChat />} />
+        <Route path="/user/chat" element={<UserChat />} />
+        <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
         <Route path="*" element={<PageNotFound />} />
-
-        <Route path="/trainer/videos" element={<TrainerVideoPage/>}></Route>
-        <Route path="/user/view-classes" element={<UserClassesPage/>}></Route>
-        <Route path="/admin/appointment/details" element={<AdminAppointmentsPage/>}></Route>
-        
-
-
-        <Route path="/demo" element={<BMICalculator />} />
-
-        <Route path="/trainer/chat" element={<TrainerChat />}></Route>
-        <Route path="/user/chat" element={<UserChat />}></Route>
-        <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>}
-        />
       </Routes>
     </div>
   );
