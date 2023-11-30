@@ -33,43 +33,66 @@ import PageNotFound from "./components/Shared/PageNotFound";
 import TrainerVideoPage from "./pages/TrainerVideoPage";
 import UserClassesPage from "./pages/UserClassesPage";
 import AdminAppointmentsPage from "./pages/AdminAppointmentsPage";
+import PublicRoutes from "./utils/PublicRoutes";
+import UserProtectedRoutes from "./utils/UserProtectedRoutes";
+import TrainerProtectedRoutes from "./utils/TrainerProtectedRoutes";
+import AdminProtectedRoutes from "./utils/AdminProtectedRoutes";
 
 function App() {
   return (
     <div className="App">
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/forgot-password" element={<PasswordForgot />} />
-        <Route path="/reset-password-email" element={<PasswordResetEmail />} />
-        <Route path="/:role/reset-password-token/:token" element={<PasswordResetPage />} />
-        <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-        <Route path="/admin/user/details" element={<AdminUserDataPage />} />
-        <Route path="/admin/trainer/details" element={<AdminTrainerDataPage />} />
-        <Route path="/user/dashboard" element={<UserDashboardPage />} />
-        <Route path="/trainer/dashboard" element={<TrainerDashboardPage />} />
-        <Route path="/user/editprofile" element={<UserProfileEditPage />} />
-        <Route path="/trainer/editprofile" element={<TrainerProfileEditPage />} />
-        <Route path="/admin/service/details" element={<AdminServiceDataPage />} />
-        <Route path="/user/viewtrainers" element={<ViewTrainersPage />} />
-        <Route path="/user/trainer/:id" element={<TrainerDetailsPage />} />
-        <Route path="/viewplandetails" element={<PlanDetailsPage />} />
-        <Route path="/user/checkout/:id" element={<CheckoutPage />} />
-        <Route path="/user/subscription-details" element={<UserSubscriptionPage />} />
-        <Route path="/trainer/addslot" element={<TrainerAddSlotPage />} />
-        <Route path="/user/booking-success" element={<BookingSuccess />} />
-        <Route path="/trainer/view-appointments" element={<TrainerAppoinmentsPage />} />
-        <Route path="/user/view-appointments" element={<UserAppointmentsPage />} />
-        <Route path="/trainer/videos" element={<TrainerVideoPage/>} />
-        <Route path="/user/view-classes" element={<UserClassesPage/>} />
-        <Route path="/admin/appointment/details" element={<AdminAppointmentsPage/>} />
-        <Route path="/trainer/chat" element={<TrainerChat />} />
-        <Route path="/user/chat" element={<UserChat />} />
-        <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
-        <Route path="*" element={<PageNotFound />} />
+
+        <Route element={<PublicRoutes />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/forgot-password" element={<PasswordForgot />} />
+          <Route path="/reset-password-email" element={<PasswordResetEmail />} />
+          <Route path="/:role/reset-password-token/:token" element={<PasswordResetPage />} />
+          <Route path="/viewplandetails" element={<PlanDetailsPage />} />
+        </Route>
+
+
+        <Route element={<UserProtectedRoutes />}>
+          <Route path="/user/dashboard" element={<UserDashboardPage />} />
+          <Route path="/user/editprofile" element={<UserProfileEditPage />} />
+          <Route path="/user/viewtrainers" element={<ViewTrainersPage />} />
+          <Route path="/user/trainer/:id" element={<TrainerDetailsPage />} />
+          <Route path="/user/checkout/:id" element={<CheckoutPage />} />
+          <Route path="/user/subscription-details" element={<UserSubscriptionPage />} />
+          <Route path="/user/booking-success" element={<BookingSuccess />} />
+          <Route path="/user/view-appointments" element={<UserAppointmentsPage />} />
+          <Route path="/user/view-classes" element={<UserClassesPage/>} />
+          <Route path="/user/chat" element={<UserChat />} />
+        </Route>
+
+
+        <Route element={<TrainerProtectedRoutes />}>
+          <Route path="/trainer/dashboard" element={<TrainerDashboardPage />} />
+          <Route path="/trainer/editprofile" element={<TrainerProfileEditPage />} />
+          <Route path="/trainer/addslot" element={<TrainerAddSlotPage />} />
+          <Route path="/trainer/view-appointments" element={<TrainerAppoinmentsPage />} />
+          <Route path="/trainer/videos" element={<TrainerVideoPage/>} />
+          <Route path="/trainer/chat" element={<TrainerChat />} />
+        </Route>
+
+
+        {/* <Route element={<AdminProtectedRoutes />}> */}
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+          <Route path="/admin/user/details" element={<AdminUserDataPage />} />
+          <Route path="/admin/trainer/details" element={<AdminTrainerDataPage />} />
+          <Route path="/admin/service/details" element={<AdminServiceDataPage />} />
+          <Route path="/admin/appointment/details" element={<AdminAppointmentsPage/>} />
+        {/* </Route> */}
+
+
+          <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
+          <Route path="*" element={<PageNotFound />} />
+
+
       </Routes>
     </div>
   );

@@ -61,6 +61,7 @@ function Checkout() {
                 });
                 navigate('/user/subscription-details');
                 console.log(data);
+
             } else {
                 console.error("Subscription creation failed.");
                 toast.error('Subscription creation failed!', {

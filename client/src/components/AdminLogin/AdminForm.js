@@ -70,7 +70,7 @@ function AdminForm() {
                 const {data} = await uninterceptedApiInstance.post(`http://localhost:4000/${role}/login`,formData)
                 console.log(data);
                 localStorage.setItem('user',JSON.stringify(data?.admin));
-                console.log(setAuth())
+                console.log("heyyy",setAuth())
                 dispatch(setAuth());
                 console.log("test")
                 navigate(`/admin/dashboard`);

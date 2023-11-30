@@ -20,6 +20,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoAppointmentsFound from '../Shared/NoAppointmentsFound';
 
+
+
 function UserAppointments() {
 
     const dispatch = useDispatch();
@@ -65,6 +67,7 @@ function UserAppointments() {
                 draggable: true,
                 progress: undefined,
             });
+            
         } catch (error) {
             console.log(error);
             toast.error("An error occurred while cancelling the appointment.", {

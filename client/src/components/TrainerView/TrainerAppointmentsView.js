@@ -63,6 +63,7 @@ function TrainerAppointmentsView() {
             draggable: true,
             progress: undefined,
         });
+
         } catch (error) {
         console.log(error);
         toast.error("An error occurred while approving the appointment.", {

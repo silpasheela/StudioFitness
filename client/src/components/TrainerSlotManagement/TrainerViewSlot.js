@@ -14,8 +14,6 @@ import moment from 'moment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
-
-
 function formatDate(date) {
 
     const formattedDate = moment(date).format('DD-MM-YYYY');
@@ -67,6 +65,7 @@ function TrainerViewSlot() {
                                 pauseOnHover: true,
                                 draggable: true,
                             });
+
                         } catch (error) {
                             console.error(error);    
                             toast.error('Failed to delete slot', {

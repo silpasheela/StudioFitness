@@ -13,6 +13,7 @@ import {
 import { instance } from '../../api/axiosInstance';
 import ReactPlayer from 'react-player';
 
+
 function UserViewClasses() {
 
     const [videos, setVideos] = useState([]);
@@ -26,6 +27,7 @@ function UserViewClasses() {
         setVideos(response.data.videos);
         setLoading(false);
         console.log("my vdos", response);
+
         } catch (error) {
         console.error('Error fetching videos:', error);
         setLoading(false);
