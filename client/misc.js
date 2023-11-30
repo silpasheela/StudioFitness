@@ -1885,85 +1885,81 @@ export default AdminCharts;
 
 
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+import React, { useEffect, useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TablePagination from '@mui/material/TablePagination';
+import { TableSortLabel, Typography } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import { instance } from '../../api/axiosInstance';
 
-[`&.${tableCellClasses.head}`]: {
-backgroundColor: theme.palette.common.black,
-color: theme.palette.common.white,
-},
-[`&.${tableCellClasses.body}`]: {
+const tableCellStyle = {
 fontSize: 14,
-},
-}));
+};
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-
-'&:nth-of-type(odd)': {
-backgroundColor: theme.palette.action.hover,
-},
-// hide last border
-'&:last-child td, &:last-child th': {
-border: 0,
-},
-}));
-
-
-const IOSSwitch = styled((props) => (
-<Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
-width: 42,
-height: 26,
-padding: 0,
-'& .MuiSwitch-switchBase': {
-padding: 0,
-margin: 2,
-transitionDuration: '300ms',
-'&.Mui-checked': {
-transform: 'translateX(16px)',
+const headCellStyle = {
+backgroundColor: '#000',
 color: '#fff',
-'& + .MuiSwitch-track': {
-backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
-opacity: 1,
-border: 0,
-},
-'&.Mui-disabled + .MuiSwitch-track': {
-opacity: 0.5,
-},
-},
-'&.Mui-focusVisible .MuiSwitch-thumb': {
-color: '#33cf4d',
-border: '6px solid #fff',
-},
-'&.Mui-disabled .MuiSwitch-thumb': {
-color:
-theme.palette.mode === 'light'
-? theme.palette.grey[100]
-: theme.palette.grey[600],
-},
-'&.Mui-disabled + .MuiSwitch-track': {
-opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-},
-},
-'& .MuiSwitch-thumb': {
-boxSizing: 'border-box',
-width: 22,
-height: 22,
-},
-'& .MuiSwitch-track': {
-borderRadius: 26 / 2,
-backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
-opacity: 1,
-transition: theme.transitions.create(['background-color'], {
-duration: 500,
-}),
-},
-}));
-
-const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}) => {
+fontSize:'21px',
+fontWeight:'bold'
+};
 
 
+function getStatusIcon(status) {
+switch (status) {
+case 'pending':
+return <ScheduleIcon sx={{ marginTop: '3px' }}/>;
+case 'approved':
+return <CheckCircleIcon style={{ paddingTop: '3px' }}/>;
+case 'rejected':
+return <HighlightOffIcon style={{ paddingTop: '3px' }}/>;
+default:
+return null;
+}
+}
+
+function AdminAppointmentsTable() {
+
+const [appointments, setAppointments] = useState([]);
+const [orderBy, setOrderBy] = useState('slotDate');
+const [order, setOrder] = useState('asc');
 const [page, setPage] = useState(0);
 const [rowsPerPage, setRowsPerPage] = useState(5);
+
+useEffect(() => {
+const fetchData = async () => {
+try {
+const response = await instance.get('/admin/all-appointments');
+const sortedAppointments = response.data.appointments.sort((a, b) => {
+if (order === 'asc') {
+return new Date(a[orderBy]) - new Date(b[orderBy]);
+} else {
+return new Date(b[orderBy]) - new Date(a[orderBy]);
+}
+});
+setAppointments(sortedAppointments);
+} catch (error) {
+console.error('Error fetching data:', error);
+}
+};
+
+fetchData();
+}, [order, orderBy]);
+
+const handleRequestSort = (property) => {
+const isAsc = orderBy === property && order === 'asc';
+setOrder(isAsc ? 'desc' : 'asc');
+setOrderBy(property);
+};
 
 const handleChangePage = (event, newPage) => {
 setPage(newPage);
@@ -1974,93 +1970,69 @@ setRowsPerPage(parseInt(event.target.value, 10));
 setPage(0);
 };
 
-const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableContent?.length - page * rowsPerPage);
-
 return (
-<div
-style={{
-display: 'flex',
-justifyContent: 'center',
-alignItems: 'center',
-flexDirection: 'column',
-height: '75vh',
-
-}}
->
-<Typography variant="h4" gutterBottom sx={{fontWeight:'bold'}}>
-{tableTitle}
-{/* table content */}
+<div style={{
+}}>
+<Typography variant="h4" gutterBottom sx={{marginTop:'3vh',fontWeight:'bold'}}>
+APPOINTMENTS DETAILS
 </Typography>
-<TableContainer component={Paper} style={{ maxWidth: 800 ,  }}>
-<Table sx={{ minWidth: 700 }} aria-label="customized table">
-{/* table headings */}
+<TableContainer component={Paper} style={{ maxWidth:'98%', marginTop:'2.5rem'  }}>
+<Table aria-label="customized table">
 <TableHead>
 <TableRow>
-{tableHead.map((column) => (
-<StyledTableCell key={column.id} sx={{fontWeight:'bold',fontSize:'20px'}}>{column.label}</StyledTableCell>
-))}
+<TableCell style={headCellStyle}>USER</TableCell>
+<TableCell align="right" style={headCellStyle}>TRAINER</TableCell>
+<TableCell align="right" style={headCellStyle}>
+<TableSortLabel
+style={headCellStyle}
+active={orderBy === 'slotDate'}
+direction={orderBy === 'slotDate' ? order : 'asc'}
+onClick={() => handleRequestSort('slotDate')}
+IconComponent={order === 'desc' ? ArrowDropDownIcon : ArrowDropUpIcon}
+>
+SLOT DATE 
+</TableSortLabel>
+</TableCell>
+<TableCell align="right" style={headCellStyle}>TIME</TableCell>
+<TableCell align="right" style={headCellStyle}>APPROVAL STATUS</TableCell>
+<TableCell align="right" style={headCellStyle}>CANCELLED</TableCell>
 </TableRow>
 </TableHead>
-
 <TableBody>
-{(rowsPerPage > 0
-? tableContent?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-: tableContent
-)?.map((row,index) => (
-<StyledTableRow key={index}>
-<StyledTableCell component="th" scope="row">
-{row?.fullName}
-</StyledTableCell>
-<StyledTableCell align="left">{row?.email}</StyledTableCell>
-<StyledTableCell align="left">{row?.gender}</StyledTableCell>
-<StyledTableCell align="left">
-<span style={{ color: row?.isActive ? 'green' : 'red' }}>
-{row?.isActive ? 'ACTIVE' : 'INACTIVE'}
-</span>
-</StyledTableCell>
-<StyledTableCell align="left">
-<Grid container alignItems="center">
-<Grid item>
-<Button variant="outlined" size="small" onClick={() => handleOpen(row)}>{<VisibilityOutlinedIcon />}</Button>
-</Grid>
-<Grid item sx={{ml:2}}>
-<FormGroup>
-<FormControlLabel
-control={<IOSSwitch sx={{ m: 1 }} 
-checked={row?.isActive}
-onChange={() => {handleBlocking(row._id)}} />}
-label=""
-/>
-</FormGroup>
-</Grid>
-</Grid>
-</StyledTableCell>
-
-</StyledTableRow>
-))}
-
-{emptyRows > 0 && (
-<TableRow style={{ height: 53 * emptyRows }}>
-<StyledTableCell colSpan={6} />
+{appointments
+.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+.map((appointment) => (
+<TableRow key={appointment?._id}>
+<TableCell style={tableCellStyle}>{appointment?.userId?.fullName}</TableCell>
+<TableCell align="right" style={tableCellStyle}>{appointment?.trainerId?.fullName}</TableCell>
+<TableCell align="right" style={tableCellStyle}>
+{new Date(appointment?.slotDate).toLocaleDateString()}
+</TableCell>
+<TableCell align="right" style={tableCellStyle}>{appointment?.slotStartTime}</TableCell>
+<TableCell align="right" style={{ ...tableCellStyle, color: (appointment?.isTrainerApproved) }}>
+{getStatusIcon(appointment?.isTrainerApproved) } {appointment?.isTrainerApproved.toUpperCase()}
+</TableCell>
+<TableCell align="right" style={tableCellStyle}>{appointment?.isCancelled ? 'Yes' : 'No'}</TableCell>
 </TableRow>
-)}
+))}
 </TableBody>
 </Table>
+</TableContainer>
 <TablePagination
 rowsPerPageOptions={[5, 10, 25]}
 component="div"
-count={tableContent?.length}
+count={appointments.length}
 rowsPerPage={rowsPerPage}
 page={page}
 onPageChange={handleChangePage}
 onRowsPerPageChange={handleChangeRowsPerPage}
 />
-</TableContainer>
 </div>
 );
-};
+}
 
-export default DataTable;
+export default AdminAppointmentsTable;
+
 
 
 

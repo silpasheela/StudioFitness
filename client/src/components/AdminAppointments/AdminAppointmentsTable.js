@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { TableSortLabel, Typography } from '@mui/material';
+import { Box, TableSortLabel, TextField, Typography } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -60,26 +60,40 @@ function AdminAppointmentsTable() {
     const [order, setOrder] = useState('asc');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await instance.get('/admin/all-appointments');
-            const sortedAppointments = response.data.appointments.sort((a, b) => {
-            if (order === 'asc') {
-                return new Date(a[orderBy]) - new Date(b[orderBy]);
-            } else {
-                return new Date(b[orderBy]) - new Date(a[orderBy]);
+            try {
+                const response = await instance.get('/admin/all-appointments');
+                let sortedAppointments = response.data.appointments.sort((a, b) => {
+                    if (order === 'asc') {
+                        return new Date(a[orderBy]) - new Date(b[orderBy]);
+                    } else {
+                        return new Date(b[orderBy]) - new Date(a[orderBy]);
+                    }
+                });
+    
+                // Filter appointments based on search term
+                if (searchTerm) {
+                    sortedAppointments = sortedAppointments.filter(
+                        (appointment) =>
+                            appointment?.userId?.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            appointment?.trainerId?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+    
+                    console.log("mysort", sortedAppointments);
+                }
+                setAppointments(sortedAppointments);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-            });
-            setAppointments(sortedAppointments);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
         };
-
+    
         fetchData();
-    }, [order, orderBy]);
+    }, [order, orderBy, searchTerm]);
+    
 
     const handleRequestSort = (property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -103,10 +117,20 @@ function AdminAppointmentsTable() {
             alignItems: 'center',
             flexDirection: 'column',
         }}>
-            <Typography variant="h4" gutterBottom sx={{marginTop:'3vh',fontWeight:'bold'}}>
-                APPOINTMENTS DETAILS
+
+        <Box display="flex" justifyContent="space-between" alignItems="center" sx={{marginLeft:'-32vh',}}>
+            <TextField
+                label="Search"
+                variant="outlined"
+                onChange={(event) => setSearchTerm(event.target.value)}
+                sx={{ marginRight: '2rem', borderRadius: '50px',}} 
+            />
+            <Typography variant="h4" gutterBottom sx={{marginTop:'4vh',fontWeight:'bold'}}>
+                APPOINTMENT DETAILS
             </Typography>
-            <TableContainer component={Paper} style={{ maxWidth:'98%', marginTop:'2.5rem'  }}>
+        </Box>
+
+            <TableContainer component={Paper} style={{ maxWidth:'98%', marginTop:'2rem'  }}>
                 <Table aria-label="customized table">
                 <TableHead>
                     <TableRow>
