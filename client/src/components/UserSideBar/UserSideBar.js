@@ -19,17 +19,21 @@ function UserSideBar() {
         return state.auth.authState;
     });
 
-    console.log("sidebar auth", authState);
-
     return (
         <Stack
         direction="row"
         spacing={4}
         sx={{
-            width: "10vh",
+            width: { xl: "10vw", lg: "10vw", md: "10vw", sm: "10vh", xs: "100%" },
             height: "350px",
             paddingLeft: "0",
-            paddingTop: "16.55vh",
+            paddingTop: {
+            xl: "16.55vh",
+            lg: "16.55vh",
+            md: "8vh",
+            sm: "8vh",
+            xs: "8vh",
+            },
         }}>
         <Paper
             sx={{
@@ -37,7 +41,17 @@ function UserSideBar() {
             color: "#fff",
             borderRadius: "0",
             }}>
-            <MenuList sx={{ minWidth: "50vh", paddingTop: "4.5vh" }}>
+            <MenuList
+            sx={{
+                minWidth: {
+                xl: "25vw",
+                lg: "25vw",
+                md: "25vw",
+                sm: "100%",
+                xs: "100%",
+                },
+                paddingTop: "4.5vh",
+            }}>
             <MenuItem
                 onClick={() => navigate("/user/editprofile")}
                 sx={{

@@ -5,17 +5,21 @@
     font-family: Arial, sans-serif;
 }
 
-.container1 {
-    display: flex;
-    justify-content: space-around;
-    max-width: 1200px;
-    margin: 0 auto;
+.container-footer {
+    display: grid;
+    width: 80%;
+    margin: auto;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 1.5rem;
 }
 
 .column {
     flex: 1;
     padding: 0 20px;
+    line-height: 2rem;
 }
+
+
 
 .footer h3 {
     font-size: 20px;
@@ -63,19 +67,21 @@
 .default-submit-btn {
     background-color: #88C13E;
     color: #fff;
-    /* border-radius: 5px; */
     width: 100px;
-    height: 54px;
-    border: none;
+    height: 50px;
+    /* border: none; */
+    border-color: #88C13E;
     font-size: 14px;
     border-left: none;
     border-radius: 0 5px 5px 0;
+    padding: 5px;
 }
 
 .default-submit-btn:hover{
     background-color: #121212;
     color: #88C13E;
     cursor: pointer;
+    border: none;
 }
 
 
@@ -94,3 +100,35 @@
 
 
 
+@media screen and (max-width: 920px) {
+    .container-footer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 545px) {
+    .container-footer {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+
+.responsive-div {
+    margin-right: 0vh;
+    margin-top: 1em;
+}
+
+.submitform, .default-submit-btn {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .submitform, .default-submit-btn {
+        width: auto;
+    }
+}

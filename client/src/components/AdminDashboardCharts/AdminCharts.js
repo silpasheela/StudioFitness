@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Doughnut, Bar, Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, CategoryScale, LinearScale, BarElement   } from 'chart.js';
 import { instance } from '../../api/axiosInstance';
-import { Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 Chart.register(ArcElement, CategoryScale, LinearScale, BarElement  );
 
@@ -11,7 +11,7 @@ function AdminCharts() {
     const [appointmentsChartData, setAppointmentsChartData] = useState({
         labels: [],
         datasets: [
-            {
+            {   
                 data: [],
                 backgroundColor: [],
                 hoverBackgroundColor: [],
@@ -50,13 +50,14 @@ function AdminCharts() {
                 // Fetch data for appointments chart
                 const appointmentsResponse = await instance.get('admin/appointment-status-chart');
                 const appointmentsData = appointmentsResponse?.data?.appointmentStatusCounts;
+                console.log("chart data", appointmentsResponse);
 
                 if (appointmentsData && Array.isArray(appointmentsData)) {
                     const cancelledCount = appointmentsData.find(item => item?.status === true)?.count || 0;
                     const nonCancelledCount = appointmentsData.find(item => item?.status === false)?.count || 0;
 
                     setAppointmentsChartData({
-                        labels: [`Cancelled (${cancelledCount})`, `Not Cancelled (${nonCancelledCount})`],
+                        labels: [`Cancelled`, `Not Cancelled`],
                         datasets: [
                             {
                                 data: [cancelledCount, nonCancelledCount],
@@ -152,7 +153,8 @@ function AdminCharts() {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', }}>
+        <div style={{ marginLeft:'30rem' }}>
+            <Grid direction={'col'}>
             <Typography variant='h5' style={{ textDecoration: 'underline' }}>Appointment Status Distribution</Typography>
             <div style={{ width: '30%', height: '30%' }}>
                 <Doughnut data={appointmentsChartData} />
@@ -167,6 +169,7 @@ function AdminCharts() {
             <div style={{ width: '30%', height: '30%' }}>
                 <Pie data={trainersChartData} />
             </div>
+            </Grid>
         </div>
     );
 }

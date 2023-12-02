@@ -1,11 +1,22 @@
 .plancard {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
+    flex-direction: column;
+    /* height: 50vh; */
     /* background-color: #ffffff; */
     background-image: url(https://t4.ftcdn.net/jpg/04/14/02/09/360_F_414020916_hrbXZVSgF6NbinmQs1CrZTVTRlDEyeqV.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 4rem 0;
+}
 
+.plancard_container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 60%;
+    margin: auto;
+    margin-bottom: 2.5rem;
+    grid-gap: 1.5rem;
 }
 
 .plancard .MuiCard-root {
@@ -66,43 +77,45 @@
     margin-top: 0.25px;
     -webkit-transition: all .5s;
     -o-transition: all .5s;
-    transition: all .5s; }
+    transition: all .5s; 
+}
 .btn-element-plan:hover {
     background: #88C13E;
     color: #000000;
     border-color: #fff;
     -webkit-box-shadow: none;
-    box-shadow: none; }
+    box-shadow: none; 
+}
 
-    .plancard .MuiTypography-body2 {
-        list-style-type: none;
-        padding: 20px;
-    }
+.plancard .MuiTypography-body2 {
+    list-style-type: none;
+    padding: 20px;
+}
     
-    .plancard .MuiTypography-body2 li {
-        position: relative;
-        padding-left: 3.5em;
-        display: flex;
-        color: #88C13E;
-    }
+.plancard .MuiTypography-body2 li {
+    position: relative;
+    padding-left: 3.5em;
+    display: flex;
+    color: #88C13E;
+}
     
-    .plancard .MuiTypography-body2 li:before {
-        content: '✔';
-        position: absolute;
-        left: 25px;
-        color: #88C13E;
-    }
+.plancard .MuiTypography-body2 li:before {
+    content: '✔';
+    position: absolute;
+    left: 25px;
+    color: #88C13E;
+}
 
     
-    .h5 {
-        font-family: 'Arial', sans-serif;
-        font-size: 24px;
-        font-weight: bolder;
+.h5 {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bolder;
         /* color: #393939; */
-        text-transform: uppercase;
-        text-align: center;
+    text-transform: uppercase;
+    text-align: center;
         color: #fff;
-    }
+}
     
     .subcard {
         -webkit-transform: skewY(-4deg);
@@ -113,6 +126,31 @@
         transition: all 0.5s;
         position: relative;
         border: 1px solid #464646;
-
-
     }
+
+@media screen and (max-width: 920px) {
+    .plancard_container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .subcard {
+        width: 100%;
+    }
+    .btn-element-plan {
+        margin-right: 0;
+        margin-left: -6rem;
+    }
+}
+
+@media screen and (max-width: 545px) {
+    .plancard_container {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+    .subcard {
+        width: 100%;
+    }
+    .plancard {
+        padding: 4rem;
+    
+    }
+}

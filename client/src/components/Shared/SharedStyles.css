@@ -1,7 +1,7 @@
 .common-background{
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819681/theme/ekz0iw2f9uat99ii08sp.webp);
     background-size: cover;
-    height: '100%';
+    min-height: 100vh;
     position: relative;
     background-repeat: no-repeat;
     background-position: center center;
@@ -11,8 +11,9 @@
 .add-slot{
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1700747640/theme/qvpkvps4k2kdrkpxhgjk.png);
     background-size: cover;
-    height: '1000px';
+    min-height: 100vh;
     position: relative;
+    background-repeat: no-repeat;
     background-position: center center;
 }
 
@@ -20,51 +21,58 @@
 .dashboard {
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819681/theme/ftq4mot1ienmjapu3zd7.jpg);
     background-size: cover;
-    height: '1000px';
+    min-height: 100vh;
     position: relative;
     background-position: center center;
+    background-repeat: no-repeat;
 }
 
 
 .user-dashboard {
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819680/theme/uq3bwxrukbptjyexnovd.jpg);
-    background-size: cover;
-    height: '1000px';
+    background-size: contain;
+    min-height: 100vh;
     position: relative;
     background-position: center center;
+    background-repeat: no-repeat;
 }
 
 
 .user-subscription {
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819680/theme/ar8nwhyreaufvwgrmfyt.webp);
     background-size: cover;
-    height: '1000px';
+    min-height: 100vh;
     position: relative;
     background-position: center center;
+    padding-bottom: 2rem;
+    background-repeat: no-repeat;
 }
 
 
 .common-background-user {
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819680/theme/aueilaujmmp7lpuiifzt.webp);
-    background-size: cover;
-    height: '1000px';
+    background-size: contain;
+    min-height: 120vh;
     position: relative;
     background-position: center center;
+    background-repeat: no-repeat;
 }
 
 
 .planpage {
     background-image: url(https://res.cloudinary.com/djd2rpgil/image/upload/v1699819680/theme/uq3bwxrukbptjyexnovd.jpg);
     background-size: cover;
-    height: '1000px';
+    min-height: 100vh;
     position: relative;
     background-position: center center;
+    background-repeat: no-repeat;
 }
 
 
 .video-page {
-    /* height: '1000px'; */
+    min-height: 100vh;
     position: relative;
     background-position: center center;
     background-color: black;
+    background-repeat: no-repeat;
 }

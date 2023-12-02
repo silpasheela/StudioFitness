@@ -22,7 +22,7 @@ function PlanDetailsPage() {
     return (
         <div>
             <NavBar/>
-            <div className="planpage" style={{height:'100vh',width:'102%'}}>
+            <div className="planpage" style={{height:'100vh',}}>
             <Container sx={{paddingTop:20,}}>
                 <Typography variant="h2" style={{fontFamily:'revert', fontWeight:'bolder',color:'#fff'}}>Find a plan that's right for you</Typography>
                 <Grid container spacing={2} sx={{marginLeft:'25vh',marginTop:6}}>

@@ -1,35 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-    Card,
-    CardActionArea,
-    CardContent,
-    Typography,
-    Container,
-    Grid,
-    CircularProgress,
-    TextField,
-    Box
-} from '@mui/material';
-import { instance } from '../../api/axiosInstance';
-import ReactPlayer from 'react-player';
-
+  Card,
+  CardActionArea,
+  CardContent,
+  Typography,
+  Container,
+  Grid,
+  CircularProgress,
+  TextField,
+  Box,
+} from "@mui/material";
+import { instance } from "../../api/axiosInstance";
+import ReactPlayer from "react-player";
 
 function UserViewClasses() {
-
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
 
     const fetchVideos = async () => {
-
         try {
-        const response = await instance.get('user/view-classes');
+        const response = await instance.get("user/view-classes");
         setVideos(response.data.videos);
         setLoading(false);
-        console.log("my vdos", response);
-
         } catch (error) {
-        console.error('Error fetching videos:', error);
+        console.error("Error fetching videos:", error);
         setLoading(false);
         }
     };
@@ -47,8 +42,11 @@ function UserViewClasses() {
     );
 
     return (
-        <Container sx={{marginTop:'20vh'}}>
-        <Typography variant="h3" gutterBottom sx={{fontFamily:'inherit', fontWeight:'bolder'}}>
+        <Container sx={{ marginTop: "20vh" }}>
+        <Typography
+            variant="h3"
+            gutterBottom
+            sx={{ fontFamily: "inherit", fontWeight: "bolder" }}>
             My Classes
         </Typography>
         <Box display="flex" marginBottom="25px">
@@ -57,26 +55,35 @@ function UserViewClasses() {
             variant="outlined"
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ width:'25%',}}
-            sx={{'& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                        borderColor: '#6EC72D',
-                        color:'#000',
-                        fontWeight:'bolder',
-                        borderRadius: '50px',
-                    },
-                    '&:hover fieldset': {
-                        borderColor: '#6EC72D',
-                    },
-                    '&.Mui-focused fieldset': {
-                        borderColor: '#6EC72D',
-                    },
+            // style={{}}
+            sx={{
+                width: {
+                xl: "30%",
+                lg: "30%",
+                md: "100%",
+                sm: "100%",
+                xs: "100%",
                 },
-                '& .MuiInputLabel-root': {
-                    '&.Mui-focused': {
-                        color: '#6EC72D',
-                    },
-                },}}
+                "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                    borderColor: "#6EC72D",
+                    color: "#000",
+                    fontWeight: "bolder",
+                    borderRadius: "50px",
+                },
+                "&:hover fieldset": {
+                    borderColor: "#6EC72D",
+                },
+                "&.Mui-focused fieldset": {
+                    borderColor: "#6EC72D",
+                },
+                },
+                "& .MuiInputLabel-root": {
+                "&.Mui-focused": {
+                    color: "#6EC72D",
+                },
+                },
+            }}
             />
         </Box>
         {loading ? (
@@ -85,7 +92,7 @@ function UserViewClasses() {
             <Grid container spacing={3}>
             {filteredVideos.map((video) => (
                 <Grid item key={video?._id} xs={12} sm={6} md={4}>
-                <Card style={{ borderRadius: '20px' }}>
+                <Card style={{ borderRadius: "20px" }}>
                     <CardActionArea>
                     <ReactPlayer
                         url={video?.fileUrl}
@@ -95,25 +102,22 @@ function UserViewClasses() {
                     />
                     <CardContent
                         sx={{
-                        minHeight: '100px',
-                        backgroundColor: '#000',
-                        color: '#6EC72D',
-                        }}
-                    >
+                        minHeight: "100px",
+                        backgroundColor: "#000",
+                        color: "#6EC72D",
+                        }}>
                         <Typography
                         gutterBottom
                         variant="h5"
                         component="div"
-                        sx={{ fontWeight: 'bolder' }}
-                        >
+                        sx={{ fontWeight: "bolder" }}>
                         {video?.title}
                         </Typography>
                         <Typography
                         variant="body2"
                         color="#fff"
-                        fontFamily={'inherit'}
-                        fontStyle={'italic'}
-                        >
+                        fontFamily={"inherit"}
+                        fontStyle={"italic"}>
                         {video?.description}
                         </Typography>
                     </CardContent>

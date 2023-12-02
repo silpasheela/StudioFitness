@@ -115,7 +115,7 @@ function Checkout() {
                                 color:'#88C13E',
                                 fontWeight:'bolder',
                             }}>
-                            Booking Info
+                            Payment Info
                         </Typography>
                         <Stack direction= 'column' spacing={3} padding= '0 3.5rem'>
                             <TextField
@@ -149,7 +149,7 @@ function Checkout() {
                         border: '1px gray dotted',
                         borderRadius: '.3rem'
                     }}>
-                        <Typography variant='h4' padding= '1rem' sx={{color:'#88C13E', fontWeight:'bolder'}}>Booking Summary</Typography>
+                        <Typography variant='h4' padding= '1rem' sx={{color:'#88C13E', fontWeight:'bolder'}}>Subscription Summary</Typography>
                         <Divider />
                         <Stack padding='.8rem' direction='row' spacing={2}>
                             <Box padding= '.3rem 0rem'>

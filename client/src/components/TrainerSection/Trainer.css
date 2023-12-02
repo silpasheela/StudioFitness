@@ -1,9 +1,14 @@
 .trainercard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
     background-color: #ffffff;
+}
+
+.card_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 1rem;
+    gap: 3rem;
+    width: 85%;
+    margin: auto;
 }
 
 .trainercard .MuiCard-root {
@@ -41,3 +46,15 @@
     text-align: 'center'
 }
 
+
+@media screen and (max-width: 920px)  {
+    .card_container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 545px)  {
+    .card_container {
+        grid-template-columns: 1fr;
+    }
+}

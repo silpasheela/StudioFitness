@@ -37,6 +37,7 @@ import PublicRoutes from "./utils/PublicRoutes";
 import UserProtectedRoutes from "./utils/UserProtectedRoutes";
 import TrainerProtectedRoutes from "./utils/TrainerProtectedRoutes";
 import AdminProtectedRoutes from "./utils/AdminProtectedRoutes";
+import DemoModel from "./pages/DemoModel";
 
 function App() {
   return (
@@ -48,10 +49,10 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/forgot-password" element={<PasswordForgot />} />
           <Route path="/reset-password-email" element={<PasswordResetEmail />} />
           <Route path="/:role/reset-password-token/:token" element={<PasswordResetPage />} />
-          <Route path="/viewplandetails" element={<PlanDetailsPage />} />
         </Route>
 
 
@@ -79,19 +80,21 @@ function App() {
         </Route>
 
 
-        {/* <Route element={<AdminProtectedRoutes />}> */}
-          <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route element={<AdminProtectedRoutes />}>
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/user/details" element={<AdminUserDataPage />} />
           <Route path="/admin/trainer/details" element={<AdminTrainerDataPage />} />
           <Route path="/admin/service/details" element={<AdminServiceDataPage />} />
           <Route path="/admin/appointment/details" element={<AdminAppointmentsPage/>} />
-        {/* </Route> */}
+        </Route>
 
 
+          <Route path="/viewplandetails" element={<PlanDetailsPage />} />
           <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
           <Route path="*" element={<PageNotFound />} />
 
+
+        <Route path="/demo" element={<DemoModel/>}></Route>
 
       </Routes>
     </div>

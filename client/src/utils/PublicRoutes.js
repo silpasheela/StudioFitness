@@ -21,7 +21,7 @@ function PublicRoutes() {
         }
     } else if (authState?.role === 'user') {
 
-        if (authState?.dateOfBirth) {
+        if (authState?.age) {
             redirect = '/user/dashboard';
         } else {
             redirect = '/user/editprofile';

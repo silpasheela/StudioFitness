@@ -264,9 +264,9 @@ const cancelSubscription = async (req, res) => {
         }
 
         // Cancel the subscription in Stripe
-        await stripe.subscriptions.update(subscription.subscriptionId, {
-            cancel_at_period_end: true,
-        });
+        // await stripe.subscriptions.update(subscription.subscriptionId, {
+        //     cancel_at_period_end: true,
+        // });
 
         subscription.status = 'canceled';
         await subscription.save();

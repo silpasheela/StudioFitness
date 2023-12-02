@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import { useSelector } from "react-redux";
 import VideoChatIcon from "@mui/icons-material/VideoChat";
 import BMICalculator from "../components/BMICalculator/BMICalculator";
+import { Box } from "@mui/material";
 
 function UserDashboardPage() {
   const [socket, setSocket] = useState(null);
@@ -51,11 +52,23 @@ function UserDashboardPage() {
   }, [socket]);
 
   return (
-    <div className="dashboard" style={{ height: "46.2rem" }}>
+    <div className="dashboard">
       <>
         <NavBar />
-        <UserSideBar />
-        <BMICalculator/>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xl: "row",
+              lg: "row",
+              md: "row",
+              sm: "row",
+              xs: "column",
+            },
+          }}>
+          <UserSideBar />
+          <BMICalculator />
+        </Box>
         {call && (
           <a
             onClick={() => {

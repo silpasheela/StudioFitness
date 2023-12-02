@@ -83,7 +83,7 @@ function UserAppointments() {
     }
 
     return (
-        <div style={{marginTop:'-45vh',height:'110vh'}}>
+        <div style={{marginTop:'-30vh',height:'110vh'}}>
             <select value={filter} onChange={handleFilterChange} style={{ marginBottom: '10px', padding: '8px', borderRadius: '4px', fontSize: '16px',marginLeft:'100vh' }}>
                 <option value="all">All</option>
                 <option value="approved">Approved</option>

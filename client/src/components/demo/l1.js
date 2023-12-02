@@ -1,5 +1,5 @@
 import React from "react";
-import "./LandingOne.css";
+import "./l1.css";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import SportsGymnasticsIcon from "@mui/icons-material/SportsGymnastics";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
@@ -8,7 +8,7 @@ import SpaIcon from "@mui/icons-material/Spa";
 import SportsMartialArtsIcon from "@mui/icons-material/SportsMartialArts";
 import { Box } from "@mui/material";
 
-function LandingOne() {
+function Land() {
     return (
         <Box
         sx={{
@@ -117,4 +117,4 @@ function LandingOne() {
     );
 }
 
-export default LandingOne;
+export default Land;
