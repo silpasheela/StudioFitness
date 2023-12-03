@@ -108,14 +108,14 @@ function VideoCall() {
         // Step 1: Install the Zego Cloud SDK using NPM
 
         // Step 2: Generate a Kit Token
-        const appID = 556730801;
-        const serverSecret = "b9a6ca17126aa0b5fc87564f2c550a4f";
+        const appID = 1955572777;
+        const serverSecret = "c7fb84426bbdf52f7e141ca0accd6fb5";
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-        appID,
-        serverSecret,
-        roomID,
-        randomID(5),
-        randomID(5)
+            appID,
+            serverSecret,
+            roomID,
+            randomID(5),
+            randomID(5)
         );
 
         // Step 3: Create an instance object from the Kit Token

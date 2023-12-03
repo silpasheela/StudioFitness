@@ -90,10 +90,10 @@ function App() {
 
 
           <Route path="/viewplandetails" element={<PlanDetailsPage />} />
-          <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
           <Route path="*" element={<PageNotFound />} />
 
 
+        <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
         <Route path="/demo" element={<DemoModel/>}></Route>
 
       </Routes>

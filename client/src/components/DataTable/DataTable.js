@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
-import { Button,Grid  } from '@mui/material';
+import { Button,Grid, TextField  } from '@mui/material';
 import { GlobalStyles } from '@mui/material';
 
 
@@ -91,11 +91,10 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}) => {
-
-
+const DataTable = ({ tableHead, tableTitle, tableContent, handleBlocking, handleOpen }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -106,97 +105,123 @@ const DataTable = ({tableHead,tableTitle,tableContent,handleBlocking,handleOpen}
         setPage(0);
     };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableContent?.length - page * rowsPerPage);
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+        setPage(0);
+    };
+
+    const filteredRows = tableContent?.filter(
+        (row) => row?.fullName.toLowerCase().includes(searchTerm)
+    );
+
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredRows?.length - page * rowsPerPage);
 
     return (
         <div
-        style={{
+            style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
             height: '75vh',
-
-        }}
+            }}
         >
-        <GlobalStyles styles={{
-            '*::-webkit-scrollbar': {
+            <GlobalStyles
+            styles={{
+                '*::-webkit-scrollbar': {
                 width: '0px',
                 background: 'transparent',
-            },
-        }} />
-        <Typography variant="h4" gutterBottom sx={{fontWeight:'bold'}}>
+                },
+            }}
+            />
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
             {tableTitle}
-            {/* table content */}
-        </Typography>
-        <TableContainer component={Paper} style={{ maxWidth: 800 ,  }}>
+            </Typography>
+
+            <TextField
+            label="Search by Name"
+            variant="outlined"
+            margin="normal"
+            value={searchTerm}
+            onChange={handleSearch}
+            />
+            <TableContainer component={Paper} style={{ maxWidth: 800 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            {/* table headings */}
                 <TableHead>
-                    <TableRow>
-                        {tableHead.map((column) => (
-                            <StyledTableCell key={column.id} sx={{fontWeight:'bold',fontSize:'20px'}}>{column.label}</StyledTableCell>
-                        ))}
-                    </TableRow>
+                <TableRow>
+                    {tableHead.map((column) => (
+                    <StyledTableCell key={column.id} sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+                        {column.label}
+                    </StyledTableCell>
+                    ))}
+                </TableRow>
                 </TableHead>
-                
-            <TableBody>
+    
+                <TableBody>
                 {(rowsPerPage > 0
-                ? tableContent?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : tableContent
-                )?.map((row,index) => (
-                <StyledTableRow key={index}>
+                    ? filteredRows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : filteredRows
+                )?.map((row, index) => (
+                    <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
-                    {row?.fullName}
+                        {row?.fullName}
                     </StyledTableCell>
                     <StyledTableCell align="left">{row?.email}</StyledTableCell>
                     <StyledTableCell align="left">{row?.gender}</StyledTableCell>
                     <StyledTableCell align="left">
-                    <span style={{ color: row?.isActive ? 'green' : 'red' }}>
-                    {row?.isActive ? 'ACTIVE' : 'INACTIVE'}
-                    </span>
+                        <span style={{ color: row?.isActive ? 'green' : 'red' }}>
+                        {row?.isActive ? 'ACTIVE' : 'INACTIVE'}
+                        </span>
                     </StyledTableCell>
                     <StyledTableCell align="left">
                         <Grid container alignItems="center">
-                            <Grid item>
-                                <Button variant="outlined" size="small" onClick={() => handleOpen(row)}>{<VisibilityOutlinedIcon />}</Button>
-                            </Grid>
-                            <Grid item sx={{ml:2}}>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={<IOSSwitch sx={{ m: 1 }} 
-                                        checked={row?.isActive}
-                                        onChange={() => {handleBlocking(row._id)}} />}
-                                        label=""
-                                    />
-                                </FormGroup>
-                            </Grid>
+                        <Grid item>
+                            <Button variant="outlined" size="small" onClick={() => handleOpen(row)}>
+                            {<VisibilityOutlinedIcon />}
+                            </Button>
+                        </Grid>
+                        <Grid item sx={{ ml: 2 }}>
+                            <FormGroup>
+                            <FormControlLabel
+                                control={
+                                <IOSSwitch
+                                    sx={{ m: 1 }}
+                                    checked={row?.isActive}
+                                    onChange={() => {
+                                    handleBlocking(row._id);
+                                    }}
+                                />
+                                }
+                                label=""
+                            />
+                            </FormGroup>
+                        </Grid>
                         </Grid>
                     </StyledTableCell>
-
-                </StyledTableRow>
+                    </StyledTableRow>
                 ))}
-
+    
                 {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableRow style={{ height: 53 * emptyRows }}>
                     <StyledTableCell colSpan={6} />
-                </TableRow>
+                    </TableRow>
                 )}
-            </TableBody>
+                </TableBody>
             </Table>
             <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={tableContent?.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={filteredRows?.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
             />
-        </TableContainer>
+            </TableContainer>
         </div>
     );
 };
+
 
 export default DataTable;
 

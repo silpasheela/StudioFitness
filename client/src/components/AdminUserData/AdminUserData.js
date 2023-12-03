@@ -76,6 +76,7 @@ function AdminUserData() {
     const tableContent = rows;
 
 
+
     const handleBlocking = (id) => {
         confirmAlert({
             title: 'Confirmation',

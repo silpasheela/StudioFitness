@@ -151,9 +151,8 @@ function TrainerAppointmentsView() {
                     style={{
                         margin: "10px 0",
                         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                        backgroundColor: "rgba(255, 255, 255, 0.1)", // semi-transparent
-                        backdropFilter: "blur(12px)", // apply blur
-                        width: "600px",
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                        backdropFilter: "blur(12px)", 
                         marginLeft: "75vh",
                         borderRadius: "8px",
                         padding: "16px",
