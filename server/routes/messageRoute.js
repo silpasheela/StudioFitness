@@ -6,6 +6,8 @@ const {
     recieveMessage,
 } = require("../controllers/messageController");
 
+
+
 router.post("/:chatId", auth.authenticateToken, sentMessage);
 router.get("/:chatId", auth.authenticateToken, recieveMessage);
 

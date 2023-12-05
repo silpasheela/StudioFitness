@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/authMiddleware");
-
 const {
     getMyUsers,
     getMyTrainers,
@@ -9,6 +8,8 @@ const {
     createUserConversation,
     getMyChat,
 } = require("../controllers/chatController");
+
+
 
 router.get("/getusers", auth.authenticateToken, auth.isTrainer, getMyUsers);
 

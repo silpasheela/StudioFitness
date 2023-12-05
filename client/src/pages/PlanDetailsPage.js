@@ -17,8 +17,6 @@ function PlanDetailsPage() {
 
     const plans = useSelector(state => state?.data?.data?.plans);
 
-    console.log("plans",plans)
-
     return (
         <div>
             <NavBar/>

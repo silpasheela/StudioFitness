@@ -4,12 +4,10 @@ import NavBar from "../components/NavBar/NavBar";
 
 function TrainerChat() {
     return (
-        // <Box sx={{ padding: "3rem" }}>
         <>
         <NavBar/>
         <ChatUI role="trainer"></ChatUI>
         </>
-        // </Box>
     );
 }
 

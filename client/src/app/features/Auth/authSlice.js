@@ -24,12 +24,6 @@ const authSlice = createSlice({
             console.log("state.authState",state.authState)
         },
 
-        // subsAuth: (state) => {
-        //     if (state.authState && state.authState.subscriptionDetails) {
-        //         state.authState.subscriptionDetails.status = 'canceled';
-        //     }
-        // },        
-
         subsAuth: (state) => {
             if (state.authState && state.authState.subscriptionDetails) {
                 if(state.authState.subscriptionDetails.status === 'canceled') {

@@ -37,7 +37,7 @@ import PublicRoutes from "./utils/PublicRoutes";
 import UserProtectedRoutes from "./utils/UserProtectedRoutes";
 import TrainerProtectedRoutes from "./utils/TrainerProtectedRoutes";
 import AdminProtectedRoutes from "./utils/AdminProtectedRoutes";
-import DemoModel from "./pages/DemoModel";
+import TrainerViewUploadsPage from "./pages/TrainerViewUploadsPage";
 
 function App() {
   return (
@@ -76,6 +76,7 @@ function App() {
           <Route path="/trainer/addslot" element={<TrainerAddSlotPage />} />
           <Route path="/trainer/view-appointments" element={<TrainerAppoinmentsPage />} />
           <Route path="/trainer/videos" element={<TrainerVideoPage/>} />
+          <Route path="/trainer/view-classes" element={<TrainerViewUploadsPage/>} />
           <Route path="/trainer/chat" element={<TrainerChat />} />
         </Route>
 
@@ -91,10 +92,7 @@ function App() {
 
           <Route path="/viewplandetails" element={<PlanDetailsPage />} />
           <Route path="*" element={<PageNotFound />} />
-
-
-        <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
-        <Route path="/demo" element={<DemoModel/>}></Route>
+          <Route path="/trainer/appointments/join/:id" element={<VideoCall></VideoCall>} />
 
       </Routes>
     </div>

@@ -66,17 +66,12 @@ function AdminForm() {
             let role = "admin"
 
             try {
-                // const {data} = await instance.post(API_ENDPOINTS.LOGIN(role), formData);
                 const {data} = await uninterceptedApiInstance.post(`http://localhost:4000/${role}/login`,formData)
-                console.log(data);
                 localStorage.setItem('user',JSON.stringify(data?.admin));
-                console.log("heyyy",setAuth())
                 dispatch(setAuth());
-                console.log("test")
                 navigate(`/admin/dashboard`);
             } catch (error) {
                 const {response} = error;
-                // console.log(response);
                 setError(response?.data?.message);
             }
         }

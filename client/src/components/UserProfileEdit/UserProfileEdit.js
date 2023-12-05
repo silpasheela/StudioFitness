@@ -37,6 +37,7 @@ function UserProfileEdit() {
 
     const [editedUser, setEditedUser] = useState(null);
 
+    // eslint-disable-next-line no-unused-vars
     const [fileData, setFileData] = useState({
         profilePicture:'',
         bio: '',
@@ -54,7 +55,6 @@ function UserProfileEdit() {
         height: ''
     })
 
-    // const [error, setError] = useState(null);
 
     let errorData = { mobileNumber: "", age: "", weight: "", height: "" };
 
@@ -84,11 +84,8 @@ function UserProfileEdit() {
 
         try {
             const {data} = await instance.get(`user/dashboard`);
-            console.log("mine", data);
-            console.log("ID:", data.user._id);
             setUserId(data.user._id);
             setFormData({...data.user,_id:undefined});
-            //
             setInitialFormData({...data.user,_id:undefined});
 
         } catch (error) {
@@ -122,13 +119,11 @@ function UserProfileEdit() {
         }
     };
 
-    //
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         let isValid = true;
 
-        console.log(formData)
 
         if(!validateMobile(formData.mobileNumber)) {
             errorData.mobileNumber = "Invalid mobile number";
@@ -156,7 +151,6 @@ function UserProfileEdit() {
             if (JSON.stringify(formData) !== JSON.stringify(initialFormData)) {
                 try {
                     const {data} = await instance.put(`user/editprofile/${userId}`,formData);
-                    console.log(data)
                     setFormData({...data?.user,_id:undefined})
                     toast.success('Profile updated successfully!', {
                         position: "top-right",
@@ -181,7 +175,6 @@ function UserProfileEdit() {
                     });
                 }
             } else {
-                // Display an info toast message when no changes have been made
                 toast.info('No changes were made.', {
                     position: "top-right",
                     autoClose: 3000,
@@ -213,9 +206,7 @@ function UserProfileEdit() {
         
             const response = await instance.put(`user/editimage/${userId}`, imageFormData);
             setFileData(response.data);
-            console.log("filedata",fileData)
             setEditedUser(response.data);
-            console.log("editeddata",editedUser)
             toast.success('Profile Picture uploaded successfully!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -228,7 +219,6 @@ function UserProfileEdit() {
             navigate('/user/dashboard');
 
         } catch (error) {
-            console.log(error);
             toast.error('Error in updating profile!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -255,11 +245,6 @@ function UserProfileEdit() {
             <Container maxWidth="lg">
             <Stack spacing={3}>
                 <div>
-                {/* <Typography variant="h4" 
-                // sx={{color:'#6EC72D'}}
-                >
-                    Account Settings
-                </Typography> */}
                 </div>
                 <div>
                 <Grid
@@ -273,7 +258,6 @@ function UserProfileEdit() {
                     >
                     {/* <AccountProfile /> */}
                     <Card 
-                    // sx={{backgroundColor:'#000',borderRadius:5}}
                     >
                         <CardContent>
                         <Box
@@ -324,7 +308,6 @@ function UserProfileEdit() {
                             </Typography>
                             <TextField
                                 fullWidth
-                                // sx={{color:'white', borderColor:'white'}}
                                 name="bio"
                                 onChange={(e) => setEditedUser({ ...editedUser, bio: e.target.value })}
                                 required
@@ -340,7 +323,6 @@ function UserProfileEdit() {
                             fullWidth
                             variant="text"
                             onClick={uploadImage}
-                            // type='submit'
                             sx={{
                                     backgroundColor: '#6EC72D', 
                                     color: '#161616',
@@ -410,7 +392,6 @@ function UserProfileEdit() {
                                     label="Phone Number"
                                     name="mobileNumber"
                                     onChange={handleChange}
-                                    // type="number"
                                     value={formData?.mobileNumber}
                                     error={Boolean(formErrors.mobileNumber)}
                                     helperText={formErrors.mobileNumber}

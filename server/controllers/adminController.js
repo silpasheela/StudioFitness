@@ -98,7 +98,6 @@ const adminDashboard = async(req,res) => {
 
 const getAllUsers = async(req,res) => {
     
-    console.log("came");
     try {
         const users = await User.find({}, { password: 0 });
 
@@ -146,7 +145,6 @@ const getUser = async(req,res) => {
 const getAllTrainers = async(req,res) => {
     
     try {
-        // const trainers = await Trainer.find({}, { password: 0 }).populate('service','service-_id');
         const trainers = await Trainer.find({}, { password: 0 })
 
         if(trainers) {
@@ -210,13 +208,9 @@ const editUser = async(req,res) => {
 
 const searchUser = async(req,res) => {
 
-    console.log(req.body)
     const {searchData} = req.body;
-    console.log(searchData)
     try {
-        // const user = await User.find({email: new RegExp(searchData,'i')});
         const user = await User.find({ email: { $regex: new RegExp(searchData, 'i') } });
-        // console.log(user)
         res.status(200).json({
             user
         })
@@ -232,12 +226,10 @@ const blockUser = async(req,res) => {
     console.log(id)
     try {
         const user = await User.findOne({_id:id});
-        console.log("myuser",user.isActiveUser)
         user.isActive = !user.isActive;
 
         await user.save();
 
-        console.log(user)
         res.status(200).json({
             user,
             message: 'User status updated successfully'
@@ -255,11 +247,8 @@ const searchTrainer = async(req,res) => {
 
     console.log(req.body)
     const {searchData} = req.body;
-    console.log(searchData)
     try {
-        // const user = await User.find({email: new RegExp(searchData,'i')});
         const trainer = await Trainer.find({ email: { $regex: new RegExp(searchData, 'i') } });
-        // console.log(user)
         res.status(200).json({
             trainer
         })
@@ -279,7 +268,6 @@ const blockTrainer = async(req,res) => {
         trainer.isActive = !trainer.isActive;
         await trainer.save();
 
-        console.log(trainer)
         res.status(200).json({
             trainer,
             message: 'Trainer status updated successfully'
@@ -341,9 +329,7 @@ const verifyTrainerCertificate = async(req,res) => {
 const addService = async (req,res) => {
 
     const {service} = req.body;
-    console.log("hey")
     if(!service) {
-        console.log("hello")
 
         return res.status(400).json({
             message: 'Please fill out the required fields !'
@@ -351,7 +337,6 @@ const addService = async (req,res) => {
     }
 
     try {
-        console.log("hemmm")
 
         const exists = await Service.findOne({service:service});
         if(exists) {
@@ -361,8 +346,6 @@ const addService = async (req,res) => {
         } else {
             const service = await Service.create({
                 ...req.body,
-                // service,
-                // isActive:true
             })
             return res.status(201).json({
                 service: service,
@@ -378,11 +361,9 @@ const addService = async (req,res) => {
 
 
 const getAllServices = async(req,res) => {
-    console.log("serv out came");
 
     try {
         const services = await Service.find({});
-        console.log("serv in came");
         if(services) {
             return res.status(200).json({
                 services,
@@ -400,26 +381,6 @@ const getAllServices = async(req,res) => {
 }
 
 
-
-// const deactivateService = async(req,res) => {
-//     const {id} = req.params;
-//     console.log(id)
-//     try {
-//         const service = await Service.findOne({_id:id});
-//         Service.isActive = !Service.isActive;
-//         await service.save();
-
-//         console.log(service)
-//         res.status(200).json({
-//             service,
-//             message: 'User status updated successfully'
-//         })
-//     } catch (error) {
-//         res.status(500).json({
-//             message: 'Internal server error'
-//         })
-//     }
-// }
 
 const deactivateService = async (req, res) => {
     const { id } = req.params;
@@ -451,9 +412,7 @@ const deactivateService = async (req, res) => {
 const addPlan = async (req,res) => {
 
     const {planName,planAmount} = req.body;
-    console.log("hey")
     if(!planName || !planAmount ) {
-        console.log("hello")
 
         return res.status(400).json({
             message: 'Please fill out the required fields !'
@@ -461,7 +420,6 @@ const addPlan = async (req,res) => {
     }
 
     try {
-        console.log("hemmm")
 
         const exists = await Plan.findOne({planName:planName});
         if(exists) {
@@ -471,7 +429,6 @@ const addPlan = async (req,res) => {
         } else {
             const plan = await Plan.create({
                 ...req.body,
-                // service,
                 isActive:true
             })
             return res.status(201).json({
@@ -670,15 +627,6 @@ const getTrainersByService = async (req, res) => {
         });
     }
 };
-
-
-
-
-
-
-
-
-
 
 
 

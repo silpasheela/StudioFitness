@@ -9,13 +9,10 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:4000/user/auth/google/callback",
 },
 async function (accessToken, refreshToken, profile, done) {
-    console.log("hoiii")
 
     try {
         const existing = await User.findOne({ email: profile.emails[0].value })
-        console.log("hoiii",profile)
         if (existing) {
-            //
             return done(null, {user:existing}, { message: "Logged in succesfully" })
         }
         const emailExisting = await User.findOne({

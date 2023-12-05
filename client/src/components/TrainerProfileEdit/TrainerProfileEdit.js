@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid, Input, InputLabel, Select, MenuItem } from '@mui/material';
@@ -68,8 +69,6 @@ function TrainerProfileEdit() {
 
         try {
             const {data} = await instance.get(`trainer/dashboard`);
-            console.log("mine", data);
-            console.log("ID:", data.trainer._id);
             setUserId(data.trainer._id);
             setFormData({...data.trainer,_id:undefined})
 
@@ -89,7 +88,6 @@ function TrainerProfileEdit() {
 
 
     const servicedata = useSelector((state) => state.data?.data?.services)
-    console.log(servicedata)
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -97,12 +95,10 @@ function TrainerProfileEdit() {
                 ...formData,
                 [name]: value,
             });
-        console.log("inside handlechange",formData);
     };
 
     const handleCertificateChange = (e) => {
         const file = e.target.files[0];
-        console.log('Selected certificate file:', file);
         setEditedCertificate(file)
 
         const filePreview = URL.createObjectURL(file);
@@ -111,7 +107,6 @@ function TrainerProfileEdit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
 
         let isValid = true;
 
@@ -153,13 +148,11 @@ function TrainerProfileEdit() {
 
                     const dataObject = Object.fromEntries(trainerData);
 
-                    // console.log("my trainer data", {dataObject});
                     const {data} = await instance.put(`trainer/editprofile/${userId}`,dataObject,
                     {    headers: {
                         'Content-Type': 'multipart/form-data',
                     }}
                     );
-                    console.log(data)
                     setFormData({...data?.user,_id:undefined})
                     toast.success('Profile updated successfully!', {
                         position: "top-right",
@@ -211,13 +204,10 @@ function TrainerProfileEdit() {
         try {
             const imageFormData = new FormData();
             imageFormData.append('profilePicture', editedProfileImage);
-            // imageFormData.append('bio', editedUser.bio);
         
             const response = await instance.put(`trainer/editimage/${userId}`, imageFormData);
             setFileData(response.data);
-            console.log("filedata",fileData)
             setEditedUser(response.data);
-            console.log("editeddata",editedUser)
             toast.success('Profile Picture uploaded successfully!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -257,9 +247,6 @@ function TrainerProfileEdit() {
             <Container maxWidth="lg">
             <Stack spacing={3}>
                 <div>
-                {/* <Typography variant="h4" sx={{color:'#6EC72D'}}>
-                    Account Settings
-                </Typography> */}
                 </div>
                 <div>
                 <Grid
@@ -307,7 +294,6 @@ function TrainerProfileEdit() {
                                 fontWeight: 'bold',
                                 color: '#fff',
                                 textTransform: 'uppercase',
-                                // letterSpacing: '0.1em',
                                 textAlign: 'center',
                                 fontFamily:'revert'
                             }}
@@ -322,7 +308,6 @@ function TrainerProfileEdit() {
                             fullWidth
                             variant="text"
                             onClick={uploadImage}
-                            // type='submit'
                             sx={{
                                     backgroundColor: '#6EC72D', 
                                     color: '#000',
@@ -455,19 +440,6 @@ function TrainerProfileEdit() {
                                 />
                                 </Grid>
 
-                                {/* <Grid
-                                xs={12}
-                                md={6}
-                                >
-                                <TextField
-                                    fullWidth
-                                    label="Services"
-                                    name="service"
-                                    onChange={handleChange}
-                                    required
-                                    value={formData?.service}
-                                />
-                                </Grid> */}
 
                                 <Grid xs={12} md={6} sx={{paddingTop:0}}>
                                     <InputLabel htmlFor="service" style={{fontSize:11}}>Services</InputLabel>

@@ -18,8 +18,8 @@ function PasswordResetEmail() {
 
     let role = location.state.role;
     let token = location.state.token;
-    console.log("hey",role)
-    console.log("hi",token)
+    console.log(role)
+    console.log(token)
 
     return (
         <div className='common-background' style={{height:'100vh',}}>

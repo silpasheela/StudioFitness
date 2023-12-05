@@ -6,11 +6,7 @@ const getHashedPassword = async(password) => {
     return hashedPassword;
 }
 
-// const verifyPassword = async(password,securedPassword) => {
 
-//     const isPasswordMatch = await bcrypt.compare(password,securedPassword);
-//     return isPasswordMatch;
-// }
 
 const verifyPassword = async(password, securedPassword) => {
     try {
@@ -27,7 +23,6 @@ const verifyPassword = async(password, securedPassword) => {
         return isPasswordMatch;
     } catch (error) {
         console.error(error);
-        // handle error appropriately
     }
 };
 

@@ -37,9 +37,6 @@ function NavBar() {
         setAnchorElUser(event.currentTarget);
     };
 
-    // const handleCloseNavMenu = () => {
-    //     setAnchorElNav(null);
-    // };
 
     const handleCloseNavMenu = (page) => {
         setAnchorElNav(null);
@@ -87,20 +84,15 @@ function NavBar() {
     };
 
     const handleDashboard = () => {
-        console.log("hyyyyyyy", authState);
         navigate(`/${authState.role}/dashboard`);
     };
 
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        // dispatch(adminLogout());
-
         localStorage.removeItem("user");
         dispatch(removeAuth());
         navigate("/login");
-        // console.log("im from logout",JSON.stringify(authState))
-        // console.log(authState.role)
     };
 
     return (
@@ -155,11 +147,6 @@ function NavBar() {
                 sx={{
                     display: { xs: "block", md: "none" },
                 }}>
-                {/* {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                            <Typography textAlign="center">{page}</Typography>
-                        </MenuItem>
-                    ))} */}
 
                 {pages.map((page) => (
                     <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
@@ -192,14 +179,13 @@ function NavBar() {
                 {pages.map((page) => (
                 <Button
                     key={page}
-                    // onClick={handleCloseNavMenu}
                     onClick={() => handleCloseNavMenu(page)}
                     sx={{
                     my: 2,
                     color: "#6B6B6B",
                     display: "block",
                     "&:hover": {
-                        color: "#88C13E", // Change text color to #88C13E on hover
+                        color: "#88C13E", 
                     },
                     }}>
                     {page}

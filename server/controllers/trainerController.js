@@ -178,16 +178,12 @@ const trainerPasswordReset = async (req,res) => {
 
     try {
         const trainerExists = await Trainer.findOne({email:email});
-        // console.log("hey",trainerExists)
         if(trainerExists) {
             const token = await getToken(trainerExists._id,email);
-            // console.log(token)
 
             trainerExists.resetPasswordToken = token;
-            // console.log(userExists)
             await trainerExists.save();
-            // console.log(token)
-            // console.log(userExists.resetPasswordToken)
+
             
             const passwordResetLink = `http://localhost:3000/trainer/reset-password-token/${token}`;
 
@@ -216,7 +212,6 @@ const trainerPasswordReset = async (req,res) => {
 
 const trainerNewPassword = async(req,res) => {
     console.log(req)
-    // const {token} = req.params;
     const {newPassword,confirmPassword,token} = req.body;
     if(newPassword === confirmPassword) {
         try {
@@ -248,7 +243,6 @@ const trainerNewPassword = async(req,res) => {
 
 const trainerProfileUpdate = async(req,res) => {
 
-    console.log("my req",req.body)
     
     const {error} = trainerProfileUpdateValidation.validate(req.body);
     if(error) {
@@ -257,24 +251,20 @@ const trainerProfileUpdate = async(req,res) => {
             message: error.details[0]?.message,
         });        
     }
-    console.log(req.userId);
     try {
         
         const updateData = await Trainer.findOne({_id:req.userId})
 
-        console.log("updateData",updateData)
 
         if(!updateData) {
             return  res.status(404).json({
                 message: `User doesn't exist`
             })
         }
-        console.log("outside single");
-        console.log("my req outside single",req.body)
+
 
 
         upload.single('certificate')(req,res,async(error) => {
-            console.log("inside single");
             try {
                 if(error) {
                     return res.status(500).json({
@@ -284,12 +274,10 @@ const trainerProfileUpdate = async(req,res) => {
                 if(req.file) {
                     const trainerCertificate = await cloudinary.uploader.upload(req.file.path);
                     req.body.certificate = trainerCertificate.secure_url;
-                    // console.log(userProfilePicture)
                 }
                 const projection = { password:0,email:0,role:0,emailVerificationToken:0,isEmailVerified:0,resetPasswordToken:0,isActive:0,__v:0 };
                 
                 const updateInfo = await Trainer.findByIdAndUpdate(req.userId,req.body,{ new: true, runValidators: true, projection })
-                console.log("updateInfo",updateInfo)
                 res.status(200).json({
                     message: 'Profile updated successfully',
                     user:updateInfo
@@ -323,48 +311,34 @@ const trainerProfilePictureEdit = async(req,res) => {
     try {
         const updateData = await Trainer.findOne({_id:req.userId})
 
-        console.log("hoi",updateData)
-
         if(!updateData) {
-            console.log("im if")
             return  res.status(404).json({
                 message: `User doesn't exist`
             })
         }
-        console.log("im outside if")
 
         upload.single('profilePicture')(req,res,async(error) => {
-            console.log("im inside upld");
             try {
-                console.log("im inside try");
 
                 if(error) {
-                    console.log("im inside err");
                     return res.status(500).json({
                         message: 'Image upload error'
                     });
                 }
-                console.log("req",req.file)
                 if(req.file) {
-                    console.log("im inside req");
                     const userProfilePicture = await cloudinary.uploader.upload(req.file.path);
                     updateData.profilePicture = userProfilePicture.secure_url;
-                    console.log("dey",userProfilePicture)
-                    console.log("mybio",req.body.bio)
                 }
                 if (req.body.bio) {
                     updateData.bio = await req.body.bio;
                 }
 
-                console.log("data",updateData)
                 const projection = { password:0,email:0,role:0,subscriptionDetails:0,emailVerificationToken:0,isEmailVerified:0,resetPasswordToken:0,isActive:0,googleId:0,__v:0 };
                 const updateInfo = await Trainer.findByIdAndUpdate(req.userId,updateData,{ new: true, runValidators: true, projection })
-                // console.log(updateInfo)
                 res.status(200).json({
                     message: 'Profile Image updated successfully',
                     user:updateInfo
                 });
-                // console.log("res",updateInfo)
             } catch (error) {
                 console.log(error)
                 return res.status(500).json({
@@ -382,11 +356,9 @@ const trainerProfilePictureEdit = async(req,res) => {
 
 
 const trainerGetAllServices = async(req,res) => {
-    console.log("serv out came");
 
     try {
         const services = await Service.find({});
-        console.log("serv in came");
         if(services) {
             return res.status(200).json({
                 services,
@@ -769,7 +741,6 @@ const trainerRejectAppointment = async (req,res) => {
         const appointmentId = req.params.appointmentId; 
         const rejectionReason = req.body.reason;
 
-        console.log(rejectionReason);
     
         // Find the trainer by ID
         const trainer = await Trainer.findById(trainerId);
@@ -785,10 +756,6 @@ const trainerRejectAppointment = async (req,res) => {
             return res.status(404).json({ error: 'Appointment not found' });
         }
     
-        // Check if the appointment is already rejected
-        // if (!appointment.isTrainerApproved) {
-        //     return res.status(400).json({ error: 'Appointment is already rejected' });
-        // }
     
         // Update the isTrainerApproved field to false
         appointment.isTrainerApproved = 'rejected';

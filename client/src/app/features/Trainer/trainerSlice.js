@@ -15,7 +15,6 @@ export const trainerGetSlots = createAsyncThunk('trainer/trainerGetSlots', async
         const response = await instance.get('trainer/view-slots',{ withCredentials: true });
 
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
         // If the response is not successful, handle it here

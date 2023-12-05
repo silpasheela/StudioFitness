@@ -4,10 +4,11 @@ const { s3, upload } = require('../utils/s3BucketHelper');
 
 
 const trainerUploadVideo = async (req, res) => {
-    console.log('req:', req);
 
     try {
-        const { title, description, trainerId } = req.body;
+        const trainerId = req.userId;
+        const { title, description } = req.body;
+
 
         // Use req.files to get the files information
         const file = req.files[0];
@@ -39,15 +40,17 @@ const trainerUploadVideo = async (req, res) => {
 };
 
 
-const trainerGetAllVideos = async (req,res) => {
+const trainerGetVideos = async (req, res) => {
 
     try {
-        // Fetch all the video details from the database
-        const videos = await Video.find({});
+        const trainerId = req.userId;
 
-        if (!videos) {
+        // Fetch videos that belong to the specific trainer
+        const videos = await Video.find({ trainerId }).populate('trainerId','fullName');
+
+        if (!videos || videos.length === 0) {
             return res.status(404).json({
-                message: 'No videos found',
+                message: 'No videos found for this trainer',
             });
         }
 
@@ -61,7 +64,8 @@ const trainerGetAllVideos = async (req,res) => {
             message: 'Error in fetching videos',
         });
     }
-}
+};
+
 
 
 const userGetAllVideos = async (req,res) => {
@@ -119,6 +123,6 @@ module.exports = {
     trainerUploadVideo,
     userGetAllVideos,
     userGetVideoClass,
-    trainerGetAllVideos
+    trainerGetVideos
 
 }

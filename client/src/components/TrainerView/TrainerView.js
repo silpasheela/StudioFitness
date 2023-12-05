@@ -16,11 +16,9 @@ function TrainerView({trainer}) {
     const navigate = useNavigate();
 
     const handleBookNow = async () => {
-        console.log("trainerid",trainer._id);
         navigate(`/user/trainer/${trainer._id}`);
     };
 
-    //
 
     return (
         <Card sx={{ maxWidth: 315, boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', transition: '0.3s', borderRadius:'15px',
@@ -42,9 +40,7 @@ function TrainerView({trainer}) {
             <Typography variant="body2" color="#6EC72D" sx={{fontStyle: 'italic',fontFamily:'inherit'}}>
             {trainer.service.service} Instructor
             </Typography>
-            {/* <Typography sx={{fontSize:12,color:'#9F9F9F', textTransform: 'uppercase'}}>
-            {trainer.gender}
-            </Typography> */}
+
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
             <IconButton sx={{color:'#3A559F',  backgroundColor: '#fff', margin:0.5, marginTop:1.3 }}>
                 <FacebookIcon />
@@ -65,7 +61,6 @@ function TrainerView({trainer}) {
 
         </CardContent>
         <CardActions sx={{ justifyContent: 'center', backgroundColor:'#000' }}>
-        {/* <Link to={`/user/trainer/${trainer._id}`} style={{ textDecoration: 'none' }}> */}
 
             <Button size="small"
                     variant="contained"  

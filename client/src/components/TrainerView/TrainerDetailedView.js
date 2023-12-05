@@ -40,24 +40,19 @@ function TrainerDetailedView() {
     }, [dispatch]);
 
     const trainer = useSelector((state) => state.user?.user?.trainer);
-    console.log(trainer);
-    console.log("sasi");
 
     const handleBookSlot = (slotId, dateId) => {
-        console.log("heloooooooooooi", slotId, dateId);
         setSlotId(slotId);
         setDateId(dateId);
     };
 
     const handleFinalBooking = async () => {
-        console.log("hel", slotId, dateId);
 
         try {
         const response = await instance.post(`user/book-appointment/${id}`, {
             slotId,
             dateId,
         });
-        console.log(response);
         if (response.status === 201) {
             toast.success("Appointment booked successfully!", {
             position: "top-right",
@@ -71,7 +66,6 @@ function TrainerDetailedView() {
             navigate("/user/booking-success");
         }
         } catch (error) {
-        console.log(error.response.data.error);
         toast.error(`${error.response.data.error}`, {
             position: "top-right",
             autoClose: 3000,
@@ -214,7 +208,7 @@ function TrainerDetailedView() {
                 <TrainerSlotView handleBookSlot={handleBookSlot} />
             </TabPanel>
             <TabPanel sx={{ color: "#fff" }} value="2">
-                Item Two
+                No Reviews
             </TabPanel>
             </TabContext>
         </Box>

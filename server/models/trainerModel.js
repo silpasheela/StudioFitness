@@ -8,7 +8,6 @@ const trainerSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        // required: true
     },
     mobileNumber: {
         type: String,
@@ -23,20 +22,18 @@ const trainerSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    // address: {
-        street: {
-            type: String
-        },
-        city: {
-            type: String
-        },
-        state: {
-            type: String
-        },
-        zip: {
-            type: String
-        },
-    // },
+    street: {
+        type: String
+    },
+    city: {
+        type: String
+    },
+    state: {
+        type: String
+    },
+    zip: {
+        type: String
+    },
     profilePicture: {
         type: String
     },
@@ -46,11 +43,9 @@ const trainerSchema = mongoose.Schema({
     },
     qualification: {
         type: String,
-        // required: true
     },
     certificate: {
         type: String,
-        // required: true
     },
     likes: {
         count: {
@@ -89,7 +84,6 @@ const trainerSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Service'
 
-        // required: true
     },
     availableSlots: [
         {

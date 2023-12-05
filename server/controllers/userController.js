@@ -108,7 +108,6 @@ const userSignIn = async(req,res) => {
         const isPasswordMatch = await verifyPassword(password,userExists.password);
 
         if(isPasswordMatch) {
-            console.log(userExists._id)
             const token = await getToken(userExists._id,email);
 
             userExists.password = undefined
@@ -158,13 +157,11 @@ const userLogOut = async(req,res) => {
 
 
 const googleAuthenticate = (req, res, next) => {
-    console.log("hi")
     passport.authenticate("google", { session: false }, async (err, user) => {
         try {
             if (err) {
             throw err
             }
-            console.log("myuser",user?.user)
             const token = await getToken(user?.user?._id, user?.user?.email)
             console.log(token)
 
@@ -190,10 +187,8 @@ const userDashboard = async(req,res) => {
     console.log(req._id)
     try {
         const userExists = await User.findOne({_id:req.userId},{password:0,email:0,role:0,subscriptionDetails:0,emailVerificationToken:0,isEmailVerified:0,resetPasswordToken:0,isActive:0,googleId:0,__v:0});
-        // userExists.password = undefined;
 
         if(userExists) {
-            console.log(userExists)
             return res.status(200).json({
                 user:userExists,
                 message: 'Welcome to the user dashboard'
@@ -214,21 +209,15 @@ const userDashboard = async(req,res) => {
 
 
 const userPasswordReset = async (req,res) => {
-    // console.log(req)
     const { email } = req.body;
-    // console.log(req.body)
     try {
         const userExists = await User.findOne({email:email});
-        // console.log("hey",userExists)
         if(userExists) {
             const token = await getToken(userExists._id,email);
-            // console.log(token)
 
             userExists.resetPasswordToken = token;
-            // console.log(userExists)
             await userExists.save();
-            // console.log(token)
-            // console.log(userExists.resetPasswordToken)
+
             
             const passwordResetLink = `http://localhost:3000/user/reset-password-token/${token}`;
 
@@ -258,7 +247,6 @@ const userPasswordReset = async (req,res) => {
 
 const userNewPassword = async(req,res) => {
     console.log(req)
-    // const {token} = req.params;
     const {newPassword,confirmPassword,token} = req.body;
     if(newPassword === confirmPassword) {
         try {
@@ -303,7 +291,6 @@ const userProfileUpdate = async(req,res) => {
         
         const updateData = await User.findOne({_id:req.userId})
 
-        console.log("updateData",updateData)
 
         if(!updateData) {
             return  res.status(404).json({
@@ -345,48 +332,36 @@ const userProfilePictureEdit = async(req,res) => {
     try {
         const updateData = await User.findOne({_id:req.userId})
 
-        console.log("hoi",updateData)
 
         if(!updateData) {
-            console.log("im if")
             return  res.status(404).json({
                 message: `User doesn't exist`
             })
         }
-        console.log("im outside if")
 
         upload.single('profilePicture')(req,res,async(error) => {
-            console.log("im inside upld");
             try {
-                console.log("im inside try");
 
                 if(error) {
-                    console.log("im inside err");
                     return res.status(500).json({
                         message: 'Image upload error'
                     });
                 }
-                console.log("req",req.file)
                 if(req.file) {
-                    console.log("im inside req");
                     const userProfilePicture = await cloudinary.uploader.upload(req.file.path);
                     updateData.profilePicture = userProfilePicture.secure_url;
-                    console.log("dey",userProfilePicture)
-                    console.log("mybio",req.body.bio)
+
                 }
                 if (req.body.bio) {
                     updateData.bio = await req.body.bio;
                 }
 
-                console.log("data",updateData)
                 const projection = { password:0,email:0,role:0,subscriptionDetails:0,emailVerificationToken:0,isEmailVerified:0,resetPasswordToken:0,isActive:0,googleId:0,__v:0 };
                 const updateInfo = await User.findByIdAndUpdate(req.userId,updateData,{ new: true, runValidators: true, projection })
-                // console.log(updateInfo)
                 res.status(200).json({
                     message: 'Profile Image updated successfully',
                     user:updateInfo
                 });
-                // console.log("res",updateInfo)
             } catch (error) {
                 console.log(error)
                 return res.status(500).json({
@@ -428,11 +403,9 @@ const userGetAllTrainers = async(req,res) => {
 const userGetTrainer = async(req,res) => {
     const {id} = req.params;
 
-    console.log('myid',id)
 
     try {
         const trainer = await Trainer.findOne({_id:id},{ password: 0 }).populate('service');
-        console.log('user',trainer);
 
         if(trainer) {
             return res.status(200).json({
@@ -477,11 +450,9 @@ const getAllPlans = async(req,res) => {
 const getPlanById = async(req,res) => {
     const {id} = req.params;
 
-    console.log('myid',id)
 
     try {
         const plan = await Plan.findOne({_id:id});
-        console.log('user',plan);
 
         if(plan) {
             return res.status(200).json({
@@ -503,12 +474,10 @@ const getPlanById = async(req,res) => {
 
 const userGetSlots = async (req, res) => {
 
-    console.log("slot", req.params);
     try {
         const trainerId = req.params.trainerId;
 
         const trainer = await Trainer.findById(trainerId);
-        console.log(trainer)
 
         if (!trainer) {
             return res.status(404).json({ error: 'Trainer not found' });
@@ -550,7 +519,6 @@ const userGetSlots = async (req, res) => {
             return res.json({ message: 'No slots available for this trainer' });
         }
 
-        console.log("filslots",filteredSlots);
         return res.status(200).json({ slots: filteredSlots });
 
     } catch (error) {
@@ -569,9 +537,6 @@ const userBookAppointment = async (req, res) => {
         const userId = req.userId;
         const trainerId = req.params.trainerId;
 
-        console.log("trainerId",trainerId)
-        console.log("slotId",slotId)
-        console.log(req.body);
 
         // Check if the user has an active subscription with a Premium plan
         const user = await User.findById(userId).populate({
@@ -584,7 +549,6 @@ const userBookAppointment = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        console.log('mysub',user?.subscriptionDetails?.planId?.planName);
         if (!user.subscriptionDetails || user.subscriptionDetails.status !== 'active' || !user.subscriptionDetails.planId || user.subscriptionDetails.planId.planName !== 'Premium') {
             return res.status(403).json({ error: 'You need an active Premium subscription to book a slot.' });
         }

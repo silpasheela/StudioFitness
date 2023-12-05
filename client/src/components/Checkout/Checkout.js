@@ -32,9 +32,6 @@ function Checkout() {
         return state.auth.authState;
     })
 
-    console.log("my",authState)
-
-    console.log(planData)
 
     const onToken = async (token) => {
         try {
@@ -60,7 +57,6 @@ function Checkout() {
                     progress: undefined,
                 });
                 navigate('/user/subscription-details');
-                console.log(data);
 
             } else {
                 console.error("Subscription creation failed.");
@@ -138,7 +134,6 @@ function Checkout() {
                             />
                             <TextField
                                 id="planName"
-                                // label="Plan Name"
                                 variant="outlined"
                                 value={planData?.planName}
                             />

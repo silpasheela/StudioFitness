@@ -4,19 +4,15 @@ const userSchema = mongoose.Schema({
 
     fullName: {
         type: String,
-        // required: true
     },
     dateOfBirth: {
         type: Date,
-        // required: true
     },
     gender: {
         type: String,
-        // required: true
     },
     mobileNumber: {
         type: String,
-        // required: true
     },
     email: {
         type: String,
@@ -25,7 +21,6 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        // required: true
     },
     address: {
         street: {
@@ -80,7 +75,6 @@ const userSchema = mongoose.Schema({
     },
     googleId: {
         type :String,
-        // required: true
 
     },
     bio: {

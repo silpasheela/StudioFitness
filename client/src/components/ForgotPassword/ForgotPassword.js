@@ -16,7 +16,6 @@ function ForgotPassword() {
     const [formErrors, setFormErrors] = useState({email: ''})
 
     const [error, setError] = useState(null);
-    // const [emailSent, setEmailSent] = useState(false);
 
     const navigate = useNavigate(); 
 
@@ -25,12 +24,8 @@ function ForgotPassword() {
 
     const handleInputChange = (e) => {
 
-        console.log(e.target)
-
         const {name,value} = e.target;
 
-        console.log(name);
-        console.log(value)
 
         setFormData((prevData) => ({
             ...prevData,
@@ -38,7 +33,6 @@ function ForgotPassword() {
             
         }));
 
-        console.log(formData);
 
         setFormErrors((prevData) => ({
             ...prevData,
@@ -68,18 +62,13 @@ function ForgotPassword() {
         if(isValid) {
             
             const role = isUser ? "user" : "trainer";
-            console.log(formData?.email)
-            console.log(role)
+
             try {
+                // eslint-disable-next-line no-unused-vars
                 const {data} = await uninterceptedApiInstance.put(`${role}/reset-password`,formData);
-                console.log(data)
-                // setEmailSent(true);
-                // let {token} = data;
-                // console.log(token)
                 navigate('/reset-password-email', { state: { role: role} });
             } catch (error) {
                 const {response} = error;
-                console.log(response?.data?.message);
                 setError(response?.data?.message);
             }
         }

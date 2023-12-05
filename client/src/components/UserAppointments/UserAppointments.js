@@ -37,8 +37,6 @@ function UserAppointments() {
 
     const data = useSelector(state => state?.appointment?.appointment?.appointments) || []
 
-    console.log("user apmnt",data)
-
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
     };
@@ -102,13 +100,14 @@ function UserAppointments() {
                     <Card key={index} style={{ 
                         margin: '10px 0', 
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)', // semi-transparent
-                        backdropFilter: 'blur(12px)', // apply blur
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                        backdropFilter: 'blur(12px)', 
                         width:'600px', 
                         marginLeft:'75vh',
                         borderRadius: '8px',
                         padding: '16px',
-                        color: 'white', }}>
+                        color: 'white', 
+                        }}>
                         <CardContent>
                             <Typography variant="h4" component="div" style={{ color: 'green',marginBottom: '10px', fontFamily:'inherit', fontWeight:'bolder' }}>
                                 APPOINTMENT {page * rowsPerPage + index + 1}

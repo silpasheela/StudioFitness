@@ -19,31 +19,21 @@ router.get('/logout',userController.userLogOut);
 router.get('/dashboard',auth.authenticateToken,auth.isUser,userController.userDashboard);
 router.put('/reset-password',userController.userPasswordReset);
 router.put('/new-password',userController.userNewPassword);
-
 router.put('/editprofile/:id',auth.authenticateToken,auth.isUser,userController.userProfileUpdate);
 router.put('/editimage/:id',auth.authenticateToken,auth.isUser,userController.userProfilePictureEdit);
 router.get('/view-trainers',auth.authenticateToken,auth.isUser,userController.userGetAllTrainers);
 router.get('/trainer/:id',auth.authenticateToken,auth.isUser,userController.userGetTrainer);
-
 router.post('/create-subscription', auth.authenticateToken,auth.isUser,subscriptionController.createSubscription);
 router.get('/subscription/:userId',auth.authenticateToken,auth.isUser,subscriptionController.getSubscription);
 router.put('/subscription/cancel/:userId',auth.authenticateToken,auth.isUser,subscriptionController.cancelSubscription);
 router.get('/view-plans',userController.getAllPlans);
 router.get('/plan/:id',userController.getPlanById);
-
-
 router.get('/view-slots/:trainerId',auth.authenticateToken,auth.isUser,userController.userGetSlots);
 router.post('/book-appointment/:trainerId',auth.authenticateToken,auth.isUser,userController.userBookAppointment);
 router.get('/view-appointments',auth.authenticateToken,auth.isUser,userController.userGetAppointments);
 router.put('/cancel-appointment/:appointmentId',auth.authenticateToken,auth.isUser,userController.userCancelAppointment);
-
-
-
-
 router.get('/view-classes',auth.authenticateToken,auth.isUser,videoController.userGetAllVideos);
 router.get('/view-class/:id',auth.authenticateToken,auth.isUser,videoController.userGetVideoClass);
-
-
 router.post('/calculate-bmi',auth.authenticateToken,auth.isUser,userController.calculateBMI);
 
 

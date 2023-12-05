@@ -58,7 +58,7 @@ const recieveMessage = async (req, res) => {
             path: "latestMessage",
             populate: {
                 path: "sender",
-                select: "fullName email profilePicure",
+                select: "fullName email profilePicture",
             },
             },
         })

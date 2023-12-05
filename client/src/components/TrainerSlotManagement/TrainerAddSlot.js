@@ -107,12 +107,10 @@ function TrainerAddSlot() {
                 onClick={() => setOpen(true)}
                 startIcon={<AddCircleIcon />}
                 sx={{ 
-                    // width: '25%', 
                     height:'55px',
                     backgroundColor: '#6EC72D', 
                     border: '1px solid #fff',
                     color: '#fff',
-                    // maxWidth:'150px',
                     borderRadius: "5px", 
                     '&:hover': { backgroundColor: '#6EC72D' , color: '#000',border: '1px solid #fff'} 
                 }}

@@ -34,7 +34,6 @@ instance.interceptors.response.use(
 
   (error) => {
     // logout the user based on the token expiry
-    // if (error.response.status === 401) {
     if (error.response.status === 401 || (error.response.status === 400 && error.response.data.message === "Your account has been temporarily suspended!")) {
       window.location.href = "/";
       localStorage.removeItem("user");
@@ -44,4 +43,3 @@ instance.interceptors.response.use(
   }
 );
 
-// export default instance;

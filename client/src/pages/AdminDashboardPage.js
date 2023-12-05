@@ -4,11 +4,6 @@ import AdminCharts from '../components/AdminDashboardCharts/AdminCharts'
 
 function AdminDashboardPage() {
 
-  // const authState = useSelector((state) => {
-  //   console.log("authState",authState)
-  //   return state?.auth?.authState;
-  // })
-
   return (
     <>
       <AdminSideBar/>

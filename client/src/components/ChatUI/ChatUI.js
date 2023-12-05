@@ -150,7 +150,6 @@ function ChatUI({ role }) {
             `/message/${conversationId}`,
             messageDetails
         );
-        // console.log(data);
         socket.emit("new message", data);
         setMessages((prev) => {
             if (prev) {
@@ -169,7 +168,6 @@ function ChatUI({ role }) {
             !selectedChatComparer.current ||
             selectedChatComparer.current !== newMessage?.conversation._id
             ) {
-            // console.log(newMessage);
             } else {
             setMessages((prev) => {
                 return [...prev, newMessage];

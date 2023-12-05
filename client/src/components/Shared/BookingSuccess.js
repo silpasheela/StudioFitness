@@ -7,7 +7,6 @@ const successCardStyle = {
 
     maxWidth: 400,
     margin: 'auto',
-    // marginTop: '20vh',
     background: 'linear-gradient(to right, #6EC72D, #000)',
     color: 'white',
     borderRadius: 16,

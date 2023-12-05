@@ -34,7 +34,7 @@ const socketConnect = (server) => {
 
         socket.on("new call", (callLink) => {
             console.log(callLink);
-            socket.in(callLink.userId).emit("doctor call", callLink.personalLink);
+            socket.in(callLink.userId).emit("trainer call", callLink.personalLink);
         });
 
         socket.on("disconnect", () => {

@@ -15,8 +15,6 @@ const containerStyle = {
     padding: "20px",
     maxWidth: "400px",
     margin: "10rem auto",
-    // marginTop: '-40vh',
-    //   border: "1px solid #ccc",
     borderRadius: "8px",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     backgroundColor: "rgba(255, 255, 255, 0.55)",

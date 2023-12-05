@@ -14,11 +14,9 @@ const initialState = {
 //USER PROFILE UPDATION
 
 export const updateUserProfile = createAsyncThunk('user/updateUserProfile', async(userData, {rejectWithValue}) => {
-    console.log("dey",userData)
     try {
         const response = await instance.put(`user/editprofile/${userData._id}`,userData, { withCredentials: true });
-        // console.log(response.data)
-        // return response.data
+
         if (response.status === 200) {
             return response.data.user;
         } else {
@@ -38,7 +36,6 @@ export const userViewAllTrainers = createAsyncThunk('user/userViewAllTrainers', 
         const response = await instance.get(`user/view-trainers`, { withCredentials: true });
         
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
         // If the response is not successful, handle it here
@@ -54,10 +51,8 @@ export const userViewAllTrainers = createAsyncThunk('user/userViewAllTrainers', 
 //GET SPECIFIC TRAINER BY USER
 
 export const userGetTrainer = createAsyncThunk('user/userGetTrainer', async(id, {rejectWithValue}) => {
-    console.log(id)
     try {
         const response = await instance.get(`user/trainer/${id}`, { withCredentials: true });
-        console.log(response.data)
 
         if(response.status === 200) {
             return response.data;
@@ -73,10 +68,8 @@ export const userGetTrainer = createAsyncThunk('user/userGetTrainer', async(id, 
 //GET SUBSCRIPTION DETAILS BY USER
 
 export const userGetSubscriptionDetails = createAsyncThunk('user/userGetSubscriptionDetails', async(id, {rejectWithValue}) => {
-    console.log(id)
     try {
         const response = await instance.get(`user/subscription/${id}`, { withCredentials: true });
-        console.log(response.data)
 
         if(response.status === 200) {
             return response.data;
@@ -93,10 +86,8 @@ export const userGetSubscriptionDetails = createAsyncThunk('user/userGetSubscrip
 //GET TRAINER SLOT DETAILS BY USER
 
 export const userGetAvailableSlots = createAsyncThunk('user/userGetAvailableSlots', async(trainerId, {rejectWithValue}) => {
-    console.log(trainerId)
     try {
         const response = await instance.get(`user/view-slots/${trainerId}`, { withCredentials: true });
-        console.log(response.data)
 
         if(response.status === 200) {
             return response.data;

@@ -43,8 +43,8 @@ function UserDashboardPage() {
 
   useEffect(() => {
     if (socket) {
-      socket.on("doctor call", (link) => {
-        console.log("doctor is calling ......!!!");
+      socket.on("trainer call", (link) => {
+        console.log("trainer is calling ......!!!");
         console.log(link);
         setCall(link);
       });

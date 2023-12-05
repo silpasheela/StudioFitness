@@ -11,7 +11,6 @@ function UserSubscriptionPage() {
     return state?.auth?.authState;
   });
 
-  console.log("hey",subscriptionData);
 
   return (
     <div className="user-subscription" style={{}}>

@@ -42,7 +42,6 @@ function TrainerViewSlot() {
 
     const slots = useSelector((state) => {return state.trainer?.trainer.slots})
 
-    console.log(slots,"hiii");
 
     const handleDeleteSlot = (date, slotId) => {
         confirmAlert({

@@ -11,24 +11,6 @@ const initialState = {
 }
 
 
-//ADMIN LOGIN
-
-// export const adminLogin = createAsyncThunk('admin/login', async (_, { rejectWithValue }) => {
-//     try {
-//         const response = await instance.post(`${baseURL}admin/login`, { withCredentials: true });
-
-//         if (response.status === 200) {
-//             console.log(response.data)
-//             return response.data;
-//         } else {
-//             return rejectWithValue('Failed to login');
-//         }
-//     } catch (error) {
-//         return rejectWithValue('Network error');        
-//     }
-// })
-
-
 //ADMIN LOGOUT
 
 export const adminLogout = createAsyncThunk('admin/logout', async (_, { rejectWithValue }) => {
@@ -36,7 +18,6 @@ export const adminLogout = createAsyncThunk('admin/logout', async (_, { rejectWi
         const response = await instance.get(`${baseURL}admin/logout`, { withCredentials: true });
         
         if (response.status === 200) {
-            // console.log(response.data)
             localStorage.removeItem('user')
             return response.data;
         } else {
@@ -57,7 +38,6 @@ export const adminGetAllUsers = createAsyncThunk('admin/getAllUsers', async (_, 
         const response = await instance.get(`${baseURL}admin/all-users`, { withCredentials: true });
         
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
         // If the response is not successful, handle it here
@@ -76,7 +56,6 @@ export const adminGetAllTrainers = createAsyncThunk('admin/getAllTrainers', asyn
         const response = await instance.get(`${baseURL}admin/all-trainers`, { withCredentials: true });
         
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
             return rejectWithValue('Failed to fetch user data');
@@ -92,7 +71,6 @@ export const adminBlockUnblockUser = createAsyncThunk('admin/blockUnblockUser', 
     try {
         const response = await instance.put(`admin/block-user/${id}`, { withCredentials: true });
         if (response.status === 200) {
-            // console.log("im from adminslice",response.data)
             return response.data;
         } else {
             return rejectWithValue('Failed to fetch user data');
@@ -125,7 +103,6 @@ export const adminBlockUnblockTrainer = createAsyncThunk('admin/blockUnblockTrai
     try {
         const response = await instance.put(`${baseURL}admin/block-trainer/${id}`, { withCredentials: true });
         if (response.status === 200) {
-            // console.log("im from adminslice",response.data)
             return response.data;
         } else {
             return rejectWithValue('Failed to fetch user data');
@@ -197,7 +174,6 @@ export const adminBlockUnblockService = createAsyncThunk('admin/blockUnblockServ
     try {
         const response = await instance.put(`${baseURL}admin/deactivate-service/${id}`, { withCredentials: true });
         if (response.status === 200) {
-            // console.log("im from adminslice",response.data)
             return response.data;
         } else {
             return rejectWithValue('Failed to fetch user data');
@@ -299,17 +275,6 @@ const adminSlice = createSlice({
                 state.error = action.error.message;
             })
 
-            // .addCase(adminLogin.pending, (state) => {
-            //     state.loading = true;
-            // })
-            // .addCase(adminLogin.fulfilled, (state, action) => {
-            //     state.loading = false;
-            //     state.users = action.payload;
-            // })
-            // .addCase(adminLogin.rejected, (state, action) => {
-            //     state.loading = false;
-            //     state.error = action.error.message;
-            // })
 
             .addCase(adminLogout.pending, (state) => {
                 state.loading = true;

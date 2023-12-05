@@ -23,7 +23,6 @@ const containerStyle = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    // minHeight: '100vh',
 };
 
 const messageStyle = {

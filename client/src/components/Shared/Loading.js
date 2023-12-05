@@ -25,7 +25,7 @@ const containerStyle = {
 };
 
 const animationStyle = {
-    width: '200px', // Adjust the width and height to fit your animation
+    width: '200px', 
     height: '200px',
 };
 

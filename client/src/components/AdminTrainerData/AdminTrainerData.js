@@ -20,7 +20,6 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    // bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
     p: 4,
@@ -38,7 +37,6 @@ function AdminTrainerData() {
 
     const rows = useSelector(state => state.admin?.trainers?.trainers);
 
-    console.log("hellllllllllooooooo",rows)
 
     //modal
     const [open, setOpen] = useState(false);
@@ -56,9 +54,7 @@ function AdminTrainerData() {
 
     const handleToggleActive = (id) => {
         dispatch(adminVerifyTrainer(id)).then(() => {
-            // dispatch(adminGetTrainer(id));
             dispatch(adminGetAllTrainers());
-            console.log("dispatch",id)
         })
     }
 

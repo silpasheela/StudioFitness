@@ -15,7 +15,7 @@ import Loading from '../components/Shared/Loading';
 function ViewTrainersPage() {
     const dispatch = useDispatch();
 
-    //
+    
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event) => {
@@ -46,10 +46,7 @@ function ViewTrainersPage() {
 
     const trainers = useSelector((state) => state.user?.user?.trainers);
 
-    console.log(trainers)
-
     if (!trainers) {
-        // return <p>Loading...</p>;
         return <Loading/>
     }
 

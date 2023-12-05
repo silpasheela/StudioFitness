@@ -21,6 +21,7 @@ function TrainerSlotView({handleBookSlot}) {
     const [slotData, setSlotData] = useState([]);
     const [expandedDate, setExpandedDate] = useState(null);
     const [selectedSlotId, setSelectedSlotId] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [selectedDateId, setSelectedDateId] = useState(null);
 
 
@@ -32,7 +33,6 @@ function TrainerSlotView({handleBookSlot}) {
 
     const fetchSlot = async () => {
         const response = await instance.get(`user/view-slots/${id}`);
-        console.log(response?.data?.slot?._id);
         setSlotData(response.data);
     };
 
@@ -87,8 +87,6 @@ function TrainerSlotView({handleBookSlot}) {
         handleBookSlot(slotId,dateId);
     };
 
-    console.log("setSelectedSlotId",selectedSlotId);
-    console.log("setSelectedDateId",selectedDateId);
 
     return (
         <div>
@@ -119,7 +117,7 @@ function TrainerSlotView({handleBookSlot}) {
                                         onClick={slot?.status ? null : () => handleSlotClick(slot?._id,dateSlot?._id)}
                                         disabled={slot?.status}
                                         sx={{ 
-                                            width: 'calc(50% - 8px)', // Set a fixed width
+                                            width: 'calc(50% - 8px)', 
                                             backgroundColor: slot?.status ? '#ebe8e8' : selectedSlotId === slot?._id ? '#6EC72D' : 'initial',
                                             color: slot?.status ? '#000' : selectedSlotId === slot?._id ? '#000' : '#fff',
                                             marginBottom: '1rem',

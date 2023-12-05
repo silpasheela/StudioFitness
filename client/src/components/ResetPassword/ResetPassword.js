@@ -15,13 +15,13 @@ function ResetPassword() {
     const [showToaster, setShowToaster] = useState(false);
 
     const showSuccessToaster = (message) => {
-      toast.success(message);
-      setShowToaster(true);
+        toast.success(message);
+        setShowToaster(true);
     };
-  
+
     const showErrorToaster = (message) => {
-      toast.error(message);
-      setShowToaster(true);
+        toast.error(message);
+        setShowToaster(true);
     };
 
     const { role, token } = useParams();
@@ -54,7 +54,6 @@ function ResetPassword() {
             
         }));
 
-        console.log(formData);
 
         setFormErrors((prevData) => ({
             ...prevData,

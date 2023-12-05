@@ -83,7 +83,6 @@ function AdminAppointmentsTable() {
                             appointment?.trainerId?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
                     );
     
-                    console.log("mysort", sortedAppointments);
                 }
                 setAppointments(sortedAppointments);
             } catch (error) {

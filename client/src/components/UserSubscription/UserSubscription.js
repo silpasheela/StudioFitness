@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { confirmAlert } from "react-confirm-alert"; 
+import "react-confirm-alert/src/react-confirm-alert.css"; 
 import { toast } from "react-toastify";
 import { Box, Unstable_Grid2 as Grid } from "@mui/material";
 import {

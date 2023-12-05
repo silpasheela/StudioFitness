@@ -14,8 +14,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PersonIcon from "@mui/icons-material/Person";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { instance } from "../../api/axiosInstance";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css"; 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -157,6 +157,7 @@ function TrainerAppointmentsView() {
                         borderRadius: "8px",
                         padding: "16px",
                         color: "white",
+                        width:'40%'
                     }}>
                     <CardContent>
                     <Typography

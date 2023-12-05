@@ -8,8 +8,6 @@ import { setAuth } from "../../app/features/Auth/authSlice"
 import jwt_decode from "jwt-decode";
 
 
-
-
 function LogIn() {
 
     const navigate = useNavigate()
@@ -18,13 +16,10 @@ function LogIn() {
     const googleToken = searchParams.get("googleToken")
 
     useEffect(() => {
-      console.log(googleToken)
   
       if (googleToken) {
         const decodedToken = jwt_decode(googleToken);
-        console.log(decodedToken);
         const user = {...decodedToken,role:'user',token:googleToken}
-        console.log(user)
         localStorage.setItem('user', JSON.stringify(user))  
         dispatch(setAuth())
         navigate("/user/dashboard")

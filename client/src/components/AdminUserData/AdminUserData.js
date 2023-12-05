@@ -17,8 +17,6 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    // bgcolor: 'background.paper',
-    // border: '1px solid ',
     boxShadow: 24,
     p: 4,
     bgcolor: '#e4f5ce'
@@ -144,7 +142,6 @@ function AdminUserData() {
                             fullWidth
                             margin="normal"
                             disabled 
-                            // sx={{color:'black'}}// disable the field
                         />
                         <TextField
                             id="mobileNumber"

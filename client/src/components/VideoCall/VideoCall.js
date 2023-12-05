@@ -34,7 +34,6 @@ function VideoCall() {
     const [callEnd, setCallEnd] = useState(false);
     const [userId, setUserId] = useState(null);
 
-    // const [zp, setZp] = useState(null);
 
     useEffect(() => {
         const fetchAppointmetDetails = async () => {
@@ -105,9 +104,6 @@ function VideoCall() {
         return;
         }
 
-        // Step 1: Install the Zego Cloud SDK using NPM
-
-        // Step 2: Generate a Kit Token
         const appID = 1955572777;
         const serverSecret = "c7fb84426bbdf52f7e141ca0accd6fb5";
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
@@ -118,9 +114,7 @@ function VideoCall() {
             randomID(5)
         );
 
-        // Step 3: Create an instance object from the Kit Token
         const zpInstance = ZegoUIKitPrebuilt.create(kitToken);
-        // setZp(zpInstance);
 
         // Generate personal link
         const link =
@@ -131,9 +125,7 @@ function VideoCall() {
         "?roomID=" +
         roomID;
         setPersonalLink(link);
-        // socket.emit('new call' , link);
 
-        // Step 4: Start a call
         zpInstance.joinRoom({
         container: element,
         sharedLinks: [

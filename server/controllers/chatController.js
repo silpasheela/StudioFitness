@@ -133,7 +133,6 @@ const getMyUsers = async (req, res) => {
             userId: 1,
             user: 1,
             trainer: {
-            //   name: 1,
             fullName: 1,
             email: 1,
             profilePicture: 1,

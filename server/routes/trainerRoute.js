@@ -15,7 +15,6 @@ router.get('/logout',trainerController.trainerLogOut);
 router.get('/dashboard',auth.authenticateToken,auth.isTrainer,trainerController.trainerDashboard);
 router.put('/reset-password',trainerController.trainerPasswordReset)
 router.put('/new-password',trainerController.trainerNewPassword)
-// router.patch('/editprofile/:id',auth.authenticateToken,auth.isTrainer,trainerController.trainerProfileUpdate);
 
 router.put('/editprofile/:id',auth.authenticateToken,auth.isTrainer,trainerController.trainerProfileUpdate);
 router.put('/editimage/:id',auth.authenticateToken,auth.isTrainer,trainerController.trainerProfilePictureEdit);
@@ -39,10 +38,8 @@ router.get(
 );
 
 
-// router.post('/upload-class',auth.authenticateToken,auth.isTrainer,videoController.trainerUploadVideo);
-
 router.post('/upload-class', auth.authenticateToken, auth.isTrainer, upload.array('video', 1), videoController.trainerUploadVideo);
-router.get('/view-uploads',auth.authenticateToken,auth.isUser,videoController.trainerGetAllVideos);
+router.get('/view-uploads',auth.authenticateToken,auth.isTrainer,videoController.trainerGetVideos);
 
 
 

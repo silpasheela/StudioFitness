@@ -50,7 +50,6 @@ function AdminCharts() {
                 // Fetch data for appointments chart
                 const appointmentsResponse = await instance.get('admin/appointment-status-chart');
                 const appointmentsData = appointmentsResponse?.data?.appointmentStatusCounts;
-                console.log("chart data", appointmentsResponse);
 
                 if (appointmentsData && Array.isArray(appointmentsData)) {
                     const cancelledCount = appointmentsData.find(item => item?.status === true)?.count || 0;
@@ -103,7 +102,6 @@ function AdminCharts() {
 
                 // Fetch data for trainers by service
                 const trainersResponse = await instance.get('admin/trainers-by-service');
-                console.log(trainersResponse);
                 const trainersData = trainersResponse?.data?.groupedTrainers;
 
                 if (trainersData && Array.isArray(trainersData)) {

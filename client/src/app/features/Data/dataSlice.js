@@ -18,7 +18,6 @@ export const viewAllTrainers = createAsyncThunk('data/viewAllTrainers', async (_
         const response = await uninterceptedApiInstance.get(`user/view-trainers`, { withCredentials: true });
         
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
         // If the response is not successful, handle it here
@@ -39,7 +38,6 @@ export const viewAllServices = createAsyncThunk('data/viewAllServices', async (_
         const response = await instance.get(`trainer/all-services`, { withCredentials: true });
         
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
         // If the response is not successful, handle it here
@@ -59,7 +57,6 @@ export const viewAllPlans = createAsyncThunk('data/viewAllPlans', async (_, { re
         const response = await uninterceptedApiInstance.get(`user/view-plans`, { withCredentials: true });
         
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
         // If the response is not successful, handle it here
@@ -75,10 +72,8 @@ export const viewAllPlans = createAsyncThunk('data/viewAllPlans', async (_, { re
 //GET SPECIFIC PLAN BY USER
 
 export const viewPlan = createAsyncThunk('data/viewPlan', async(id, {rejectWithValue}) => {
-    console.log(id)
     try {
         const response = await uninterceptedApiInstance.get(`user/plan/${id}`, { withCredentials: true });
-        console.log(response.data)
 
         if(response.status === 200) {
             return response.data;

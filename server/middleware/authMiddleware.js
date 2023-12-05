@@ -7,7 +7,6 @@ const {verifyToken} = require('../utils/token');
 const authenticateToken = (req,res,next) => {
 
     const authToken = req.headers['authorization']?.replace('Bearer ','') || req.cookies.token;
-    // console.log("one",authToken)
 
     if(!authToken) {
         return res.status(401).json({
@@ -16,7 +15,6 @@ const authenticateToken = (req,res,next) => {
     }
     try {
         const decoded = verifyToken(authToken);
-        console.log("two",decoded)
         req.userId = decoded.userId;
         next();
     } catch (error) {

@@ -13,8 +13,6 @@ function PlanDetails({plan}) {
         return state?.auth?.authState;
     })
 
-    console.log(authState.role);
-
 
     return (
         <>
@@ -30,7 +28,7 @@ function PlanDetails({plan}) {
             transform: 'skewY(-4deg)',
             transition: 'all 0.5s',
             '&:hover': {
-            transform: 'scale(1.05)', // Scale up the card on hover
+            transform: 'scale(1.05)', 
         },
         }}>
             <CardContent>

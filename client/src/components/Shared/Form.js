@@ -66,13 +66,13 @@ function Form({ formType }) {
 
     const handleGoogleAuth = async () => {
         try {
+        // eslint-disable-next-line no-unused-vars
         const test = window.open(
             "http://localhost:4000/user/auth/google",
             "_self"
         );
-        console.log("oi", test);
         } catch (error) {
-        console.log(error);
+            console.log(error);
         }
     };
 
@@ -153,16 +153,14 @@ function Form({ formType }) {
 
         if (formType === "signup") {
             try {
+            // eslint-disable-next-line no-unused-vars
             const { data } = await uninterceptedApiInstance.post(
                 API_ENDPOINTS.SIGNUP(role),
                 formData
             );
-            // const data = await instance.post(`http://localhost:4000/${role}/signup`,formData)
-            console.log(data);
             navigate("/login");
             } catch (error) {
             const { response } = error;
-            console.log(response);
             setError(response?.data?.message);
 
             toast.error(response?.data?.message, {
@@ -181,14 +179,12 @@ function Form({ formType }) {
                 API_ENDPOINTS.LOGIN(role),
                 formData
             );
-            // const data = await instance.post(`http://localhost:4000/${role}/login`,formData)
-            console.log(data);
+
             localStorage.setItem("user", JSON.stringify(data?.user));
             dispatch(setAuth());
             navigate(`/${role}/dashboard`);
             } catch (error) {
             const { response } = error;
-            console.log(response);
             setError(response?.data?.message);
 
             toast.error(response?.data?.message, {
@@ -463,16 +459,6 @@ function Form({ formType }) {
                 </Button>
             </Tooltip>
             </Box>
-            {/* {error && (
-                        <Typography
-                            sx={{
-                                marginLeft: "2rem",
-                                color: "red",
-                                textAlign: "center",
-                            }}>
-                            {error}
-                        </Typography>
-                    )} */}
         </Grid>
         </Grid>
     );

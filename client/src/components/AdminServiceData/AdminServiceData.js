@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import AddCircleIcon from '@mui/icons-material/AddCircle'; // Material-UI Add Circle Icon
+import AddCircleIcon from '@mui/icons-material/AddCircle'; 
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -39,7 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
     },
-    // hide last border
     '&:last-child td, &:last-child th': {
         border: 0,
     },
@@ -111,7 +110,6 @@ function AdminServiceData() {
 
     const rows = useSelector(state => state.admin?.users?.services);
 
-    console.log(rows)
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -147,7 +145,6 @@ function AdminServiceData() {
     ]
 
     const handleBlocking = (id) => {
-        console.log("id hey",id);
         dispatch(adminBlockUnblockService(id)).then(() => {
             dispatch(adminGetAllServices());
         })
@@ -197,7 +194,6 @@ function AdminServiceData() {
 
             try {
                 const response = await instance.post('admin/add-service', serviceDetails);
-                console.log(response.service)
 
                 if(response.status === 201) {
                     setServiceDetails({
@@ -283,7 +279,6 @@ function AdminServiceData() {
                     <StyledTableCell align="left">
                         <Grid container alignItems="center">
                             <Grid item>
-                                {/* <Button variant="outlined" size="small" onClick={() => handleOpen(row)}>{<VisibilityOutlinedIcon />}</Button> */}
                             </Grid>
                             <Grid item sx={{ml:2}}>
                                 <FormGroup>
@@ -294,7 +289,6 @@ function AdminServiceData() {
                                         />}
                                         label=""
                                     />
-                                    {/* {console.log("hooooooo",row._id)} */}
                                 </FormGroup>
                             </Grid>
                         </Grid>

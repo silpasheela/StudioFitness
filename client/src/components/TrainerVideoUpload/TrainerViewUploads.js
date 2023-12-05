@@ -12,8 +12,10 @@ import {
 } from "@mui/material";
 import { instance } from "../../api/axiosInstance";
 import ReactPlayer from "react-player";
+import NoVideo from "../Shared/NoVideo";
 
-function UserViewClasses() {
+
+function TrainerViewUploads() {
 
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ function UserViewClasses() {
 
     const fetchVideos = async () => {
         try {
-            const response = await instance.get("user/view-classes");
+            const response = await instance.get("trainer/view-uploads");
             setVideos(response.data.videos);
             setLoading(false);
         } catch (error) {
@@ -48,49 +50,56 @@ function UserViewClasses() {
             variant="h3"
             gutterBottom
             sx={{ fontFamily: "inherit", fontWeight: "bolder" }}>
-            My Classes
+            My Uploads
         </Typography>
-        <Box display="flex" marginBottom="25px">
-            <TextField
-            label="Search"
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            sx={{
-                width: {
-                xl: "30%",
-                lg: "30%",
-                md: "100%",
-                sm: "100%",
-                xs: "100%",
-                },
-                "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                    borderColor: "#6EC72D",
-                    color: "#000",
-                    fontWeight: "bolder",
-                    borderRadius: "50px",
-                },
-                "&:hover fieldset": {
-                    borderColor: "#6EC72D",
-                },
-                "&.Mui-focused fieldset": {
-                    borderColor: "#6EC72D",
-                },
-                },
-                "& .MuiInputLabel-root": {
-                "&.Mui-focused": {
-                    color: "#6EC72D",
-                },
-                },
-            }}
-            />
-        </Box>
+        {videos.length > 0 && (
+                <Box display="flex" marginBottom="25px">
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        sx={{
+                            width: {
+                                xl: "30%",
+                                lg: "30%",
+                                md: "100%",
+                                sm: "100%",
+                                xs: "100%",
+                            },
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": {
+                                    borderColor: "#6EC72D",
+                                    color: "#000",
+                                    fontWeight: "bolder",
+                                    borderRadius: "50px",
+                                },
+                                "&:hover fieldset": {
+                                    borderColor: "#6EC72D",
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "#6EC72D",
+                                },
+                            },
+                            "& .MuiInputLabel-root": {
+                                "&.Mui-focused": {
+                                    color: "#6EC72D",
+                                },
+                            },
+                        }}
+                    />
+                </Box>
+            )}
         {loading ? (
             <CircularProgress />
         ) : (
             <Grid container spacing={3}>
-            {filteredVideos.map((video) => (
+            {filteredVideos.length === 0 ? (
+                        <Grid item xs={12}>
+                            <NoVideo />
+                        </Grid>
+                    ) : (
+            filteredVideos.map((video) => (
                 <Grid item key={video?._id} xs={12} sm={6} md={4}>
                 <Card style={{ borderRadius: "20px" }}>
                     <CardActionArea>
@@ -124,11 +133,11 @@ function UserViewClasses() {
                     </CardActionArea>
                 </Card>
                 </Grid>
-            ))}
+            )))}
             </Grid>
         )}
         </Container>
     );
 }
 
-export default UserViewClasses;
+export default TrainerViewUploads

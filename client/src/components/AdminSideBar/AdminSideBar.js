@@ -24,7 +24,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import './AdminSideBar.css'
 import {adminLogout} from '../../app/features/Admin/adminSlice'
 import { removeAuth } from '../../app/features/Auth/authSlice';
 
@@ -172,14 +171,12 @@ export default function PersistentDrawerLeft() {
             <List>
             {['Users', 'Trainers', 'Services', 'Appointments'].map((text, index) => (
                 <ListItem key={text} button onClick={() => handleClick(text.toLowerCase().slice(0, -1))}>
-                {/* <Link to={`/${text.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}> */}
                     <ListItemButton>
                     <ListItemIcon sx={{color:'#88C13E'}} >
                         {index % 2 === 0 ? <PeopleAltIcon /> : <SupervisedUserCircleSharpIcon />}
                     </ListItemIcon>
                     <ListItemText primary={text} />
                     </ListItemButton>
-                {/* </Link> */}
                 </ListItem>
             ))}
             </List>
@@ -187,7 +184,6 @@ export default function PersistentDrawerLeft() {
         </Drawer>
         <Main open={open}>
             <DrawerHeader />
-            {/* <Typography paragraph>Welcome to the Admin Dashboard</Typography> */}
         </Main>
         <Menu
             sx={{ mt: '45px' }}
