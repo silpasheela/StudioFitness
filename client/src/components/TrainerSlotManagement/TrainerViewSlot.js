@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import {IconButton, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,6 +13,8 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import moment from 'moment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useDispatch, useSelector } from 'react-redux';
+import { trainerGetSlots } from '../../app/features/Trainer/trainerSlice';
 
 
 function formatDate(date) {
@@ -23,7 +26,8 @@ function formatDate(date) {
 
 function TrainerViewSlot() {
 
-    const [slots, setSlots] = useState([]);
+    const dispatch = useDispatch();
+
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedSlotId, setSelectedSlotId] = useState('');
@@ -33,8 +37,12 @@ function TrainerViewSlot() {
 
 
     useEffect(() => {
-        getSlots();
+        dispatch(trainerGetSlots());
     }, []);
+
+    const slots = useSelector((state) => {return state.trainer?.trainer.slots})
+
+    console.log(slots,"hiii");
 
     const handleDeleteSlot = (date, slotId) => {
         confirmAlert({
@@ -46,16 +54,7 @@ function TrainerViewSlot() {
                     onClick: async () => {
                         try {
                             await instance.delete(`trainer/delete-slot/${slotId}`);
-                            setSlots((prevSlots) => {
-                                const updatedSlots = prevSlots.map((dateSlot) => {
-                                    if (dateSlot.date === date) {
-                                        // Filter out the deleted slot based on its _id
-                                        dateSlot.slots = dateSlot.slots.filter((slot) => slot._id !== slotId);
-                                    }
-                                    return dateSlot;
-                                });
-                                return updatedSlots;
-                            });
+                            dispatch(trainerGetSlots())
     
                             toast.success('Slot deleted successfully', {
                                 position: 'top-right',
@@ -86,14 +85,6 @@ function TrainerViewSlot() {
         });
     };
 
-    const getSlots = async () => {
-        try {
-            const response = await instance.get('trainer/view-slots');
-            setSlots(response.data.slots);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const handleEdit = (date, slotId, startTime, endTime) => {
         setSelectedDate(date);
@@ -127,7 +118,7 @@ function TrainerViewSlot() {
             });
 
             setEditDialogOpen(false); // Close the edit dialog
-            getSlots(); // Refresh the slots data
+            dispatch(trainerGetSlots())
         } catch (error) {
             console.error(error);
             toast.error(`${error.response.data.error}`, {
@@ -140,14 +131,6 @@ function TrainerViewSlot() {
             });
         }
     };
-
-    // const settings = {
-    //     dots: true, 
-    //     infinite: false,
-    //     speed: 500,
-    //     slidesToShow: 1,
-    //     slidesToScroll: 1,
-    // };
 
 
     const settings = {
@@ -199,7 +182,7 @@ function TrainerViewSlot() {
         <>
         <div style={{ marginTop: '35px', marginLeft:'49vh' }}>
             <Slider {...settings} style={{ width: '50%', margin: 'auto' }}>
-                {slots.map((dateSlot) => (
+                {slots?.map((dateSlot) => (
                 <div key={dateSlot.date}>
                     <Button
                     variant="contained"
@@ -216,7 +199,7 @@ function TrainerViewSlot() {
     
                     {expandedDate === dateSlot.date && (
                     <>
-                        {dateSlot.slots.map((slot) => (
+                        {dateSlot?.slots?.map((slot) => (
                         <div key={slot._id}>
                             <Button
                             variant="outlined"

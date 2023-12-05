@@ -1,6 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../../api/axiosInstance";
-// import { baseURL } from "../../../constants/endpoints";
 
 const initialState = {
 
@@ -10,24 +9,6 @@ const initialState = {
     error: ''
 }
 
-
-//USER DASHBOARD
-
-// export const getUserDashboard = createAsyncThunk('user/getUserDashboard', async(_, {rejectWithValue}) => {
-
-//     try {
-//         const response = await instance.get(`user/dashboard`, { withCredentials: true });
-//         // console.log("hey",response)
-//         if(response.status === 200) {
-//             console.log("hey",response)
-//             return response.data
-//         } else {
-//             return rejectWithValue('Failed to fetch user dashboard data');
-//         }
-//     } catch (error) {
-//         return rejectWithValue(error.message);
-//     }
-// })
 
 
 //USER PROFILE UPDATION
@@ -133,22 +114,6 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {},
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(getUserDashboard.pending, (state) => {
-    //             state.loading = true;
-    //             state.error = '';
-    //         })
-    //         .addCase(getUserDashboard.fulfilled, (state, action) => {
-    //             state.loading = false;
-    //             state.user = action.payload.user;
-    //             state.error = '';
-    //         })
-    //         .addCase(getUserDashboard.rejected, (state, action) => {
-    //             state.loading = false;
-    //             state.error = action.error.message;
-    //         })
-    // }
 
     extraReducers: (builder) => {
         builder

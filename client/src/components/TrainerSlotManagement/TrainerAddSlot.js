@@ -5,9 +5,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
 import { instance } from '../../api/axiosInstance';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { trainerGetSlots } from '../../app/features/Trainer/trainerSlice';
 
 
 function TrainerAddSlot() {
+
+
+    const dispatch = useDispatch();
+
 
     const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
     const [slots, setSlots] = useState([{ startTime: moment().format('HH:mm'), endTime: moment().format('HH:mm') }]);
@@ -37,6 +43,7 @@ function TrainerAddSlot() {
         setSlots(newSlots);
     };
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -63,6 +70,7 @@ function TrainerAddSlot() {
                 progress: undefined,
             });
             setOpen(false);
+            dispatch(trainerGetSlots());
         } catch (error) {
             console.error(error);
             toast.error(`${error.response.data.error}`, {

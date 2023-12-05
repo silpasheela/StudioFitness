@@ -536,7 +536,7 @@ const trainerGetSlots = async (req, res) => {
                     s.endTime = endTime.toLocaleString('en-IN', options);
                 });
             });
-        return res.json({ slots: filteredSlots });
+        return res.status(200).json({ slots: filteredSlots });
 
     } catch (error) {
         console.error(error);
