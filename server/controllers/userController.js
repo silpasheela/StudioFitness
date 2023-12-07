@@ -44,7 +44,7 @@ const userSignUp = async(req,res) => {
     
         //email verification
 
-        const verificationLink = `http://localhost:3000/verify?emailVerificationToken=${emailVerificationToken}`;
+        const verificationLink = `https://studio-fitness.vercel.app/verify?emailVerificationToken=${emailVerificationToken}`;
 
         const mailOptions = {
             to: newUser.email,
@@ -166,11 +166,11 @@ const googleAuthenticate = (req, res, next) => {
             console.log(token)
 
             user.token=token;
-            res.redirect(`http://localhost:3000/login?googleToken=${token}`)
+            res.redirect(`https://studio-fitness.vercel.app/login?googleToken=${token}`)
         } catch (error) {
             console.log(error)
             return res.redirect(
-            "http://localhost:3000/login?authentication=failed"
+            "https://studio-fitness.vercel.app/login?authentication=failed"
             )
         }
     })(req, res)
@@ -178,7 +178,7 @@ const googleAuthenticate = (req, res, next) => {
 
 
 const failedGoogleAuthentication = async (req, res) => {
-    res.redirect("http://localhost:3000/login?authentication=failed")
+    res.redirect("https://studio-fitness.vercel.app/login?authentication=failed")
 }
 
 
@@ -219,7 +219,7 @@ const userPasswordReset = async (req,res) => {
             await userExists.save();
 
             
-            const passwordResetLink = `http://localhost:3000/user/reset-password-token/${token}`;
+            const passwordResetLink = `https://studio-fitness.vercel.app/user/reset-password-token/${token}`;
 
             const mailOptions = {
                 to: userExists.email,

@@ -38,7 +38,7 @@ const trainerSignUp = async(req,res) => {
     
         //email verification
 
-        const verificationLink = `http://localhost:3000/verify?emailVerificationToken=${emailVerificationToken}`;
+        const verificationLink = `https://studio-fitness.vercel.app/verify?emailVerificationToken=${emailVerificationToken}`;
 
         const mailOptions = {
             to: newTrainer.email,
@@ -185,7 +185,7 @@ const trainerPasswordReset = async (req,res) => {
             await trainerExists.save();
 
             
-            const passwordResetLink = `http://localhost:3000/trainer/reset-password-token/${token}`;
+            const passwordResetLink = `https://studio-fitness.vercel.app/trainer/reset-password-token/${token}`;
 
             const mailOptions = {
                 to: trainerExists.email,

@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 //CROSS ORIGIN RESOURCE SHARING
 const cors = require("cors");
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "https://studio-fitness.vercel.app" }));
 
 app.use(express.static(path.join(__dirname, "public")));
 

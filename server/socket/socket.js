@@ -3,7 +3,7 @@ const socketIO = require("socket.io");
 const socketConnect = (server) => {
     const io = socketIO(server, {
             cors: {
-            origin: "http://localhost:3000",
+            origin: "https://studio-fitness.vercel.app",
             methods: ["GET", "POST"],
         },
     });
