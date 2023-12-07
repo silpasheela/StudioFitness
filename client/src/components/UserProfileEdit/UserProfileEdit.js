@@ -9,8 +9,7 @@ import { instance } from '../../api/axiosInstance';
 
 
 
-function UserProfileEdit() {
-        
+function UserProfileEdit() {   
 
     const navigate = useNavigate();
 

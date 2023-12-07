@@ -1,4 +1,4 @@
-const baseURL = `http://localhost:4000/`;
+const baseURL = `https://studio.time-shift.shop/`;
 
 const API_ENDPOINTS = {
 

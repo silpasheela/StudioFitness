@@ -66,7 +66,7 @@ function AdminForm() {
             let role = "admin"
 
             try {
-                const {data} = await uninterceptedApiInstance.post(`http://localhost:4000/${role}/login`,formData)
+                const {data} = await uninterceptedApiInstance.post(`https://studio.time-shift.shop/${role}/login`,formData)
                 localStorage.setItem('user',JSON.stringify(data?.admin));
                 dispatch(setAuth());
                 navigate(`/admin/dashboard`);

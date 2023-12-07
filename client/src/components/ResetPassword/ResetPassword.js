@@ -90,7 +90,7 @@ function ResetPassword() {
         if(isValid) {
 
             try {
-                const {data} = await instance.put(`http://localhost:4000/${role}/new-password`,formData,token);
+                const {data} = await instance.put(`https://studio.time-shift.shop/${role}/new-password`,formData,token);
                 console.log(data)
                 showSuccessToaster('Password reset successfully'); // Show success notification
                 navigate('/login')

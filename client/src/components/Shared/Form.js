@@ -68,7 +68,7 @@ function Form({ formType }) {
         try {
         // eslint-disable-next-line no-unused-vars
         const test = window.open(
-            "http://localhost:4000/user/auth/google",
+            "https://studio.time-shift.shop/user/auth/google",
             "_self"
         );
         } catch (error) {

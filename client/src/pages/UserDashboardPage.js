@@ -17,7 +17,7 @@ function UserDashboardPage() {
   });
 
   useEffect(() => {
-    const socket = io("http://localhost:4000/");
+    const socket = io("https://studio.time-shift.shop/");
 
     setSocket(socket);
     // Cleanup on component unmount
