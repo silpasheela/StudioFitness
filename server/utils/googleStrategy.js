@@ -6,7 +6,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 passport.use(new GoogleStrategy({
     clientID: "938437657695-8dgijp5akt5l14jagfk4lgoe10773ru3.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:4000/user/auth/google/callback",
+    callbackURL: "https://studio.time-shift.shop/user/auth/google/callback",
 },
 async function (accessToken, refreshToken, profile, done) {
 
