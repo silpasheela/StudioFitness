@@ -20,9 +20,9 @@ import { subsAuth } from "../../app/features/Auth/authSlice";
 function UserSubscription() {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(subsAuth());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(subsAuth());
+    // }, [dispatch]);
 
     const navigate = useNavigate();
 
