@@ -29,16 +29,16 @@ function TrainerView({trainer}) {
             }}>
         <CardMedia
             sx={{ height: 230 }}
-            image={trainer.profilePicture}
-            title={trainer.fullName}
+            image={trainer?.profilePicture}
+            title={trainer?.fullName}
         />
         <CardContent sx={{marginBottom:'-15px',backgroundColor:'#000', color:'#fff' }}>
 
             <Typography gutterBottom variant="h5" component="div" sx={{fontWeight: 'bolder'}}>
-            {trainer.fullName}
+            {trainer?.fullName}
             </Typography>
             <Typography variant="body2" color="#6EC72D" sx={{fontStyle: 'italic',fontFamily:'inherit'}}>
-            {trainer.service.service} Instructor
+            {trainer?.service?.service} Instructor
             </Typography>
 
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
