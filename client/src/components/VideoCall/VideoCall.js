@@ -104,8 +104,8 @@ function VideoCall() {
         return;
         }
 
-        const appID = 1955572777;
-        const serverSecret = "c7fb84426bbdf52f7e141ca0accd6fb5";
+        const appID = 833664987;
+        const serverSecret = "63e19b9ecc44254e196adf6ca7f2c567";
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
             appID,
             serverSecret,
